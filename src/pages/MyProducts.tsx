@@ -31,7 +31,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { DateSelectionDialog } from "@/components/DateSelectionDialog";
 
-const Products = () => {
+const MyProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isDateDialogOpen, setIsDateDialogOpen] = useState(false);
@@ -101,9 +101,18 @@ const Products = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Product Catalog</h1>
-            <p className="text-muted-foreground">Browse and rent products from our catalog</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">My Products</h1>
+            <p className="text-muted-foreground">Manage your rental inventory and pricing</p>
           </div>
+                 <Button 
+             variant="hero" 
+             size="lg" 
+             className="mt-4 sm:mt-0"
+             onClick={() => navigate('/add-product', { state: { from: '/my-products' } })}
+           >
+             <Package className="w-4 h-4 mr-2" />
+             Add New Product
+           </Button>
         </div>
 
         {/* Search and Filters */}
@@ -256,9 +265,13 @@ const Products = () => {
 
                  {/* Actions - Always at bottom */}
                  <div className="flex gap-2 mt-auto pt-4">
-                   <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/products/${product.id}`, { state: { from: '/products' } })}>
+                   <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/products/${product.id}`, { state: { from: '/my-products' } })}>
                      <Eye className="w-4 h-4 mr-1" />
                      View
+                   </Button>
+                   <Button variant="default" size="sm" className="flex-1">
+                     <Edit className="w-4 h-4 mr-1" />
+                     Edit
                    </Button>
                    <Button variant="hero" size="sm" className="flex-1" onClick={() => handleAddToCartClick(product)}>
                      <ShoppingCart className="w-4 h-4 mr-1" />
@@ -283,6 +296,6 @@ const Products = () => {
        )}
      </div>
    );
- };
+};
 
-export default Products;
+export default MyProducts;

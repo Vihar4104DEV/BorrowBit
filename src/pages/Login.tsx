@@ -23,6 +23,13 @@ const Login = () => {
     if (dummyUser) {
       // Use dummy user data
       signIn(dummyUser);
+      
+      // Redirect based on role
+      if (dummyUser.role === "delivery") {
+        navigate("/delivery-partner");
+      } else {
+        navigate("/profile");
+      }
     } else {
       // Create new user with 'user' role
       const user = {
@@ -32,9 +39,8 @@ const Login = () => {
         role: "user" as const,
       };
       signIn(user);
+      navigate("/profile");
     }
-    
-    navigate("/profile");
   };
 
   return (
@@ -58,7 +64,10 @@ const Login = () => {
             {/* Testing Info */}
             <div className="mt-4 p-3 bg-muted rounded-lg">
               <p className="text-xs text-muted-foreground text-center">
-                <strong>Testing:</strong> Use admin@example.com for admin access
+                <strong>Testing:</strong><br />
+                admin@example.com - Admin access<br />
+                delivery@example.com - Delivery Partner access<br />
+                user@example.com - Normal user access
               </p>
             </div>
           </CardContent>

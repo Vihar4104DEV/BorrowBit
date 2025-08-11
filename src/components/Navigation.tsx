@@ -1,36 +1,63 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Calendar, Package, Users, BarChart3, MessageCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Menu, X, Calendar, Package, Users, BarChart3, MessageCircle, Truck, ShoppingCart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isAdmin, isUser } = useAuth();
+  const { user, isAdmin, isUser, isDelivery } = useAuth();
+  const { getCartItemCount } = useCart();
+
+  // Debug logging for role detection
+  console.log("Navigation - User role debug:", { 
+    isAdmin, 
+    isUser, 
+    isDelivery, 
+    userRole: user?.role 
+  });
+
+  // Define navigation item type
+  type NavItem = {
+    href: string;
+    label: string;
+    icon?: any;
+    badge?: number;
+  };
 
   // Define navigation items based on user role
-  const getNavItems = () => {
+  const getNavItems = (): NavItem[] => {
     const baseItems = [
       { href: "/", label: "Home" },
       { href: "/products", label: "Products", icon: Package },
     ];
 
     if (isAdmin) {
-      // Admin sees everything
+      // Admin sees everything except cart (cart is in action buttons)
       return [
         ...baseItems,
         { href: "/bookings", label: "Bookings", icon: Calendar },
         { href: "/customers", label: "Customers", icon: Users },
         { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
       ];
+    } else if (isDelivery) {
+      // Delivery partner sees only home and delivery dashboard
+      return [
+        { href: "/", label: "Home" },
+        { href: "/delivery-partner", label: "Delivery Dashboard", icon: Truck },
+      ];
     } else if (isUser) {
       // Normal user sees limited items
       return [
-        ...baseItems,
+        { href: "/", label: "Home" },
+        { href: "/products", label: "Products", icon: Package },
         { href: "/bookings", label: "Bookings", icon: Calendar },
         { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
+        { href: "/my-products", label: "My Products", icon: Package },
       ];
     } else {
       // Guest sees only home and products
@@ -39,6 +66,11 @@ export const Navigation = () => {
   };
 
   const navItems = getNavItems();
+
+  // Debug logging for navigation items
+  console.log("Navigation - Generated nav items:", navItems);
+  console.log("Navigation - Current user role:", user?.role);
+  console.log("Navigation - isDelivery flag:", isDelivery);
 
   return (
     <nav className="bg-background/95 backdrop-blur-md border-b border-border shadow-card sticky top-0 z-50">
@@ -61,11 +93,12 @@ export const Navigation = () => {
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
+              
               return (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
+                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth relative ${
                     isActive
                       ? "bg-primary text-primary-foreground shadow-elegant"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -73,6 +106,11 @@ export const Navigation = () => {
                 >
                   {Icon && <Icon className="w-4 h-4 mr-2" />}
                   {item.label}
+                  {item.badge && item.badge > 0 && (
+                    <Badge variant="destructive" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                      {item.badge}
+                    </Badge>
+                  )}
                 </Link>
               );
             })}
@@ -89,9 +127,24 @@ export const Navigation = () => {
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
-              <Button variant="outline" size="sm" onClick={() => navigate("/profile")}>
-                Profile
-              </Button>
+              <>
+                {/* Only show cart for non-delivery users */}
+                {!isDelivery && (
+                  <Button variant="outline" size="sm" onClick={() => navigate("/cart")} className="flex items-center gap-2">
+                    <ShoppingCart className="w-4 h-4" />
+                    Cart
+                    {getCartItemCount() > 0 && (
+                      <Badge variant="destructive" className="h-5 w-5 rounded-full p-0 text-xs">
+                        {getCartItemCount()}
+                      </Badge>
+                    )}
+                  </Button>
+                )}
+                <Button variant="outline" size="sm" onClick={() => navigate("/profile")} className="flex items-center gap-2">
+                  <Users className="w-4 h-4" />
+                  Profile
+                </Button>
+              </>
             ) : (
               <>
                 <Button variant="outline" size="sm" onClick={() => navigate("/login")}> 
@@ -127,7 +180,7 @@ export const Navigation = () => {
                   <Link
                     key={item.href}
                     to={item.href}
-                    className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
+                    className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth relative ${
                       isActive
                         ? "bg-primary text-primary-foreground shadow-elegant"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -136,6 +189,11 @@ export const Navigation = () => {
                   >
                     {Icon && <Icon className="w-4 h-4 mr-2" />}
                     {item.label}
+                    {item.badge && item.badge > 0 && (
+                      <Badge variant="destructive" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                        {item.badge}
+                      </Badge>
+                    )}
                   </Link>
                 );
               })}
@@ -148,13 +206,32 @@ export const Navigation = () => {
               </Button>
               <div className="pt-4 space-y-2">
                 {user ? (
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => { setIsOpen(false); navigate("/profile"); }}
-                  >
-                    Profile
-                  </Button>
+                  <>
+                    {/* Only show cart for non-delivery users */}
+                    {!isDelivery && (
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start"
+                        onClick={() => { setIsOpen(false); navigate("/cart"); }}
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        Cart
+                        {getCartItemCount() > 0 && (
+                          <Badge variant="destructive" className="ml-2 h-5 w-5 rounded-full p-0 text-xs">
+                            {getCartItemCount()}
+                          </Badge>
+                        )}
+                      </Button>
+                    )}
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start"
+                      onClick={() => { setIsOpen(false); navigate("/profile"); }}
+                    >
+                      <Users className="w-4 h-4" />
+                      Profile
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button

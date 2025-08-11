@@ -22,6 +22,13 @@ export const dummyUsers: AuthUser[] = [
     phone: "+1122334455",
     role: "user",
   },
+  {
+    id: "4",
+    name: "Delivery Partner",
+    email: "delivery@example.com",
+    phone: "+1555666777",
+    role: "delivery",
+  },
 ];
 
 export const getDummyUserByEmail = (email: string): AuthUser | undefined => {

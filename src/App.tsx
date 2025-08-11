@@ -8,15 +8,20 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Customers from "./pages/Customers";
+import DeliveryPartner from "./pages/DeliveryPartner";
+import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 import { ChatbotButton } from "@/components/ChatbotButton";
 import Chat from "@/pages/Chat";
 import ProductDetail from "@/pages/ProductDetail";
+import AddProduct from "@/pages/AddProduct";
 import { RouteGuard } from "@/components/RouteGuard";
+import MyProducts from "./pages/MyProducts";
 
 const queryClient = new QueryClient();
 
@@ -26,11 +31,22 @@ const App = () => (
       <Toaster />
       <Sonner />
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/my-products" element={
+              <RouteGuard requiredRole="user" fallbackPath="/">
+                <MyProducts />
+              </RouteGuard>
+            } />
+            <Route path="/products/:id" element={
+              <RouteGuard requiredRole="user" fallbackPath="/">
+                <ProductDetail />
+              </RouteGuard>
+            } />
+            <Route path="/add-product" element={<AddProduct />} />
             
             {/* Admin-only routes */}
             <Route path="/customers" element={
@@ -51,6 +67,20 @@ const App = () => (
               </RouteGuard>
             } />
             
+            {/* Delivery Partner route */}
+            <Route path="/delivery-partner" element={
+              <RouteGuard requiredRole="delivery" fallbackPath="/">
+                <DeliveryPartner />
+              </RouteGuard>
+            } />
+            
+            {/* Cart route */}
+            <Route path="/cart" element={
+              <RouteGuard requiredRole="user" fallbackPath="/login">
+                <Cart />
+              </RouteGuard>
+            } />
+            
             {/* Auth routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -63,10 +93,11 @@ const App = () => (
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-        <ChatbotButton />
-      </AuthProvider>
+                      </Routes>
+          </BrowserRouter>
+          <ChatbotButton />
+        </CartProvider>
+        </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

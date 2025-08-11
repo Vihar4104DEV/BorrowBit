@@ -1,23 +1,51 @@
 import { useMemo, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Heart, Minus, Plus, Package } from "lucide-react";
+import { Calendar as CalendarIcon, Heart, Minus, Plus, Package, ShoppingCart } from "lucide-react";
 import { products, getProductById } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
+import { DateSelectionDialog } from "@/components/DateSelectionDialog";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+  const { addToCart } = useCart();
   const productId = Number(id);
   const product = useMemo(() => getProductById(productId), [productId]);
+
+  // Determine where to go back based on referrer
+  const getBackPath = () => {
+    const referrer = location.state?.from || document.referrer;
+    if (referrer.includes('/my-products')) {
+      return '/my-products';
+    }
+    return '/products';
+  };
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [qty, setQty] = useState(1);
   const [coupon, setCoupon] = useState("");
+  const [isDateDialogOpen, setIsDateDialogOpen] = useState(false);
+
+  const handleAddToCartClick = () => {
+    setIsDateDialogOpen(true);
+  };
+
+  const handleDateSelectionConfirm = (fromDate: string, toDate: string, quantity: number) => {
+    addToCart(productId, quantity, fromDate, toDate, product.dailyRate);
+    toast({
+      title: "Added to Cart",
+      description: `${quantity} ${quantity === 1 ? 'item' : 'items'} of ${product.name} added to cart successfully!`,
+    });
+  };
 
   if (!product) {
     return (
@@ -37,7 +65,7 @@ const ProductDetail = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
         <div className="text-sm text-muted-foreground mb-6">
-          <Link to="/products" className="underline">All Products</Link> / <span className="text-foreground">{product.name}</span>
+          <Link to={getBackPath()} className="underline">All Products</Link> / <span className="text-foreground">{product.name}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -79,20 +107,30 @@ const ProductDetail = () => {
               ₹ {product.weeklyRate} <span className="text-sm text-muted-foreground">( ₹{product.dailyRate} / per unit )</span>
             </div>
 
-            {/* Date range */}
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-lg font-semibold text-foreground">From:</span>
-              <div className="flex items-center gap-2">
-                <Input placeholder="DD/MM" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="w-36" />
-                <CalendarIcon className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <span className="text-lg font-semibold text-foreground">to</span>
-              <div className="flex items-center gap-2">
-                <Input placeholder="DD/MM" value={toDate} onChange={(e) => setToDate(e.target.value)} className="w-36" />
-                <CalendarIcon className="w-5 h-5 text-muted-foreground" />
-              </div>
-              <Badge variant="secondary">Ultimate Yak</Badge>
-            </div>
+                         {/* Date range */}
+             <div className="flex items-center gap-3 mb-6">
+               <span className="text-lg font-semibold text-foreground">From:</span>
+               <div className="flex items-center gap-2">
+                 <Input 
+                   type="date" 
+                   value={fromDate} 
+                   onChange={(e) => setFromDate(e.target.value)} 
+                   className="w-36" 
+                 />
+                 <CalendarIcon className="w-5 h-5 text-muted-foreground" />
+               </div>
+               <span className="text-lg font-semibold text-foreground">to</span>
+               <div className="flex items-center gap-2">
+                 <Input 
+                   type="date" 
+                   value={toDate} 
+                   onChange={(e) => setToDate(e.target.value)} 
+                   className="w-36" 
+                 />
+                 <CalendarIcon className="w-5 h-5 text-muted-foreground" />
+               </div>
+               <Badge variant="secondary">Ultimate Yak</Badge>
+             </div>
 
             {/* Quantity and Add to Cart */}
             <div className="flex items-center gap-4 mb-8">
@@ -105,9 +143,9 @@ const ProductDetail = () => {
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
-              <Button variant="outline" size="lg" className="px-6">
-                <Heart className="w-4 h-4 mr-2" /> Add to Cart
-              </Button>
+                             <Button variant="outline" size="lg" className="px-6" onClick={handleAddToCartClick}>
+                 <ShoppingCart className="w-4 h-4 mr-2" /> Add to Cart
+               </Button>
             </div>
 
             {/* Coupon */}
@@ -134,11 +172,20 @@ const ProductDetail = () => {
                 <div className="text-sm text-muted-foreground">[social buttons placeholder]</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+                     </div>
+         </div>
+       </div>
+
+       {/* Date Selection Dialog */}
+       <DateSelectionDialog
+         isOpen={isDateDialogOpen}
+         onClose={() => setIsDateDialogOpen(false)}
+         onConfirm={handleDateSelectionConfirm}
+         productName={product.name}
+         dailyRate={product.dailyRate}
+       />
+     </div>
+   );
+ };
 
 export default ProductDetail;
