@@ -73,13 +73,7 @@ class UserManager(BaseUserManager):
 class User(AbstractUser, BaseModel):
     """Custom user model for the rental application."""
     
-    USER_TYPE_CHOICES = [
-        ('CUSTOMER', 'Customer'),
-        ('STAFF', 'Staff'),
-        ('ADMIN', 'Administrator'),
-        ('MANAGER', 'Manager'),
-    ]
-    
+       
     GENDER_CHOICES = [
         ('M', 'Male'),
         ('F', 'Female'),
@@ -98,7 +92,7 @@ class User(AbstractUser, BaseModel):
     # Personal information
     first_name = models.CharField(max_length=150, verbose_name=_("First Name"))
     last_name = models.CharField(max_length=150, verbose_name=_("Last Name"))
-    middle_name = models.CharField(max_length=150, blank=True, verbose_name=_("Middle Name"))
+    prefix = models.CharField(max_length=150, blank=True, verbose_name=_("Prefix"))
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True, verbose_name=_("Gender"))
     date_of_birth = models.DateField(null=True, blank=True, verbose_name=_("Date of Birth"))
     

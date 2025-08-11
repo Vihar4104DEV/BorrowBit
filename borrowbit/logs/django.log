@@ -1,0 +1,143 @@
+INFO 2025-08-11 15:45:48,123 autoreload 10792 19892 Watching for file changes with StatReloader
+INFO 2025-08-11 15:46:34,639 autoreload 10792 19892 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 15:46:40,456 autoreload 17552 11016 Watching for file changes with StatReloader
+INFO 2025-08-11 15:46:45,957 autoreload 17552 11016 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 15:46:49,741 autoreload 17136 13524 Watching for file changes with StatReloader
+INFO 2025-08-11 15:47:24,043 autoreload 17136 13524 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 15:47:27,736 autoreload 11900 14960 Watching for file changes with StatReloader
+INFO 2025-08-11 15:49:04,584 autoreload 11900 14960 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\models.py changed, reloading.
+INFO 2025-08-11 15:49:12,688 autoreload 11756 13236 Watching for file changes with StatReloader
+INFO 2025-08-11 15:49:22,314 autoreload 11756 13236 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\models.py changed, reloading.
+INFO 2025-08-11 15:49:31,494 autoreload 21404 17576 Watching for file changes with StatReloader
+INFO 2025-08-11 15:50:53,399 autoreload 21404 17576 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 15:50:56,714 autoreload 9264 13052 Watching for file changes with StatReloader
+INFO 2025-08-11 15:51:17,415 autoreload 9264 13052 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 15:51:20,815 autoreload 15948 17392 Watching for file changes with StatReloader
+INFO 2025-08-11 15:51:30,466 autoreload 15948 17392 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\urls.py changed, reloading.
+INFO 2025-08-11 15:51:34,181 autoreload 6044 15656 Watching for file changes with StatReloader
+INFO 2025-08-11 15:53:24,348 autoreload 6044 15656 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 15:53:47,761 autoreload 19896 6600 Watching for file changes with StatReloader
+INFO 2025-08-11 15:54:11,870 autoreload 19896 6600 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\admin.py changed, reloading.
+INFO 2025-08-11 15:54:32,659 autoreload 3460 13348 Watching for file changes with StatReloader
+INFO 2025-08-11 15:55:14,547 autoreload 3460 13348 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\notifications\admin.py changed, reloading.
+INFO 2025-08-11 15:55:27,065 autoreload 17160 3180 Watching for file changes with StatReloader
+ERROR 2025-08-11 15:56:02,199 log 16988 10792 Internal Server Error: /api/v1/userforgot-password/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 99, in _get
+    return self.client.get(key, default=default, version=version, client=client)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 260, in get
+    raise ConnectionInterrupted(connection=client) from e
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 422, in initial
+    self.check_throttles(request)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 365, in check_throttles
+    if not throttle.allow_request(request, self):
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\throttling.py", line 123, in allow_request
+    self.history = self.cache.get(self.key, [])
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 92, in get
+    value = self._get(key, default, version, client)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 36, in _decorator
+    raise e.__cause__
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 258, in get
+    value = client.get(key)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\commands\core.py", line 1829, in get
+    return self.execute_command("GET", name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+ERROR 2025-08-11 15:56:14,618 log 16988 10792 Internal Server Error: /api/v1/userregister/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 99, in _get
+    return self.client.get(key, default=default, version=version, client=client)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 260, in get
+    raise ConnectionInterrupted(connection=client) from e
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 422, in initial
+    self.check_throttles(request)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 365, in check_throttles
+    if not throttle.allow_request(request, self):
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\throttling.py", line 123, in allow_request
+    self.history = self.cache.get(self.key, [])
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 92, in get
+    value = self._get(key, default, version, client)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 36, in _decorator
+    raise e.__cause__
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 258, in get
+    value = client.get(key)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\commands\core.py", line 1829, in get
+    return self.execute_command("GET", name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.

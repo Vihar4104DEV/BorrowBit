@@ -1,3 +1,128 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.utils import timezone
+from .serializers import RegisterSerializer, LoginSerializer, ForgotPasswordSerializer, OTPVerificationSerializer
+from .models import User, OTPVerification
+from core.utils import success_response, error_response
+from notifications.tasks import send_otp_notification
+import random
 
-# Create your views here.
+class RegisterView(APIView):
+    """
+    API endpoint for user registration.
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if not serializer.is_valid():
+            return error_response(str(serializer.errors))
+        
+        user = serializer.save()
+        
+        # Generate OTP for email and phone
+        otp_code = str(random.randint(100000, 999999))
+        expires_at = timezone.now() + timezone.timedelta(minutes=10)
+        
+        OTPVerification.objects.create(
+            user=user,
+            email=user.email,
+            phone_number=user.phone_number,
+            otp=otp_code,
+            otp_type="email",
+            expires_at=expires_at
+        )
+        
+        OTPVerification.objects.create(
+            user=user,
+            email=user.email,
+            phone_number=user.phone_number,
+            otp=otp_code,
+            otp_type="phone",
+            expires_at=expires_at
+        )
+        
+        # Send OTP via Celery
+        send_otp_notification.delay(user.email, user.phone_number, otp_code)
+        
+        return success_response("Registration successful. OTP sent to email and phone.")
+
+class LoginView(APIView):
+    """
+    API endpoint for user login via email/password or mobile/OTP.
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if not serializer.is_valid():
+            return error_response(str(serializer.errors))
+        
+        validated_data = serializer.validated_data
+        user = validated_data["user"]
+        login_type = validated_data["login_type"]
+        
+        if not user.is_verified:
+            return error_response("User email/phone not verified.")
+        
+        refresh = RefreshToken.for_user(user)
+        user.record_successful_login(request.META.get("REMOTE_ADDR"))
+        
+        return success_response(f"Login successful via {login_type}.", data={
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "login_type": login_type
+        })
+
+class ForgotPasswordView(APIView):
+    """
+    API endpoint for forgot password (send OTP to email).
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = ForgotPasswordSerializer(data=request.data)
+        if not serializer.is_valid():
+            return error_response(str(serializer.errors))
+        
+        user = User.objects.get(email=serializer.validated_data["email"])
+        otp_code = str(random.randint(100000, 999999))
+        expires_at = timezone.now() + timezone.timedelta(minutes=10)
+        
+        OTPVerification.objects.create(
+            user=user,
+            email=user.email,
+            phone_number=user.phone_number,
+            otp=otp_code,
+            otp_type="email",
+            expires_at=expires_at
+        )
+        
+        send_otp_notification.delay(user.email, user.phone_number, otp_code)
+        
+        return success_response("OTP sent to email for password reset.")
+
+class OTPVerificationView(APIView):
+    """
+    API endpoint for OTP verification (email or phone).
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = OTPVerificationSerializer(data=request.data)
+        if not serializer.is_valid():
+            return error_response(str(serializer.errors))
+        
+        validated_data = serializer.validated_data
+        otp_type = validated_data["otp_type"]
+        
+        # Mark user as verified if both email and phone are verified
+        if otp_type == "email":
+            user = User.objects.get(email=validated_data["email"])
+            user.verify_email()
+        else:
+            user = User.objects.get(phone_number=validated_data["phone_number"])
+            user.verify_phone()
+        
+        return success_response(f"{otp_type.capitalize()} OTP verified successfully.")
