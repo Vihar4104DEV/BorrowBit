@@ -1,0 +1,73 @@
+asgiref==3.9.1
+Django==5.2.5
+sqlparse==0.5.3
+tzdata==2025.2
+
+
+# Core Django and REST Framework
+djangorestframework
+django-cors-headers
+
+# Async Support
+channels==4.0.0
+channels-redis==4.1.0
+# (django-async-rest appears outdated/unmaintained—consider evaluating or removing)
+
+# Database
+django-redis==5.4.0
+
+# Authentication & Security
+djangorestframework-simplejwt==5.3.0
+django-oauth-toolkit==2.3.0
+cryptography==41.0.7
+django-ratelimit==4.1.0
+
+# Background Tasks
+celery==5.3.4
+redis==5.0.1
+
+# API Documentation
+drf-spectacular==0.27.0
+drf-yasg==1.21.7
+
+# Validation & Serialization
+django-filter==23.5
+django-extensions==3.2.3
+
+# File Handling
+Pillow
+django-storages==1.14.2
+
+# Email & Notifications
+django-anymail==10.2
+
+# Testing
+pytest==7.4.3
+pytest-django==4.7.0
+pytest-cov==4.1.0
+factory-boy==3.3.0
+
+# Development & Production
+gunicorn==21.2.0
+whitenoise==6.6.0
+python-decouple==3.8
+django-environ==0.11.2
+
+# Monitoring & Logging
+sentry-sdk==1.38.0
+django-debug-toolbar==4.2.0
+
+# Payment Gateway Support
+stripe==7.8.0
+razorpay==1.4.1
+
+# PDF Generation
+reportlab==4.0.7
+xlsxwriter
+
+# Caching & Performance
+django-cacheops
+django-redis-cache
+
+# Environment Management
+python-dotenv
