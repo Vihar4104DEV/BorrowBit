@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Celery configuration for rental_backend project.
 
@@ -25,3 +26,28 @@ def debug_task(self):
     """Debug task to test Celery configuration."""
     print(f'Request: {self.request!r}')
 
+=======
+# Celery configuration has been disabled to run Django without Celery
+# Uncomment and configure when you want to use Celery again
+
+# import os
+# from celery import Celery
+
+# # Set the default Django settings module for the 'celery' program.
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'borrowbit.settings')
+
+# app = Celery('borrowbit')
+
+# # Using a string here means the worker doesn't have to serialize
+# # the configuration object to child processes.
+# # - namespace='CELERY' means all celery-related configuration keys
+# #   should have a `CELERY_` prefix.
+# app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# # Load task modules from all registered Django apps.
+# app.autodiscover_tasks()
+
+# @app.task(bind=True, ignore_result=True)
+# def debug_task(self):
+#     print(f'Request: {self.request!r}')
+>>>>>>> ab444e60970b217a519b6bccb175f10d45758085

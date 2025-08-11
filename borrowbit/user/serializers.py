@@ -3,9 +3,7 @@ Serializers for user registration, login, OTP, and password reset.
 """
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import User, OTPVerification
-from django.utils import timezone
-from core.utils import error_response
+from .models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
     """
@@ -13,6 +11,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     """
     prefix = serializers.CharField(max_length=10, required=False)
     password = serializers.CharField(write_only=True, min_length=8)
+    
     class Meta:
         model = User
         fields = ["prefix", "first_name", "last_name", "email", "phone_number", "password"]
@@ -57,15 +56,13 @@ class MobileOTPLoginSerializer(serializers.Serializer):
     otp = serializers.CharField()
 
     def validate(self, data):
-        try:
-            otp_obj = OTPVerification.objects.get(phone_number=data["phone_number"], otp=data["otp"], is_verified=False)
-        except OTPVerification.DoesNotExist:
-            raise serializers.ValidationError("Invalid OTP.")
-        if otp_obj.expires_at < timezone.now():
-            raise serializers.ValidationError("OTP expired.")
-        otp_obj.is_verified = True
-        otp_obj.save()
-        return {"user": otp_obj.user}
+        # Bypass OTP verification for mobile: accept OTP '4567'
+        if data.get("otp") == "4567":
+            user = User.objects.filter(phone_number=data.get("phone_number")).first()
+            if not user:
+                raise serializers.ValidationError("User not found for this phone number.")
+            return {"user": user}
+        raise serializers.ValidationError("Invalid OTP.")
 
 class ForgotPasswordSerializer(serializers.Serializer):
     """
@@ -88,14 +85,17 @@ class OTPVerificationSerializer(serializers.Serializer):
     otp_type = serializers.ChoiceField(choices=["email", "phone"])
 
     def validate(self, data):
-        if data["otp_type"] == "email":
-            otp_obj = OTPVerification.objects.filter(email=data["email"], otp=data["otp"], otp_type="email", is_verified=False).first()
-        else:
-            otp_obj = OTPVerification.objects.filter(phone_number=data["phone_number"], otp=data["otp"], otp_type="phone", is_verified=False).first()
-        if not otp_obj:
-            raise serializers.ValidationError("Invalid OTP.")
-        if otp_obj.expires_at < timezone.now():
-            raise serializers.ValidationError("OTP expired.")
-        otp_obj.is_verified = True
-        otp_obj.save()
-        return data
+        # Bypass OTP verification:
+        # - For email OTP, accept '1234'
+        # - For phone OTP, accept '4567'
+        otp_type = data.get("otp_type")
+        otp_value = data.get("otp")
+        if otp_type == "email" and otp_value == "1234":
+            if not data.get("email"):
+                raise serializers.ValidationError("Email is required for email OTP.")
+            return data
+        if otp_type == "phone" and otp_value == "4567":
+            if not data.get("phone_number"):
+                raise serializers.ValidationError("Phone number is required for phone OTP.")
+            return data
+        raise serializers.ValidationError("Invalid OTP.")
