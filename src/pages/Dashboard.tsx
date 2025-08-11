@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +21,16 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user, isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    // If not authenticated, redirect to login
+    if (!isAuthenticated && !isLoading) {
+      navigate('/login');
+    }
+    // Optionally, fetch user/session data here if needed
+  }, [isAuthenticated, isLoading, navigate]);
   const stats = [
     {
       title: "Total Revenue",
@@ -251,19 +264,19 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-auto p-4 flex flex-col items-center">
+              <Button variant="outline" className="h-auto p-4 flex flex-col items-center" onClick={() => navigate('/products/create')}>
                 <Package className="w-6 h-6 mb-2" />
                 <span>Add Product</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col items-center">
+              <Button variant="outline" className="h-auto p-4 flex flex-col items-center" onClick={() => navigate('/bookings/create')}>
                 <Calendar className="w-6 h-6 mb-2" />
                 <span>New Booking</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col items-center">
+              <Button variant="outline" className="h-auto p-4 flex flex-col items-center" onClick={() => navigate('/customers/create')}>
                 <Users className="w-6 h-6 mb-2" />
                 <span>Add Customer</span>
               </Button>
-              <Button variant="outline" className="h-auto p-4 flex flex-col items-center">
+              <Button variant="outline" className="h-auto p-4 flex flex-col items-center" onClick={() => navigate('/invoices/create')}>
                 <DollarSign className="w-6 h-6 mb-2" />
                 <span>Generate Invoice</span>
               </Button>

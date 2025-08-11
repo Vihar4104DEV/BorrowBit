@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Search,
   Filter,
@@ -16,17 +17,29 @@ import {
   AlertCircle,
   Eye,
   Edit,
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
 } from "lucide-react";
-import { products as productsData } from "@/data/products";
+import { useProducts } from "@/hooks/useProducts";
+import { useAuth } from "@/hooks/useAuth";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
+  
+  const { products, loading, error, pagination, fetchProducts, isFetching } = useProducts();
+  const { user, isAuthenticated } = useAuth();
 
-  const products = productsData;
+  // Fetch products on component mount and page change
+  useEffect(() => {
+    fetchProducts({ page: currentPage, pageSize: 12 });
+  }, [currentPage, fetchProducts]);
 
   const getStatusBadge = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case "available":
         return (
           <Badge className="bg-success text-success-foreground">
@@ -50,10 +63,60 @@ const Products = () => {
     }
   };
 
+  const getConditionBadge = (condition: string) => {
+    switch (condition.toLowerCase()) {
+      case "excellent":
+        return <Badge className="bg-green-100 text-green-800">Excellent</Badge>;
+      case "good":
+        return <Badge className="bg-blue-100 text-blue-800">Good</Badge>;
+      case "fair":
+        return <Badge className="bg-yellow-100 text-yellow-800">Fair</Badge>;
+      default:
+        return <Badge variant="secondary">{condition}</Badge>;
+    }
+  };
+
   const filteredProducts = products.filter(
     (product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchTerm.toLowerCase())
+      product.category_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const totalPages = Math.ceil(pagination.count / pagination.pageSize);
+
+  // Loading skeleton for products
+  const ProductSkeleton = () => (
+    <Card className="shadow-card">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <Skeleton className="h-6 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-1/2 mb-2" />
+            <Skeleton className="h-5 w-20" />
+          </div>
+          <Skeleton className="w-20 h-20 rounded-lg" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <Skeleton className="h-4 w-full mb-4" />
+        <Skeleton className="h-4 w-3/4 mb-4" />
+        <div className="space-y-2 mb-4">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-8 flex-1" />
+          <Skeleton className="h-8 flex-1" />
+          <Skeleton className="h-8 flex-1" />
+        </div>
+      </CardContent>
+    </Card>
   );
 
   return (
@@ -64,9 +127,9 @@ const Products = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Product Catalog</h1>
-            <p className="text-muted-foreground">Manage your rental inventory and pricing</p>
+            <p className="text-muted-foreground">Browse and manage rental products</p>
           </div>
-          <Button variant="hero" size="lg" className="mt-4 sm:mt-0">
+          <Button variant="hero" size="lg" className="mt-4 sm:mt-0" onClick={() => navigate('/products/create')}>
             <Package className="w-4 h-4 mr-2" />
             Add New Product
           </Button>
@@ -96,7 +159,9 @@ const Products = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Total Products</p>
-                  <p className="text-2xl font-bold text-foreground">{products.length}</p>
+                  <p className="text-2xl font-bold text-foreground">
+                    {loading ? <Skeleton className="h-8 w-16" /> : pagination.count}
+                  </p>
                 </div>
                 <Package className="w-8 h-8 text-primary" />
               </div>
@@ -108,7 +173,8 @@ const Products = () => {
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Available</p>
                   <p className="text-2xl font-bold text-success">
-                    {products.filter((p) => p.status === "available").length}
+                    {loading ? <Skeleton className="h-8 w-16" /> : 
+                      products.filter((p) => p.status.toLowerCase() === "available").length}
                   </p>
                 </div>
                 <CheckCircle className="w-8 h-8 text-success" />
@@ -119,12 +185,13 @@ const Products = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Currently Rented</p>
+                  <p className="text-sm text-muted-foreground mb-1">Featured</p>
                   <p className="text-2xl font-bold text-warning">
-                    {products.filter((p) => p.status === "rented").length}
+                    {loading ? <Skeleton className="h-8 w-16" /> : 
+                      products.filter((p) => p.is_featured).length}
                   </p>
                 </div>
-                <Clock className="w-8 h-8 text-warning" />
+                <Star className="w-8 h-8 text-warning" />
               </div>
             </CardContent>
           </Card>
@@ -132,9 +199,10 @@ const Products = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-1">Maintenance</p>
+                  <p className="text-sm text-muted-foreground mb-1">Popular</p>
                   <p className="text-2xl font-bold text-destructive">
-                    {products.filter((p) => p.status === "maintenance").length}
+                    {loading ? <Skeleton className="h-8 w-16" /> : 
+                      products.filter((p) => p.is_popular).length}
                   </p>
                 </div>
                 <AlertCircle className="w-8 h-8 text-destructive" />
@@ -143,76 +211,196 @@ const Products = () => {
           </Card>
         </div>
 
+        {/* Error Display */}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800">Error: {error}</p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="mt-2"
+              onClick={() => fetchProducts({ page: currentPage, pageSize: 12 })}
+            >
+              Retry
+            </Button>
+          </div>
+        )}
+
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => (
-            <Card key={product.id} className="shadow-card hover:shadow-elegant transition-smooth">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg font-semibold text-foreground mb-1">
-                      {product.name}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground mb-2">{product.category}</p>
-                    {getStatusBadge(product.status)}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {loading ? (
+            // Show skeletons while loading
+            Array.from({ length: 6 }).map((_, index) => (
+              <ProductSkeleton key={index} />
+            ))
+          ) : (
+                         filteredProducts.map((product) => {
+               const isOwner = isAuthenticated && user?.id === product.owner;
+               return (
+                 <Card key={product.id} className="shadow-card hover:shadow-elegant transition-smooth">
+                <CardHeader className="pb-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg font-semibold text-foreground mb-1">
+                        {product.name}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mb-2">{product.category_name}</p>
+                      <div className="flex gap-2 mb-2">
+                        {getStatusBadge(product.status)}
+                        {getConditionBadge(product.condition)}
+                      </div>
+                      {product.is_featured && (
+                        <Badge className="bg-yellow-100 text-yellow-800">
+                          <Star className="w-3 h-3 mr-1" />Featured
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
+                      {product.main_image_url ? (
+                        <img 
+                          src={product.main_image_url} 
+                          alt={product.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = '/placeholder.svg';
+                          }}
+                        />
+                      ) : (
+                        <Package className="w-8 h-8 text-muted-foreground" />
+                      )}
+                    </div>
                   </div>
-                  <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center">
-                    <Package className="w-8 h-8 text-muted-foreground" />
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                  {product.description}
-                </p>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                    {product.short_description}
+                  </p>
 
-                {/* Pricing */}
-                <div className="space-y-2 mb-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Daily Rate:</span>
-                    <span className="font-semibold text-foreground">${product.dailyRate}</span>
+                  {/* Rating */}
+                  <div className="flex items-center mb-4">
+                    <div className="flex items-center">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < Math.floor(product.average_rating)
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-sm text-muted-foreground ml-2">
+                      ({product.review_count} reviews)
+                    </span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Weekly Rate:</span>
-                    <span className="font-semibold text-foreground">${product.weeklyRate}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-muted-foreground">Monthly Rate:</span>
-                    <span className="font-semibold text-foreground">${product.monthlyRate}</span>
-                  </div>
-                </div>
 
-                {/* Stock and Stats */}
-                <div className="flex justify-between items-center mb-4 p-3 bg-muted rounded-lg">
-                  <div className="text-center">
-                    <p className="text-sm text-muted-foreground">Stock</p>
-                    <p className="font-semibold text-foreground">{product.stock}</p>
+                  {/* Pricing */}
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Daily Rate:</span>
+                      <span className="font-semibold text-foreground">
+                        ${product.basic_pricing.daily_rate}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Deposit:</span>
+                      <span className="font-semibold text-foreground">
+                        ${product.deposit_amount}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Available:</span>
+                      <span className="font-semibold text-foreground">
+                        {product.available_quantity} units
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm text-muted-foreground">Total Rentals</p>
-                    <p className="font-semibold text-foreground">{product.totalRentals}</p>
-                  </div>
-                </div>
 
-                {/* Actions */}
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/products/${product.id}`)}>
-                    <Eye className="w-4 h-4 mr-1" />
-                    View
-                  </Button>
-                  <Button variant="default" size="sm" className="flex-1">
-                    <Edit className="w-4 h-4 mr-1" />
-                    Edit
-                  </Button>
-                  <Button variant="hero" size="sm" className="flex-1">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    Book
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="flex-1" 
+                      onClick={() => navigate(`/products/${product.id}`)}
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      View
+                    </Button>
+                    {isOwner && (
+                      <Button 
+                        variant="default" 
+                        size="sm" 
+                        className="flex-1"
+                        onClick={() => navigate(`/products/edit/${product.id}`)}
+                      >
+                        <Edit className="w-4 h-4 mr-1" />
+                        Edit
+                      </Button>
+                    )}
+                    <Button variant="hero" size="sm" className="flex-1">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      Book
+                    </Button>
+                                     </div>
+                 </CardContent>
+               </Card>
+             );
+           })
+          )}
         </div>
+
+        {/* Pagination */}
+        {!loading && totalPages > 1 && (
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1 || isFetching}
+            >
+              <ChevronLeft className="w-4 h-4 mr-1" />
+              Previous
+            </Button>
+            
+            <div className="flex items-center gap-1">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                const pageNum = i + 1;
+                return (
+                  <Button
+                    key={pageNum}
+                    variant={currentPage === pageNum ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handlePageChange(pageNum)}
+                    disabled={isFetching}
+                    className="w-8 h-8 p-0"
+                  >
+                    {pageNum}
+                  </Button>
+                );
+              })}
+            </div>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || isFetching}
+            >
+              Next
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        )}
+
+        {/* Loading indicator for pagination */}
+        {isFetching && (
+          <div className="flex items-center justify-center mt-4">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            <span className="ml-2 text-muted-foreground">Loading products...</span>
+          </div>
+        )}
       </div>
     </div>
   );

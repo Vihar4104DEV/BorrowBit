@@ -4,37 +4,57 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/contexts/AuthContext";
-import { getDummyUserByEmail } from "@/data/users";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+  const { login, isLoginLoading, clearError } = useAuth();
 
-  const [email, setEmail] = useState("admin@example.com");
-  const [password, setPassword] = useState("password123");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Try to find user in dummy data first
-    const dummyUser = getDummyUserByEmail(email);
-    
-    if (dummyUser) {
-      // Use dummy user data
-      signIn(dummyUser);
-    } else {
-      // Create new user with 'user' role
-      const user = {
-        id: crypto.randomUUID(),
-        name: "User",
-        email,
-        role: "user" as const,
-      };
-      signIn(user);
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
     }
-    
-    navigate("/profile");
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    clearError();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      await login(formData);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
 
   return (
@@ -47,20 +67,48 @@ const Login = () => {
           </CardHeader>
           <CardContent className="w-full">
             <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-sm mx-auto">
-              <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <Button type="submit" variant="hero" className="w-full">Sign In</Button>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  placeholder="Email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  className={errors.email ? "border-red-500" : ""}
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  placeholder="Password"
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  className={errors.password ? "border-red-500" : ""}
+                />
+                {errors.password && (
+                  <p className="text-sm text-red-500">{errors.password}</p>
+                )}
+              </div>
+
+              <Button 
+                type="submit" 
+                variant="hero" 
+                className="w-full"
+                disabled={isLoginLoading}
+              >
+                {isLoginLoading ? "Signing In..." : "Sign In"}
+              </Button>
             </form>
             <p className="text-sm text-muted-foreground mt-3 text-center">
               No account? <Link className="underline" to="/signup">Sign up</Link>
             </p>
-            
-            {/* Testing Info */}
-            <div className="mt-4 p-3 bg-muted rounded-lg">
-              <p className="text-xs text-muted-foreground text-center">
-                <strong>Testing:</strong> Use admin@example.com for admin access
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>

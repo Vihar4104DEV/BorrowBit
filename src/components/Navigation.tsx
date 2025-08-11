@@ -1,37 +1,37 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Calendar, Package, Users, BarChart3, MessageCircle } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { Menu, X, Calendar, Package, Users, BarChart3, MessageCircle, LogOut, TestTube } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isAdmin, isUser } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
 
-  // Define navigation items based on user role
+  // Define navigation items based on authentication status and user role
   const getNavItems = () => {
     const baseItems = [
       { href: "/", label: "Home" },
       { href: "/products", label: "Products", icon: Package },
     ];
 
-    if (isAdmin) {
-      // Admin sees everything
-      return [
-        ...baseItems,
-        { href: "/bookings", label: "Bookings", icon: Calendar },
-        { href: "/customers", label: "Customers", icon: Users },
-        { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
-      ];
-    } else if (isUser) {
-      // Normal user sees limited items
-      return [
-        ...baseItems,
+    if (isAuthenticated) {
+      // Add user-specific items
+      const userItems = [
         { href: "/bookings", label: "Bookings", icon: Calendar },
         { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
       ];
+
+      // Add admin-specific items
+      const isAdmin = user?.user_role?.includes('admin');
+if (isAdmin) {
+  userItems.push({ href: "/customers", label: "Customers", icon: Users });
+}
+
+
+      return [...baseItems, ...userItems];
     } else {
       // Guest sees only home and products
       return baseItems;
@@ -40,6 +40,11 @@ export const Navigation = () => {
 
   const navItems = getNavItems();
 
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+  };
+
   return (
     <nav className="bg-background/95 backdrop-blur-md border-b border-border shadow-card sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,9 +52,7 @@ export const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-              {/* <Calendar className="w-5 h-5 text-primary-foreground" /> */}
               <img src="/logo.png" alt="Icon" className="w-7 h-7 text-primary-foreground" />
-
             </div>
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Borrowbit
@@ -76,22 +79,41 @@ export const Navigation = () => {
                 </Link>
               );
             })}
-            {/* <Button
-              variant="ghost"
-              size="sm"
-              className="ml-1"
-              onClick={() => navigate("/chat")}
+            
+            {/* API Test Link - Always visible for debugging */}
+            {/* <Link
+              to="/api-test"
+              className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
+                location.pathname === '/api-test'
+                  ? "bg-orange-500 text-white shadow-elegant"
+                  : "text-orange-600 hover:text-orange-700 hover:bg-orange-50"
+              }`}
             >
-              <MessageCircle className="w-4 h-4 mr-2" /> Chatbot
-            </Button> */}
+              <TestTube className="w-4 h-4 mr-2" />
+              API Test
+            </Link> */}
           </div>
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            {user ? (
-              <Button variant="outline" size="sm" onClick={() => navigate("/profile")}>
-                Profile
-              </Button>
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-muted-foreground">
+                  Welcome, {user?.first_name || user?.email?.split('@')[0]}!
+                  {user?.user_role && (
+                    <span className="ml-1 text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                      {user.user_role}
+                    </span>
+                  )}
+                </span>
+                <Button variant="outline" size="sm" onClick={() => navigate("/profile")}>
+                  Profile
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
             ) : (
               <>
                 <Button variant="outline" size="sm" onClick={() => navigate("/login")}> 
@@ -139,6 +161,21 @@ export const Navigation = () => {
                   </Link>
                 );
               })}
+              
+              {/* API Test Link in mobile menu */}
+              <Link
+                to="/api-test"
+                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
+                  location.pathname === '/api-test'
+                    ? "bg-orange-500 text-white shadow-elegant"
+                    : "text-orange-600 hover:text-orange-700 hover:bg-orange-50"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                <TestTube className="w-4 h-4 mr-2" />
+                API Test
+              </Link>
+              
               <Button
                 variant="ghost"
                 className="w-full justify-start"
@@ -147,14 +184,32 @@ export const Navigation = () => {
                 <MessageCircle className="w-4 h-4 mr-2" /> Chatbot
               </Button>
               <div className="pt-4 space-y-2">
-                {user ? (
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start"
-                    onClick={() => { setIsOpen(false); navigate("/profile"); }}
-                  >
-                    Profile
-                  </Button>
+                {isAuthenticated ? (
+                  <>
+                    <div className="px-3 py-2 text-sm text-muted-foreground">
+                      Welcome, {user?.first_name || user?.email?.split('@')[0]}!
+                      {user?.user_role && (
+                        <span className="ml-1 text-xs bg-primary/10 text-primary px-2 py-1 rounded">
+                          {user.user_role}
+                        </span>
+                      )}
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start"
+                      onClick={() => { setIsOpen(false); navigate("/profile"); }}
+                    >
+                      Profile
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start"
+                      onClick={() => { setIsOpen(false); handleLogout(); }}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button
