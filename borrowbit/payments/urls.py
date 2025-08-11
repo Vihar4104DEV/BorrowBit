@@ -27,3 +27,4 @@ urlpatterns = [
     path('webhooks/stripe/', views.PaymentWebhookViewSet.as_view({'post': 'stripe_webhook'}), name='stripe-webhook'),
     path('webhooks/razorpay/', views.PaymentWebhookViewSet.as_view({'post': 'razorpay_webhook'}), name='razorpay-webhook'),
 ]
+

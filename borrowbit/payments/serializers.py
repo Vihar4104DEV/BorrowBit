@@ -513,3 +513,4 @@ class PaymentAnalyticsSerializer(serializers.Serializer):
     currency = serializers.CharField()
     period = serializers.CharField()
     data_points = serializers.ListField(child=serializers.DictField())
+

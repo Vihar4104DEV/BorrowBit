@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 """
 Celery configuration for rental_backend project.
 
@@ -50,4 +50,3 @@ def debug_task(self):
 # @app.task(bind=True, ignore_result=True)
 # def debug_task(self):
 #     print(f'Request: {self.request!r}')
->>>>>>> ab444e60970b217a519b6bccb175f10d45758085

@@ -352,3 +352,4 @@ class PaymentBulkActionPermission(permissions.BasePermission):
         
         # Only admins and staff can perform bulk actions
         return 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names
+
