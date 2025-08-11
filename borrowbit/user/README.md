@@ -2,6 +2,8 @@
 
 This document describes the user authentication APIs for the BorrowBit rental application.
 
+**Note: Celery has been disabled. The system now works synchronously with a normal Django server.**
+
 ## Base URL
 ```
 /api/v1/user/
@@ -165,6 +167,7 @@ All endpoints return consistent error responses:
 - **Expiration**: 10 minutes from creation
 - **Delivery**: Email and SMS (SMS integration pending)
 - **Verification**: One-time use, marked as verified after use
+- **Processing**: Synchronous (no background tasks)
 
 ## Testing
 
@@ -177,7 +180,7 @@ python manage.py test user.tests
 
 - Django REST Framework
 - Django Simple JWT
-- Celery (for async notifications)
+- ~~Celery~~ (Disabled - now synchronous)
 - Redis (for caching and sessions)
 
 ## Notes
@@ -187,4 +190,16 @@ python manage.py test user.tests
 - Email addresses are automatically normalized
 - User verification is required before login
 - Failed login attempts are tracked for security
+- **OTP notifications are now sent synchronously** (may cause slight delays in API responses)
+- **No background task processing** - everything runs in the main Django process
+
+## Running the Server
+
+```bash
+# Normal Django development server
+python manage.py runserver
+
+# No need to start Celery workers
+# OTP notifications are sent immediately during API calls
+```
 

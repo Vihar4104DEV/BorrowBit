@@ -141,3 +141,656 @@ Traceback (most recent call last):
   File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
     raise ConnectionError(self._error_message(e))
 redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+INFO 2025-08-11 17:12:23,533 autoreload 7312 14008 Watching for file changes with StatReloader
+WARNING 2025-08-11 17:18:07,819 log 7312 8540 Not Found: /api/v1/user/register/
+WARNING 2025-08-11 17:18:07,821 basehttp 7312 8540 "POST /api/v1/user/register/ HTTP/1.1" 404 3354
+INFO 2025-08-11 17:18:31,674 autoreload 7312 14008 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 17:18:38,855 autoreload 15448 11240 Watching for file changes with StatReloader
+ERROR 2025-08-11 17:19:00,499 log 15448 16208 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 99, in _get
+    return self.client.get(key, default=default, version=version, client=client)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 260, in get
+    raise ConnectionInterrupted(connection=client) from e
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 422, in initial
+    self.check_throttles(request)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 365, in check_throttles
+    if not throttle.allow_request(request, self):
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\throttling.py", line 123, in allow_request
+    self.history = self.cache.get(self.key, [])
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 92, in get
+    value = self._get(key, default, version, client)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 36, in _decorator
+    raise e.__cause__
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 258, in get
+    value = client.get(key)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\commands\core.py", line 1829, in get
+    return self.execute_command("GET", name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+ERROR 2025-08-11 17:19:00,538 basehttp 15448 16208 "POST /api/v1/user/register/ HTTP/1.1" 500 158719
+INFO 2025-08-11 17:20:01,251 autoreload 15448 11240 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 17:20:06,996 autoreload 15456 15608 Watching for file changes with StatReloader
+ERROR 2025-08-11 17:20:18,087 log 15456 13120 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 99, in _get
+    return self.client.get(key, default=default, version=version, client=client)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 260, in get
+    raise ConnectionInterrupted(connection=client) from e
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 503, in dispatch
+    self.initial(request, *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 422, in initial
+    self.check_throttles(request)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 365, in check_throttles
+    if not throttle.allow_request(request, self):
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\throttling.py", line 123, in allow_request
+    self.history = self.cache.get(self.key, [])
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 92, in get
+    value = self._get(key, default, version, client)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\cache.py", line 36, in _decorator
+    raise e.__cause__
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django_redis\client\default.py", line 258, in get
+    value = client.get(key)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\commands\core.py", line 1829, in get
+    return self.execute_command("GET", name)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 1086, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+ERROR 2025-08-11 17:20:18,120 basehttp 15456 13120 "POST /api/v1/user/register/ HTTP/1.1" 500 158719
+INFO 2025-08-11 17:20:26,622 autoreload 15456 15608 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 17:20:32,832 autoreload 11616 6120 Watching for file changes with StatReloader
+INFO 2025-08-11 17:27:56,522 autoreload 17200 16684 Watching for file changes with StatReloader
+WARNING 2025-08-11 17:28:03,874 log 17200 5776 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 17:28:03,876 basehttp 17200 5776 "POST /api/v1/user/register/ HTTP/1.1" 400 352
+INFO 2025-08-11 17:29:53,817 autoreload 17200 16684 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\utils.py changed, reloading.
+INFO 2025-08-11 17:29:59,366 autoreload 16472 16848 Watching for file changes with StatReloader
+INFO 2025-08-11 17:30:19,370 autoreload 16472 16848 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\utils.py changed, reloading.
+INFO 2025-08-11 17:30:27,792 autoreload 15616 4424 Watching for file changes with StatReloader
+WARNING 2025-08-11 17:30:45,234 log 15616 15864 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 17:30:45,238 basehttp 15616 15864 "POST /api/v1/user/register/ HTTP/1.1" 400 127
+INFO 2025-08-11 17:31:00,955 autoreload 15616 4424 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 17:31:07,124 autoreload 16516 13460 Watching for file changes with StatReloader
+INFO 2025-08-11 17:31:17,968 autoreload 16516 13460 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\urls.py changed, reloading.
+INFO 2025-08-11 17:31:23,543 autoreload 16496 16376 Watching for file changes with StatReloader
+ERROR 2025-08-11 17:32:26,807 log 16496 16884 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table user_user has no column named prefix
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 22, in post
+    user = serializer.save()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py", line 32, in create
+    user = User.objects.create_user(**validated_data)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\models.py", line 55, in create_user
+    user.save(using=self._db)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\query.py", line 1868, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table user_user has no column named prefix
+ERROR 2025-08-11 17:32:26,874 basehttp 16496 16884 "POST /api/v1/user/register/? HTTP/1.1" 500 235197
+INFO 2025-08-11 17:33:13,209 autoreload 16496 16376 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 17:33:18,664 autoreload 12984 16984 Watching for file changes with StatReloader
+INFO 2025-08-11 17:34:04,462 autoreload 12984 16984 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\utils.py changed, reloading.
+INFO 2025-08-11 17:34:10,001 autoreload 16536 15280 Watching for file changes with StatReloader
+ERROR 2025-08-11 17:36:24,483 log 16536 17364 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table user_user has no column named prefix
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 22, in post
+    user = serializer.save()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py", line 32, in create
+    user = User.objects.create_user(**validated_data)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\models.py", line 55, in create_user
+    user.save(using=self._db)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\query.py", line 1868, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table user_user has no column named prefix
+ERROR 2025-08-11 17:36:24,523 basehttp 16536 17364 "POST /api/v1/user/register/? HTTP/1.1" 500 235197
+INFO 2025-08-11 17:36:44,913 autoreload 16536 15280 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 17:36:49,666 autoreload 15664 6840 Watching for file changes with StatReloader
+INFO 2025-08-11 17:37:02,509 autoreload 15664 6840 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 17:37:11,363 autoreload 17204 8476 Watching for file changes with StatReloader
+INFO 2025-08-11 17:37:27,856 autoreload 17204 8476 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 17:37:34,428 autoreload 8984 14000 Watching for file changes with StatReloader
+INFO 2025-08-11 17:38:03,579 autoreload 8984 14000 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 17:38:09,613 autoreload 7384 5488 Watching for file changes with StatReloader
+INFO 2025-08-11 17:39:10,263 autoreload 13756 14604 Watching for file changes with StatReloader
+WARNING 2025-08-11 17:39:18,565 connection 13756 12128 No hostname was supplied. Reverting to default 'localhost'
+ERROR 2025-08-11 17:39:23,439 log 13756 12128 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+        self._connection_factory, self.recoverable_connection_errors,
+    ...<2 lines>...
+        callback, timeout=timeout
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+    ~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+    ~~~~~~~~~~~~~~~~~^^^^
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 47, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ~~~~~~~~~~~~~^
+        self.name, args, kwargs, task_id=task_id, producer=producer,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        **options
+        ^^^^^^^^^
+    )
+    ^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+        body,
+    ...<7 lines>...
+        **properties
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+        body, priority, content_type, content_encoding,
+        headers, properties, routing_key, mandatory, immediate,
+        exchange_name, declare, timeout, confirm_timeout, retry, retry_policy
+    )
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+         ~~~^^
+  File "C:\Python313\Lib\contextlib.py", line 162, in __exit__
+    self.gen.throw(value)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+ERROR 2025-08-11 17:39:23,488 basehttp 13756 12128 "POST /api/v1/user/register/? HTTP/1.1" 500 248314
+INFO 2025-08-11 18:11:58,244 autoreload 13756 14604 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\notifications\tasks.py changed, reloading.
+INFO 2025-08-11 18:12:00,225 autoreload 8060 16308 Watching for file changes with StatReloader
+INFO 2025-08-11 18:12:26,972 autoreload 8060 16308 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 18:12:28,913 autoreload 5264 4556 Watching for file changes with StatReloader
+INFO 2025-08-11 18:13:08,082 autoreload 5264 4556 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:13:09,924 autoreload 4604 15524 Watching for file changes with StatReloader
+INFO 2025-08-11 18:14:31,512 autoreload 4604 15524 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\notifications\tasks.py changed, reloading.
+INFO 2025-08-11 18:14:36,127 autoreload 16468 2532 Watching for file changes with StatReloader
+INFO 2025-08-11 18:14:43,697 autoreload 16468 2532 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 18:14:48,361 autoreload 17260 12188 Watching for file changes with StatReloader
+INFO 2025-08-11 18:14:58,130 autoreload 17260 12188 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:15:02,771 autoreload 12536 15524 Watching for file changes with StatReloader
+ERROR 2025-08-11 18:15:31,309 tasks 12536 3932 Failed to send OTP notification: [WinError 10061] No connection could be made because the target machine actively refused it
+INFO 2025-08-11 18:15:31,441 basehttp 12536 3932 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 18:20:24,857 autoreload 12536 15524 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:20:27,638 autoreload 7708 4040 Watching for file changes with StatReloader
+INFO 2025-08-11 18:20:29,773 autoreload 7708 4040 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:20:31,879 autoreload 12768 15412 Watching for file changes with StatReloader
+INFO 2025-08-11 18:29:13,048 autoreload 16124 13924 Watching for file changes with StatReloader
+ERROR 2025-08-11 18:29:45,006 tasks 16124 10148 Failed to send OTP notification: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO 2025-08-11 18:29:45,182 basehttp 16124 10148 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+ERROR 2025-08-11 18:31:01,454 tasks 16124 13420 Failed to send OTP notification: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO 2025-08-11 18:31:01,646 basehttp 16124 13420 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 18:33:17,416 autoreload 16124 13924 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:33:21,216 autoreload 12056 13836 Watching for file changes with StatReloader
+INFO 2025-08-11 18:33:41,864 autoreload 12056 13836 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:33:46,501 autoreload 16776 7344 Watching for file changes with StatReloader
+INFO 2025-08-11 18:34:16,008 autoreload 16776 7344 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:34:48,352 autoreload 2956 7320 Watching for file changes with StatReloader
+INFO 2025-08-11 18:35:19,410 autoreload 2956 7320 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\notifications\tasks.py changed, reloading.
+INFO 2025-08-11 18:35:26,086 autoreload 6728 2624 Watching for file changes with StatReloader
+ERROR 2025-08-11 18:36:08,319 tasks 6728 6040 Error sending email to talaviyavihar41+4@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO 2025-08-11 18:36:08,548 basehttp 6728 6040 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 18:36:56,538 autoreload 6728 2624 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:37:02,739 autoreload 13304 10908 Watching for file changes with StatReloader
+INFO 2025-08-11 18:47:09,146 autoreload 15748 6468 Watching for file changes with StatReloader
+ERROR 2025-08-11 18:47:50,174 tasks 15748 16952 Error sending email to talaviyavihar41+5@gmail.com: [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond
+INFO 2025-08-11 18:47:50,355 basehttp 15748 16952 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 18:50:08,391 autoreload 15748 6468 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:50:15,954 autoreload 15672 14888 Watching for file changes with StatReloader
+INFO 2025-08-11 18:50:22,167 autoreload 15672 14888 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:50:26,701 autoreload 16712 848 Watching for file changes with StatReloader
+INFO 2025-08-11 18:51:56,348 autoreload 16712 848 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 18:52:05,117 autoreload 14644 7036 Watching for file changes with StatReloader
+INFO 2025-08-11 18:52:29,283 autoreload 13228 13076 Watching for file changes with StatReloader
+ERROR 2025-08-11 18:52:43,728 tasks 13228 16888 Error sending email to talaviyavihar41+6@gmail.com: You must set ANYMAIL_MAILGUN_API_KEY or ANYMAIL = {'MAILGUN_API_KEY': ...} or MAILGUN_API_KEY in your Django settings
+INFO 2025-08-11 18:52:43,840 basehttp 13228 16888 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 19:51:15,762 autoreload 18396 18712 Watching for file changes with StatReloader
+INFO 2025-08-11 19:52:59,515 autoreload 18396 18712 D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework_simplejwt\utils.py changed, reloading.
+INFO 2025-08-11 19:53:05,594 autoreload 5012 9244 Watching for file changes with StatReloader
+INFO 2025-08-11 19:53:23,424 autoreload 18752 15956 Watching for file changes with StatReloader
+INFO 2025-08-11 19:53:53,081 tasks 18752 6020 Bypassed email sending to talaviyavihar41+7@gmail.com; OTP: 880673
+INFO 2025-08-11 19:53:53,087 basehttp 18752 6020 "POST /api/v1/user/register/ HTTP/1.1" 200 92
+INFO 2025-08-11 19:59:28,397 autoreload 18752 15956 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\utils.py changed, reloading.
+INFO 2025-08-11 19:59:34,786 autoreload 2780 16004 Watching for file changes with StatReloader
+INFO 2025-08-11 19:59:50,022 autoreload 2780 16004 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 19:59:55,858 autoreload 12412 3108 Watching for file changes with StatReloader
+INFO 2025-08-11 20:00:05,867 autoreload 12412 3108 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\utils.py changed, reloading.
+INFO 2025-08-11 20:00:12,785 autoreload 15324 10804 Watching for file changes with StatReloader
+INFO 2025-08-11 20:00:19,876 autoreload 15324 10804 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:00:25,502 autoreload 20124 15868 Watching for file changes with StatReloader
+INFO 2025-08-11 20:00:36,424 autoreload 20124 15868 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:00:41,231 autoreload 14672 17160 Watching for file changes with StatReloader
+INFO 2025-08-11 20:00:53,744 autoreload 14672 17160 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:00:59,350 autoreload 19916 16428 Watching for file changes with StatReloader
+INFO 2025-08-11 20:01:06,810 autoreload 19916 16428 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:01:12,590 autoreload 4568 17332 Watching for file changes with StatReloader
+INFO 2025-08-11 20:02:04,682 autoreload 4568 17332 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:02:10,428 autoreload 6612 19476 Watching for file changes with StatReloader
+INFO 2025-08-11 20:02:29,423 autoreload 6612 19476 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:02:35,049 autoreload 2192 4000 Watching for file changes with StatReloader
+INFO 2025-08-11 20:02:52,836 autoreload 2192 4000 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:02:59,245 autoreload 14308 2496 Watching for file changes with StatReloader
+INFO 2025-08-11 20:03:22,743 autoreload 14308 2496 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:03:28,101 autoreload 17860 18644 Watching for file changes with StatReloader
+INFO 2025-08-11 20:03:31,981 autoreload 17860 18644 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:03:38,164 autoreload 17672 19164 Watching for file changes with StatReloader
+INFO 2025-08-11 20:03:44,385 autoreload 17672 19164 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:03:51,132 autoreload 19696 19916 Watching for file changes with StatReloader
+INFO 2025-08-11 20:04:01,576 autoreload 19696 19916 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:04:07,429 autoreload 18956 2812 Watching for file changes with StatReloader
+INFO 2025-08-11 20:04:25,761 autoreload 18956 2812 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:04:31,912 autoreload 19284 6564 Watching for file changes with StatReloader
+INFO 2025-08-11 20:04:37,740 autoreload 19284 6564 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:04:43,325 autoreload 19572 20364 Watching for file changes with StatReloader
+INFO 2025-08-11 20:04:50,584 autoreload 19572 20364 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:04:57,517 autoreload 5352 17216 Watching for file changes with StatReloader
+INFO 2025-08-11 20:05:07,863 autoreload 5352 17216 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:05:12,953 autoreload 14308 19680 Watching for file changes with StatReloader
+INFO 2025-08-11 20:11:35,669 autoreload 14308 19680 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:11:38,860 autoreload 20060 12476 Watching for file changes with StatReloader
+INFO 2025-08-11 20:11:49,026 autoreload 20060 12476 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:11:55,742 autoreload 18596 15076 Watching for file changes with StatReloader
+INFO 2025-08-11 20:12:10,071 autoreload 18596 15076 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:12:19,191 autoreload 3208 12632 Watching for file changes with StatReloader
+INFO 2025-08-11 20:12:27,638 autoreload 3208 12632 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:12:33,337 autoreload 16844 18956 Watching for file changes with StatReloader
+INFO 2025-08-11 20:12:53,684 autoreload 16844 18956 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:12:59,483 autoreload 18480 18448 Watching for file changes with StatReloader
+INFO 2025-08-11 20:13:21,279 autoreload 18480 18448 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:13:26,607 autoreload 7208 18712 Watching for file changes with StatReloader
+INFO 2025-08-11 20:13:35,550 autoreload 7208 18712 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:13:40,458 autoreload 2208 11808 Watching for file changes with StatReloader
+INFO 2025-08-11 20:13:58,833 basehttp 2208 17092 "POST /api/v1/user/register/ HTTP/1.1" 200 907
+INFO 2025-08-11 20:16:32,599 basehttp 2208 15308 "POST /api/v1/user/register/ HTTP/1.1" 200 920
+INFO 2025-08-11 20:22:55,778 autoreload 2208 11808 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 20:23:02,186 autoreload 15092 16108 Watching for file changes with StatReloader
+INFO 2025-08-11 20:25:01,971 autoreload 15092 16108 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-11 20:25:06,360 autoreload 6928 6116 Watching for file changes with StatReloader
+WARNING 2025-08-11 20:26:01,298 log 6928 7928 Method Not Allowed: /api/v1/user/login/
+WARNING 2025-08-11 20:26:01,301 basehttp 6928 7928 "GET /api/v1/user/login/ HTTP/1.1" 405 40
+WARNING 2025-08-11 20:26:10,462 log 6928 7928 Bad Request: /api/v1/user/login/
+WARNING 2025-08-11 20:26:10,464 basehttp 6928 7928 "POST /api/v1/user/login/ HTTP/1.1" 400 70
+WARNING 2025-08-11 20:27:11,972 log 6928 18632 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 20:27:11,974 basehttp 6928 18632 "POST /api/v1/user/register/ HTTP/1.1" 400 86
+WARNING 2025-08-11 20:27:43,283 log 6928 18632 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 20:27:43,286 basehttp 6928 18632 "POST /api/v1/user/register/ HTTP/1.1" 400 64
+INFO 2025-08-11 20:27:58,274 basehttp 6928 18632 "POST /api/v1/user/register/ HTTP/1.1" 200 924
+WARNING 2025-08-11 20:30:24,617 log 6928 5416 Bad Request: /api/v1/user/verify-otp/
+WARNING 2025-08-11 20:30:24,621 basehttp 6928 5416 "POST /api/v1/user/verify-otp/ HTTP/1.1" 400 78
+WARNING 2025-08-11 20:31:09,159 log 6928 5416 Bad Request: /api/v1/user/verify-otp/
+WARNING 2025-08-11 20:31:09,162 basehttp 6928 5416 "POST /api/v1/user/verify-otp/ HTTP/1.1" 400 68
+INFO 2025-08-11 20:31:52,132 autoreload 6928 6116 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:31:57,647 autoreload 17636 10396 Watching for file changes with StatReloader
+WARNING 2025-08-11 20:32:19,450 log 17636 17724 Bad Request: /api/v1/user/verify-otp/
+WARNING 2025-08-11 20:32:19,453 basehttp 17636 17724 "POST /api/v1/user/verify-otp/ HTTP/1.1" 400 68
+INFO 2025-08-11 20:32:28,800 autoreload 17636 10396 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:32:34,243 autoreload 2852 18760 Watching for file changes with StatReloader
+INFO 2025-08-11 20:32:53,253 basehttp 2852 18788 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 71
+INFO 2025-08-11 20:33:50,183 basehttp 2852 18788 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 71
+INFO 2025-08-11 20:34:07,254 basehttp 2852 18788 "POST /api/v1/user/login/ HTTP/1.1" 200 937
+INFO 2025-08-11 20:45:13,892 autoreload 2852 18760 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:45:21,277 autoreload 18672 16460 Watching for file changes with StatReloader
+ERROR 2025-08-11 20:45:32,804 log 18672 18448 Internal Server Error: /api/v1/user/verify-otp/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 139, in post
+    return success_response(f"{otp_type.capitalize()} OTP verified successfully.",data={"user": prepare_user_data(user)})
+                                                                                  ^^^^
+NameError: name 'data' is not defined
+ERROR 2025-08-11 20:45:32,820 basehttp 18672 18448 "POST /api/v1/user/verify-otp/ HTTP/1.1" 500 103622
+INFO 2025-08-11 20:45:50,971 autoreload 18672 16460 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 20:45:56,967 autoreload 12148 4988 Watching for file changes with StatReloader
+INFO 2025-08-11 20:46:01,614 basehttp 12148 17100 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 371
