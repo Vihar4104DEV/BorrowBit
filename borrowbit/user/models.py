@@ -177,7 +177,6 @@ class User(AbstractUser, BaseModel):
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['email']),
-            models.Index(fields=['user_type', 'is_active']),
             models.Index(fields=['phone_number']),
             models.Index(fields=['created_at']),
         ]
