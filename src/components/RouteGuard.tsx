@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 type RouteGuardProps = {
   children: ReactNode;
-  requiredRole?: "admin" | "user" | "guest";
+  requiredRole?: "admin" | "user" | "delivery" | "guest";
   fallbackPath?: string;
 };
 
@@ -13,11 +13,12 @@ export const RouteGuard = ({
   requiredRole = "guest", 
   fallbackPath = "/" 
 }: RouteGuardProps) => {
-  const { user, isAdmin, isUser } = useAuth();
+  const { user, isAdmin, isUser, isDelivery } = useAuth();
 
   const hasAccess = () => {
     if (requiredRole === "guest") return true;
     if (requiredRole === "user" && (isUser || isAdmin)) return true;
+    if (requiredRole === "delivery" && isDelivery) return true;
     if (requiredRole === "admin" && isAdmin) return true;
     return false;
   };

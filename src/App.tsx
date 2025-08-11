@@ -7,6 +7,8 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Customers from "./pages/Customers";
+import DeliveryPartner from "./pages/DeliveryPartner";
+import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -48,6 +50,18 @@ const App = () => (
             <Dashboard />
           </ProtectedRoute>
         } />
+         <Route path="/delivery-partner" element={
+              <ProtectedRoute>
+                <DeliveryPartner />
+             </ProtectedRoute>
+            } />
+            
+            {/* Cart route */}
+            <Route path="/cart" element={
+              <ProtectedRoute>
+                <Cart />
+            </ProtectedRoute>
+            } />
         <Route path="/bookings" element={
           <ProtectedRoute>
             <Bookings />

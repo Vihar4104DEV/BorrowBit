@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 
-export type UserRole = "admin" | "user" | "guest";
+export type UserRole = "admin" | "user" | "delivery" | "guest";
 
 export type AuthUser = {
   id: string;
@@ -16,6 +16,7 @@ type AuthContextValue = {
   signOut: () => void;
   isAdmin: boolean;
   isUser: boolean;
+  isDelivery: boolean;
   isGuest: boolean;
 };
 
@@ -56,6 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signOut: () => setUser(null),
     isAdmin: user?.role === "admin",
     isUser: user?.role === "user",
+    isDelivery: user?.role === "delivery",
     isGuest: !user || user?.role === "guest",
   }), [user]);
 

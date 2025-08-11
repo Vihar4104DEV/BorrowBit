@@ -8,10 +8,14 @@ import {
   ArrowRight,
   Zap,
   Shield,
-  Clock
+  Clock,
+  Truck
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
+  
   const features = [
     {
       icon: Calendar,
@@ -99,6 +103,24 @@ export const Hero = () => {
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-success" />
                 No Setup Fees
+              </div>
+            </div>
+            
+            {/* Quick Access for Delivery Partners */}
+            <div className="mt-8 p-4 bg-primary/5 rounded-lg border border-primary/20">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-foreground mb-2">Are you a Delivery Partner?</h3>
+                <p className="text-sm text-muted-foreground mb-4">Access your delivery dashboard to manage assignments and track deliveries</p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate("/delivery-partner")}
+                  className="group"
+                >
+                  <Truck className="w-4 h-4 mr-2" />
+                  Go to Delivery Dashboard
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </div>
             </div>
           </div>

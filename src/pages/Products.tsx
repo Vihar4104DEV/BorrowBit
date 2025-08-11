@@ -7,6 +7,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Search,
   Filter,
   Calendar,
@@ -21,6 +28,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Loader2,
+  X,
 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { useAuth } from "@/hooks/useAuth";
@@ -29,14 +37,17 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
-  
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { products, loading, error, pagination, fetchProducts, isFetching } = useProducts();
   const { user, isAuthenticated } = useAuth();
 
   // Fetch products on component mount and page change
   useEffect(() => {
-    fetchProducts({ page: currentPage, pageSize: 12 });
+    fetchProducts({ page: currentPage, pageSize: 6 });
   }, [currentPage, fetchProducts]);
+
+  // Get unique categories from products
+  const categories = Array.from(new Set(products.map(product => product.category))).sort();
 
   const getStatusBadge = (status: string) => {
     switch (status.toLowerCase()) {
@@ -146,10 +157,36 @@ const Products = () => {
               className="pl-10 shadow-card"
             />
           </div>
-          <Button variant="outline" className="shadow-card">
-            <Filter className="w-4 h-4 mr-2" />
-            Filters
-          </Button>
+          <div className="flex gap-2">
+            <Select value={selectedCategory || ""} onValueChange={(value) => setSelectedCategory(value === "all" ? null : value)}>
+              <SelectTrigger className="w-[200px] shadow-card">
+                <Filter className="w-4 h-4 mr-2" />
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {(selectedCategory || searchTerm) && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSearchTerm("");
+                }}
+                className="shadow-card"
+              >
+                <X className="w-4 h-4" />
+                Clear
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Stats Cards */}

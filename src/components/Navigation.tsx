@@ -22,14 +22,18 @@ export const Navigation = () => {
       const userItems = [
         { href: "/bookings", label: "Bookings", icon: Calendar },
         { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
+        { href: "/cart", label: "Cart", icon: Package },
+        { href: "/chat", label: "Chatbot", icon: MessageCircle },
+        { href: "/profile", label: "Profile", icon: Users },
       ];
 
       // Add admin-specific items
       const isAdmin = user?.user_role?.includes('admin');
 if (isAdmin) {
   userItems.push({ href: "/customers", label: "Customers", icon: Users });
+  userItems.push({ href: "/delivery-partner", label: "Delivery Partner", icon: Users });
+  
 }
-
 
       return [...baseItems, ...userItems];
     } else {
@@ -81,7 +85,7 @@ if (isAdmin) {
             })}
             
             {/* API Test Link - Always visible for debugging */}
-            {/* <Link
+            <Link
               to="/api-test"
               className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
                 location.pathname === '/api-test'
@@ -91,7 +95,7 @@ if (isAdmin) {
             >
               <TestTube className="w-4 h-4 mr-2" />
               API Test
-            </Link> */}
+            </Link>
           </div>
 
           {/* Action Buttons */}

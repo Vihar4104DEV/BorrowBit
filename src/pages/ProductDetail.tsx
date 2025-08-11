@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useMemo, useState,useEffect } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,16 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const { product, loading, error, fetchProductDetails, isFetching } = useProductDetails();
   const { user, isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  // Determine where to go back based on referrer
+  const getBackPath = () => {
+    const referrer = location.state?.from || document.referrer;
+    if (referrer.includes('/my-products')) {
+      return '/my-products';
+    }
+    return '/products';
+  };
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
