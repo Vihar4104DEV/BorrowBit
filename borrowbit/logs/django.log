@@ -141,3 +141,821 @@ Traceback (most recent call last):
   File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\redis\connection.py", line 270, in connect
     raise ConnectionError(self._error_message(e))
 redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. No connection could be made because the target machine actively refused it.
+WARNING 2025-08-11 16:46:04,480 log 13992 14248 Bad Request: /api/v1/userforgot-password/
+ERROR 2025-08-11 16:46:09,326 log 13992 14248 Internal Server Error: /api/v1/userregister/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: table user_user has no column named prefix
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 22, in post
+    user = serializer.save()
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\serializers.py", line 210, in save
+    self.instance = self.create(validated_data)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\serializers.py", line 32, in create
+    user = User.objects.create_user(**validated_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\models.py", line 55, in create_user
+    user.save(using=self._db)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\contrib\auth\base_user.py", line 65, in save
+    super().save(*args, **kwargs)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\base.py", line 902, in save
+    self.save_base(
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\base.py", line 1008, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\base.py", line 1169, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\base.py", line 1210, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\query.py", line 1868, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1882, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: table user_user has no column named prefix
+ERROR 2025-08-11 16:51:10,054 log 14212 13768 Internal Server Error: /api/v1/userlogin/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 64, in post
+    login_type = validated_data["login_type"]
+                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'login_type'
+WARNING 2025-08-11 16:51:10,814 connection 14212 13768 No hostname was supplied. Reverting to default 'localhost'
+ERROR 2025-08-11 16:51:14,927 log 14212 13768 Internal Server Error: /api/v1/userforgot-password/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 102, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+WARNING 2025-08-11 16:51:15,057 log 14212 13768 Bad Request: /api/v1/userforgot-password/
+ERROR 2025-08-11 16:51:16,295 log 14212 13768 Internal Server Error: /api/v1/userlogin/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 64, in post
+    login_type = validated_data["login_type"]
+                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'login_type'
+WARNING 2025-08-11 16:51:16,921 log 14212 13768 Bad Request: /api/v1/userlogin/
+WARNING 2025-08-11 16:51:17,527 log 14212 13768 Bad Request: /api/v1/userverify-otp/
+WARNING 2025-08-11 16:51:18,152 log 14212 13768 Bad Request: /api/v1/userverify-otp/
+WARNING 2025-08-11 16:51:19,379 log 14212 13768 Bad Request: /api/v1/userregister/
+WARNING 2025-08-11 16:51:20,047 log 14212 13768 Bad Request: /api/v1/userregister/
+ERROR 2025-08-11 16:51:24,748 log 14212 13768 Internal Server Error: /api/v1/userregister/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 47, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+ERROR 2025-08-11 17:03:03,128 log 2356 8604 Internal Server Error: /api/v1/userlogin/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 64, in post
+    login_type = validated_data["login_type"]
+                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'login_type'
+WARNING 2025-08-11 17:03:04,020 connection 2356 8604 No hostname was supplied. Reverting to default 'localhost'
+ERROR 2025-08-11 17:03:08,135 log 2356 8604 Internal Server Error: /api/v1/userforgot-password/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 102, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+WARNING 2025-08-11 17:03:08,193 log 2356 8604 Bad Request: /api/v1/userforgot-password/
+ERROR 2025-08-11 17:03:09,560 log 2356 8604 Internal Server Error: /api/v1/userlogin/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 64, in post
+    login_type = validated_data["login_type"]
+                 ~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'login_type'
+WARNING 2025-08-11 17:03:10,189 log 2356 8604 Bad Request: /api/v1/userlogin/
+WARNING 2025-08-11 17:03:10,952 log 2356 8604 Bad Request: /api/v1/userverify-otp/
+WARNING 2025-08-11 17:03:11,654 log 2356 8604 Bad Request: /api/v1/userverify-otp/
+WARNING 2025-08-11 17:03:13,059 log 2356 8604 Bad Request: /api/v1/userregister/
+WARNING 2025-08-11 17:03:13,735 log 2356 8604 Bad Request: /api/v1/userregister/
+ERROR 2025-08-11 17:03:18,420 log 2356 8604 Internal Server Error: /api/v1/userregister/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 47, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+INFO 2025-08-11 17:49:45,591 autoreload 6324 17768 Watching for file changes with StatReloader
+WARNING 2025-08-11 17:51:44,334 connection 6324 6576 No hostname was supplied. Reverting to default 'localhost'
+ERROR 2025-08-11 17:51:48,636 log 6324 6576 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 47, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+ERROR 2025-08-11 17:51:48,722 basehttp 6324 6576 "POST /api/v1/user/register/ HTTP/1.1" 500 250930
+WARNING 2025-08-11 18:13:35,700 log 6324 21512 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 18:13:35,703 basehttp 6324 21512 "POST /api/v1/user/register/ HTTP/1.1" 400 134
+ERROR 2025-08-11 18:14:09,618 log 6324 21512 Internal Server Error: /api/v1/user/register/
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 32, in __call__
+    return self.__value__
+           ^^^^^^^^^^^^^^
+AttributeError: 'ChannelPromise' object has no attribute '__value__'. Did you mean: '__call__'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 472, in _reraise_as_library_errors
+    yield
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 459, in _ensure_connection
+    return retry_over_time(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 938, in _connection_factory
+    self._connection = self._establish_connection()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 860, in _establish_connection
+    conn = self.transport.establish_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\transport\pyamqp.py", line 203, in establish_connection
+    conn.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\connection.py", line 324, in connect
+    self.transport.connect()
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 132, in connect
+    self._connect(self.host, self.port, self.connect_timeout)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\amqp\transport.py", line 187, in _connect
+    self.sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] No connection could be made because the target machine actively refused it
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\views.py", line 47, in post
+    send_otp_notification.delay(user.email, user.phone_number, otp_code)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 444, in delay
+    return self.apply_async(args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\task.py", line 594, in apply_async
+    return app.send_task(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\base.py", line 798, in send_task
+    amqp.send_task_message(P, name, message, **options)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\celery\app\amqp.py", line 517, in send_task_message
+    ret = producer.publish(
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 190, in publish
+    return _publish(
+           ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 556, in _ensured
+    return fun(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 200, in _publish
+    channel = self.channel
+              ^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 224, in _get_channel
+    channel = self._channel = channel()
+                              ^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\utils\functional.py", line 34, in __call__
+    value = self.__value__ = self.__contract__()
+                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\messaging.py", line 240, in <lambda>
+    channel = ChannelPromise(lambda: connection.default_channel)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 957, in default_channel
+    self._ensure_connection(**conn_opts)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 458, in _ensure_connection
+    with ctx():
+  File "C:\Users\Shyam Kalariya\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\venv\Lib\site-packages\kombu\connection.py", line 476, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: [WinError 10061] No connection could be made because the target machine actively refused it
+ERROR 2025-08-11 18:14:09,635 basehttp 6324 21512 "POST /api/v1/user/register/ HTTP/1.1" 500 250960
+INFO 2025-08-11 18:19:28,469 autoreload 17656 16928 Watching for file changes with StatReloader
+WARNING 2025-08-11 18:20:15,703 log 17656 10912 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 18:20:15,705 basehttp 17656 10912 "POST /api/v1/user/register/ HTTP/1.1" 400 134
+WARNING 2025-08-11 18:20:32,596 log 17656 10912 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 18:20:32,598 basehttp 17656 10912 "POST /api/v1/user/register/ HTTP/1.1" 400 134
+WARNING 2025-08-11 18:25:41,955 log 17656 224 Bad Request: /api/v1/user/register/
+WARNING 2025-08-11 18:25:41,960 basehttp 17656 224 "POST /api/v1/user/register/ HTTP/1.1" 400 134
