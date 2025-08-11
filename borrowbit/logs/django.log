@@ -794,3 +794,209 @@ ERROR 2025-08-11 20:45:32,820 basehttp 18672 18448 "POST /api/v1/user/verify-otp
 INFO 2025-08-11 20:45:50,971 autoreload 18672 16460 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
 INFO 2025-08-11 20:45:56,967 autoreload 12148 4988 Watching for file changes with StatReloader
 INFO 2025-08-11 20:46:01,614 basehttp 12148 17100 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 371
+INFO 2025-08-11 20:58:02,810 autoreload 17716 17296 Watching for file changes with StatReloader
+ERROR 2025-08-11 21:07:59,084 log 17716 19020 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:07:59,092 basehttp 17716 19020 "GET / HTTP/1.1" 400 80391
+INFO 2025-08-11 21:11:54,499 autoreload 9264 16428 Watching for file changes with StatReloader
+INFO 2025-08-11 21:12:49,805 autoreload 9264 16428 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:13:10,362 autoreload 19612 18004 Watching for file changes with StatReloader
+INFO 2025-08-11 21:13:23,527 autoreload 19612 18004 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:14:14,233 autoreload 18788 14400 Watching for file changes with StatReloader
+ERROR 2025-08-11 21:24:14,334 log 18788 16500 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:24:14,345 basehttp 18788 16500 "OPTIONS /user/login/ HTTP/1.1" 400 82222
+ERROR 2025-08-11 21:24:18,792 log 18788 616 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:24:18,797 basehttp 18788 616 "OPTIONS /user/login/ HTTP/1.1" 400 82222
+ERROR 2025-08-11 21:24:58,383 log 18788 3556 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:24:58,388 basehttp 18788 3556 "OPTIONS /user/login/ HTTP/1.1" 400 82222
+ERROR 2025-08-11 21:25:03,880 log 18788 20456 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:25:03,885 basehttp 18788 20456 "GET /user/login/ HTTP/1.1" 400 83143
+ERROR 2025-08-11 21:25:04,070 log 18788 10656 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:25:04,076 basehttp 18788 10656 "GET /favicon.ico HTTP/1.1" 400 82836
+INFO 2025-08-11 21:25:40,400 autoreload 6612 1828 Watching for file changes with StatReloader
+ERROR 2025-08-11 21:25:45,094 log 6612 12124 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:25:45,102 basehttp 6612 12124 "OPTIONS /user/login/ HTTP/1.1" 400 82222
+INFO 2025-08-11 21:26:11,927 autoreload 6612 1828 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:26:17,461 autoreload 15956 1080 Watching for file changes with StatReloader
+INFO 2025-08-11 21:26:23,185 autoreload 15956 1080 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:26:44,070 autoreload 16752 4852 Watching for file changes with StatReloader
+ERROR 2025-08-11 21:26:49,471 log 16752 16664 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:26:49,480 basehttp 16752 16664 "OPTIONS /user/login/ HTTP/1.1" 400 82222
+ERROR 2025-08-11 21:28:04,394 log 16752 5616 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:28:04,398 basehttp 16752 5616 "OPTIONS /api/v1/user/login/ HTTP/1.1" 400 82397
+ERROR 2025-08-11 21:28:58,352 log 16752 18680 Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\utils\deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\middleware\common.py", line 48, in process_request
+    host = request.get_host()
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\http\request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'easily-bold-elephant.ngrok-free.app'. You may need to add 'easily-bold-elephant.ngrok-free.app' to ALLOWED_HOSTS.
+WARNING 2025-08-11 21:28:58,356 basehttp 16752 18680 "OPTIONS /api/v1/user/login/ HTTP/1.1" 400 82397
+INFO 2025-08-11 21:29:29,645 autoreload 16752 4852 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:29:34,244 autoreload 12412 13780 Watching for file changes with StatReloader
+INFO 2025-08-11 21:29:39,724 basehttp 12412 18504 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 199
+WARNING 2025-08-11 21:30:05,435 log 12412 14188 Method Not Allowed: /api/v1/user/login/
+WARNING 2025-08-11 21:30:05,437 basehttp 12412 14188 "GET /api/v1/user/login/ HTTP/1.1" 405 40
+WARNING 2025-08-11 21:30:05,739 log 12412 14188 Not Found: /favicon.ico
+WARNING 2025-08-11 21:30:05,740 basehttp 12412 14188 "GET /favicon.ico HTTP/1.1" 404 2387
+INFO 2025-08-11 21:30:20,411 autoreload 12412 13780 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:30:25,907 autoreload 4092 16144 Watching for file changes with StatReloader
+INFO 2025-08-11 21:30:29,500 autoreload 4092 16144 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:30:34,306 autoreload 16216 7000 Watching for file changes with StatReloader
+INFO 2025-08-11 21:30:38,173 basehttp 16216 18364 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 199
+INFO 2025-08-11 21:32:07,950 autoreload 16216 7000 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:32:13,569 autoreload 14960 14352 Watching for file changes with StatReloader
+INFO 2025-08-11 21:32:18,098 autoreload 14960 14352 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:32:23,239 autoreload 3744 3332 Watching for file changes with StatReloader
+INFO 2025-08-11 21:32:31,298 autoreload 3744 3332 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:32:37,856 autoreload 19716 16468 Watching for file changes with StatReloader
+INFO 2025-08-11 21:32:53,152 autoreload 19716 16468 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:33:00,148 autoreload 16760 3388 Watching for file changes with StatReloader
+INFO 2025-08-11 21:33:14,080 autoreload 16760 3388 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 21:33:19,469 autoreload 16960 20236 Watching for file changes with StatReloader
+INFO 2025-08-11 21:33:23,636 autoreload 16960 20236 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 21:33:29,399 autoreload 18264 17120 Watching for file changes with StatReloader
+INFO 2025-08-11 21:33:52,647 basehttp 18264 6472 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:34:10,136 autoreload 18264 17120 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\urls.py changed, reloading.
+INFO 2025-08-11 21:34:15,080 autoreload 16864 7540 Watching for file changes with StatReloader
+INFO 2025-08-11 21:34:21,530 basehttp 16864 884 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:36:58,490 autoreload 16864 7540 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:37:00,202 autoreload 17676 3796 Watching for file changes with StatReloader
+INFO 2025-08-11 21:37:11,051 autoreload 17676 3796 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:37:13,251 autoreload 6152 5252 Watching for file changes with StatReloader
+INFO 2025-08-11 21:37:19,773 autoreload 6152 5252 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\views.py changed, reloading.
+INFO 2025-08-11 21:37:21,597 autoreload 20256 19484 Watching for file changes with StatReloader
+INFO 2025-08-11 21:37:24,460 autoreload 20256 19484 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:37:26,513 autoreload 18180 20188 Watching for file changes with StatReloader
+INFO 2025-08-11 21:37:38,368 autoreload 18180 20188 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:37:40,539 autoreload 7552 8176 Watching for file changes with StatReloader
+INFO 2025-08-11 21:37:55,536 basehttp 7552 19364 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:40:43,503 basehttp 7552 6428 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:43:00,726 basehttp 7552 9264 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:46:03,416 autoreload 7552 8176 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:46:05,122 autoreload 16612 20076 Watching for file changes with StatReloader
+INFO 2025-08-11 21:46:11,394 autoreload 16612 20076 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:46:13,663 autoreload 18520 19504 Watching for file changes with StatReloader
+INFO 2025-08-11 21:46:17,264 basehttp 18520 6152 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:46:21,118 autoreload 18520 19504 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:46:22,864 autoreload 6016 20436 Watching for file changes with StatReloader
+INFO 2025-08-11 21:46:39,021 autoreload 6016 20436 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:46:41,357 autoreload 17804 8908 Watching for file changes with StatReloader
+INFO 2025-08-11 21:46:51,074 autoreload 17804 8908 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 21:46:53,271 autoreload 4884 2116 Watching for file changes with StatReloader
+INFO 2025-08-11 21:47:08,363 autoreload 4884 2116 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-11 21:47:10,698 autoreload 17796 17960 Watching for file changes with StatReloader
+INFO 2025-08-11 21:47:20,969 basehttp 17796 5752 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:48:58,496 autoreload 17796 17960 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 21:49:00,366 autoreload 17480 17352 Watching for file changes with StatReloader
+INFO 2025-08-11 21:49:23,615 basehttp 17480 1728 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+WARNING 2025-08-11 21:49:24,368 log 17480 17952 Bad Request: /api/v1/user/login/
+WARNING 2025-08-11 21:49:24,369 basehttp 17480 17952 "POST /api/v1/user/login/ HTTP/1.1" 400 68
+INFO 2025-08-11 21:51:39,890 basehttp 17480 19328 "OPTIONS /api/v1/user/register/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:51:41,797 basehttp 17480 15224 "POST /api/v1/user/register/ HTTP/1.1" 200 920
+INFO 2025-08-11 21:51:48,016 basehttp 17480 19328 "OPTIONS /api/v1/user/verify-otp/ HTTP/1.1" 200 0
+INFO 2025-08-11 21:51:48,251 basehttp 17480 15224 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 342
+WARNING 2025-08-11 21:53:01,127 log 17480 15224 Bad Request: /api/v1/user/login/
+WARNING 2025-08-11 21:53:01,128 basehttp 17480 15224 "POST /api/v1/user/login/ HTTP/1.1" 400 68
+INFO 2025-08-11 21:53:04,273 basehttp 17480 15224 "POST /api/v1/user/register/ HTTP/1.1" 200 904
+WARNING 2025-08-11 21:53:08,396 log 17480 15224 Unauthorized: /api/v1/user/verify-otp/
+WARNING 2025-08-11 21:53:08,397 basehttp 17480 15224 "POST /api/v1/user/verify-otp/ HTTP/1.1" 401 58
+WARNING 2025-08-11 21:53:11,713 log 17480 15224 Unauthorized: /api/v1/user/verify-otp/
+WARNING 2025-08-11 21:53:11,714 basehttp 17480 15224 "POST /api/v1/user/verify-otp/ HTTP/1.1" 401 58
+INFO 2025-08-11 21:53:37,216 basehttp 17480 19352 "POST /api/v1/user/login/ HTTP/1.1" 200 908
+INFO 2025-08-11 22:03:29,423 basehttp 17480 13440 "POST /api/v1/user/login/ HTTP/1.1" 200 937
+INFO 2025-08-11 22:09:11,986 autoreload 17480 17352 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-11 22:09:13,566 autoreload 18684 14256 Watching for file changes with StatReloader
