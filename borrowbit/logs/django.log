@@ -1374,3 +1374,31 @@ INFO 2025-08-12 05:55:28,292 unified_email_service 18692 4528 Testing SMTP conne
 INFO 2025-08-12 05:55:33,609 unified_email_service 18692 4528 Sending email via SMTP to shyamkalariya294@gmail.com
 INFO 2025-08-12 05:55:36,216 smtp_email_service 18692 4528 Attempting to send email to shyamkalariya294@gmail.com
 INFO 2025-08-12 05:55:37,808 smtp_email_service 18692 4528 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 07:33:38,337 smtp_email_service 11764 4296 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 07:33:38,339 smtp_email_service 11764 4296 TLS: True, SSL: False
+INFO 2025-08-12 07:33:38,341 unified_email_service 11764 4296 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 07:33:38,790 unified_email_service 11764 4296 Testing SMTP connection
+INFO 2025-08-12 07:33:43,518 unified_email_service 11764 4296 Sending email via SMTP to 'shyamkalariya294@gmail.com'
+INFO 2025-08-12 07:33:46,727 smtp_email_service 11764 4296 Attempting to send email to 'shyamkalariya294@gmail.com'
+ERROR 2025-08-12 07:33:47,467 smtp_email_service 11764 4296 Recipient refused: {"'shyamkalariya294@gmail.com'": (553, b"5.1.3 The recipient address <'shyamkalariya294@gmail.com'> is not a valid\n5.1.3 RFC 5321 address. For more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. 98e67ed59e1d1-31f63dc4ef0sm32813585a91.14 - gsmtp")}
+INFO 2025-08-12 07:34:09,324 smtp_email_service 9500 4608 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 07:34:09,324 smtp_email_service 9500 4608 TLS: True, SSL: False
+INFO 2025-08-12 07:34:09,325 unified_email_service 9500 4608 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 07:34:09,636 unified_email_service 9500 4608 Testing SMTP connection
+INFO 2025-08-12 07:34:14,637 unified_email_service 9500 4608 Sending email via SMTP to 'shyamkalariya235@gmail.com'
+INFO 2025-08-12 07:34:17,794 smtp_email_service 9500 4608 Attempting to send email to 'shyamkalariya235@gmail.com'
+ERROR 2025-08-12 07:34:18,516 smtp_email_service 9500 4608 Recipient refused: {"'shyamkalariya235@gmail.com'": (553, b"5.1.3 The recipient address <'shyamkalariya235@gmail.com'> is not a valid\n5.1.3 RFC 5321 address. For more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. d2e1a72fcca58-76bcce89125sm28055789b3a.33 - gsmtp")}
+INFO 2025-08-12 07:36:37,070 smtp_email_service 14856 6784 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 07:36:37,071 smtp_email_service 14856 6784 TLS: True, SSL: False
+INFO 2025-08-12 07:36:37,071 unified_email_service 14856 6784 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 07:36:37,378 unified_email_service 14856 6784 Testing SMTP connection
+INFO 2025-08-12 07:36:42,379 unified_email_service 14856 6784 Sending email via SMTP to 'shyamkalariya235@gmail.com'
+INFO 2025-08-12 07:36:44,935 smtp_email_service 14856 6784 Attempting to send email to 'shyamkalariya235@gmail.com'
+ERROR 2025-08-12 07:36:45,671 smtp_email_service 14856 6784 Recipient refused: {"'shyamkalariya235@gmail.com'": (553, b"5.1.3 The recipient address <'shyamkalariya235@gmail.com'> is not a valid\n5.1.3 RFC 5321 address. For more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. d9443c01a7336-241d1ef6cb7sm282914665ad.26 - gsmtp")}
+INFO 2025-08-12 07:37:26,100 smtp_email_service 10120 6404 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 07:37:26,100 smtp_email_service 10120 6404 TLS: True, SSL: False
+INFO 2025-08-12 07:37:26,101 unified_email_service 10120 6404 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 07:37:26,413 unified_email_service 10120 6404 Testing SMTP connection
+INFO 2025-08-12 07:37:30,827 unified_email_service 10120 6404 Sending email via SMTP to shyamkalariya235@gmail.com
+INFO 2025-08-12 07:37:33,405 smtp_email_service 10120 6404 Attempting to send email to shyamkalariya235@gmail.com
+INFO 2025-08-12 07:37:34,938 smtp_email_service 10120 6404 Email sent successfully to shyamkalariya235@gmail.com

@@ -64,7 +64,9 @@ LOCAL_APPS = [
     'products',
     'user',
     'borrowbit',
-    'core'
+    'core',
+    'invoices',
+    'rentals',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
