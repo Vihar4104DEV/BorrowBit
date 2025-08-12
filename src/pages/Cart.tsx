@@ -128,7 +128,8 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-6">
             {cartItems.map((item) => {
-              const product = getProductByIdSafe(item.productId);
+              // Prefer product from cart item, fallback to getProductByIdSafe
+              const product = item.product || getProductByIdSafe(item.productId);
               const days = calculateRentalDays(item.fromDate, item.toDate);
               const itemTotal = calculateItemTotal(item);
 
@@ -148,12 +149,12 @@ const Cart = () => {
                             <h3 className="font-semibold text-foreground mb-1">{product.name}</h3>
                             <p className="text-sm text-muted-foreground">{product.category}</p>
                           </div>
-                                                     <Button
-                             variant="ghost"
-                             size="sm"
-                             onClick={() => removeFromCart(item.id)}
-                             className="text-muted-foreground hover:text-destructive"
-                           >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFromCart(item.id)}
+                            className="text-muted-foreground hover:text-destructive"
+                          >
                             <Trash2 className="w-4 h-4" />
                           </Button>
                         </div>

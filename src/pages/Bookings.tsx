@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ import {
 const Bookings = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const navigate = useNavigate();
   
   const bookings = [
     {
@@ -201,8 +203,8 @@ const Bookings = () => {
         </div>
 
         {/* Status Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 shadow-card">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-10 sm:mt-10">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 sm:grid-cols-12 shadow-card">
             <TabsTrigger value="all" className="text-sm">
               All ({getStatusCount("all")})
             </TabsTrigger>
@@ -306,19 +308,19 @@ const Bookings = () => {
 
                       {/* Actions */}
                       <div className="flex flex-wrap gap-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => navigate(`/bookings/${booking.id}`)}>
                           <Eye className="w-4 h-4 mr-1" />
                           View Details
                         </Button>
-                        <Button variant="default" size="sm">
+                        <Button variant="default" size="sm" onClick={() => navigate(`/bookings/edit/${booking.id}`)}>
                           <Edit className="w-4 h-4 mr-1" />
                           Edit Booking
                         </Button>
-                        <Button variant="success" size="sm">
+                        <Button variant="success" size="sm" onClick={() => alert(`Contract generated for booking ${booking.id}`)}>
                           <FileText className="w-4 h-4 mr-1" />
                           Generate Contract
                         </Button>
-                        <Button variant="hero" size="sm">
+                        <Button variant="hero" size="sm" onClick={() => alert(`Notification sent for booking ${booking.id}`)}>
                           <Send className="w-4 h-4 mr-1" />
                           Send Notification
                         </Button>
@@ -338,7 +340,7 @@ const Bookings = () => {
                           : `No ${tab === "all" ? "" : tab} bookings at the moment`
                         }
                       </p>
-                      <Button variant="hero">
+                      <Button variant="hero" onClick={() => navigate("/bookings/create") }>
                         <Plus className="w-4 h-4 mr-2" />
                         Create New Booking
                       </Button>

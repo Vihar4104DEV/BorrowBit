@@ -4,6 +4,7 @@ import { getProductById } from "@/data/products";
 export type CartItem = {
   id: string;
   productId: number;
+  product?: any;
   quantity: number;
   fromDate: string;
   toDate: string;
@@ -12,7 +13,7 @@ export type CartItem = {
 
 type CartContextValue = {
   cartItems: CartItem[];
-  addToCart: (productId: number, quantity: number, fromDate: string, toDate: string, dailyRate: number) => void;
+  addToCart: (product: any, quantity: number, fromDate: string, toDate: string, dailyRate: number) => void;
   removeFromCart: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
@@ -25,11 +26,11 @@ const CartContext = createContext<CartContextValue | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const addToCart = (productId: number, quantity: number, fromDate: string, toDate: string, dailyRate: number) => {
+  const addToCart = (product: any, quantity: number, fromDate: string, toDate: string, dailyRate: number) => {
     setCartItems(prev => {
       // Check if item already exists in cart
       const existingItemIndex = prev.findIndex(item => 
-        item.productId === productId && 
+        item.productId === product.id && 
         item.fromDate === fromDate && 
         item.toDate === toDate
       );
@@ -46,7 +47,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         // Add new item
         const newItem: CartItem = {
           id: crypto.randomUUID(),
-          productId,
+          productId: product.id,
+          product,
           quantity,
           fromDate,
           toDate,

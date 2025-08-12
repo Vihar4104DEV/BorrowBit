@@ -10,31 +10,41 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
 
+  // Update nav item type to support children
+  type NavItem = {
+    href?: string;
+    label: string;
+    icon?: any;
+    children?: Array<{ href: string; label: string; icon?: any }>;
+  };
+
   // Define navigation items based on authentication status and user role
   const getNavItems = () => {
-    const baseItems = [
+    const baseItems: NavItem[] = [
       { href: "/", label: "Home" },
       { href: "/products", label: "Products", icon: Package },
     ];
 
     if (isAuthenticated) {
       // Add user-specific items
-      const userItems = [
+      let userItems: NavItem[] = [
         { href: "/bookings", label: "Bookings", icon: Calendar },
         { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
         { href: "/cart", label: "Cart", icon: Package },
-        { href: "/chat", label: "Chatbot", icon: MessageCircle },
-        { href: "/profile", label: "Profile", icon: Users },
       ];
 
-      // Add admin-specific items
-      const isAdmin = user?.user_role?.includes('admin');
-if (isAdmin) {
-  userItems.push({ href: "/customers", label: "Customers", icon: Users });
-  userItems.push({ href: "/delivery-partner", label: "Delivery Partner", icon: Users });
-  
-}
-
+      // Add admin-specific items, but group them under a dropdown if too many
+      const isAdmin = user?.user_role?.includes('ADMIN') || user?.user_role?.includes('SUPER_ADMIN');
+      if (isAdmin) {
+        userItems.push({
+          label: "Admin",
+          icon: Users,
+          children: [
+            { href: "/customers", label: "Customers", icon: Users },
+            { href: "/delivery-partner", label: "Delivery Partner", icon: Users },
+          ],
+        });
+      }
       return [...baseItems, ...userItems];
     } else {
       // Guest sees only home and products
@@ -66,6 +76,30 @@ if (isAdmin) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
+              if (item.children && item.children.length > 0) {
+                // Render dropdown for admin items
+                return (
+                  <div key={item.label} className="relative group">
+                    <Button variant="outline" size="sm" className="flex items-center">
+                      {item.icon && <item.icon className="w-4 h-4 mr-2" />}
+                      {item.label}
+                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </Button>
+                    <div className="absolute left-0 mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-10 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          to={child.href}
+                          className={`flex items-center px-4 py-2 text-sm rounded-md hover:bg-muted transition-smooth`}
+                        >
+                          {child.icon && <child.icon className="w-4 h-4 mr-2" />}
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
               return (
@@ -85,7 +119,7 @@ if (isAdmin) {
             })}
             
             {/* API Test Link - Always visible for debugging */}
-            <Link
+            {/* <Link
               to="/api-test"
               className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-smooth ${
                 location.pathname === '/api-test'
@@ -95,7 +129,7 @@ if (isAdmin) {
             >
               <TestTube className="w-4 h-4 mr-2" />
               API Test
-            </Link>
+            </Link> */}
           </div>
 
           {/* Action Buttons */}

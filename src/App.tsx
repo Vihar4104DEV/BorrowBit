@@ -6,6 +6,12 @@ import Index from "./pages/Index";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
+import GenerateContract from "./pages/GenerateContract";
+import SendNotification from "./pages/SendNotification";
+import AdvancedFilters from "./pages/AdvancedFilters";
+import BookingDetail from "./pages/BookingDetail";
+import EditBooking from "./pages/EditBooking";
+import CreateBooking from "./pages/CreateBooking";
 import Customers from "./pages/Customers";
 import DeliveryPartner from "./pages/DeliveryPartner";
 import Cart from "./pages/Cart";
@@ -22,12 +28,29 @@ import EditProduct from "@/pages/EditProduct";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ApiTest from "@/components/ApiTest";
 
+import { CartProvider } from "@/contexts/CartContext";
 const App = () => (
   <TooltipProvider>
-    <Toaster />
+  <CartProvider>
+    <TooltipProvider>
     <Sonner />
     <BrowserRouter>
       <Routes>
+        <Route path="/bookings/contract/:id" element={
+          <ProtectedRoute>
+            <GenerateContract />
+          </ProtectedRoute>
+        } />
+        <Route path="/bookings/notify/:id" element={
+          <ProtectedRoute>
+            <SendNotification />
+          </ProtectedRoute>
+        } />
+        <Route path="/bookings/filters" element={
+          <ProtectedRoute>
+            <AdvancedFilters />
+          </ProtectedRoute>
+        } />
         <Route path="/" element={<Index />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
@@ -67,6 +90,21 @@ const App = () => (
             <Bookings />
           </ProtectedRoute>
         } />
+        <Route path="/bookings/:id" element={
+          <ProtectedRoute>
+            <BookingDetail />
+          </ProtectedRoute>
+        } />
+        <Route path="/bookings/edit/:id" element={
+          <ProtectedRoute>
+            <EditBooking />
+          </ProtectedRoute>
+        } />
+        <Route path="/bookings/create" element={
+          <ProtectedRoute>
+            <CreateBooking />
+          </ProtectedRoute>
+        } />
         
         {/* Auth routes */}
         <Route path="/login" element={
@@ -92,6 +130,9 @@ const App = () => (
       </Routes>
     </BrowserRouter>
     <ChatbotButton />
+    <ChatbotButton />
+    </TooltipProvider>
+  </CartProvider>
   </TooltipProvider>
 );
 

@@ -334,10 +334,18 @@ class ApiService {
   }
 
   async login(credentials: { email: string; password: string }): Promise<ApiResponse<AuthData>> {
-    return this.request<AuthData>('/user/login/', {
+    const response = await this.request<AuthData>('/user/login/', {
       method: 'POST',
       body: JSON.stringify(credentials),
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
     });
+
+    console.log('Login response:', response); // Add this line
+  return response;
+
   }
 
   async verifyOtp(otpData: {
@@ -396,6 +404,31 @@ class ApiService {
       body: JSON.stringify(productData),
     });
   }
+
+    // Rental Order APIs
+    async createRentalOrderFromCart(payload: {
+      cart_items: { product_id: string; quantity: number }[];
+      rental_start_date: string;
+      rental_end_date: string;
+      notes?: string;
+    }): Promise<ApiResponse<any>> {
+      return this.request<any>('/payments/rental-orders/create_from_cart/', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+    }
+
+    async getMyRentalOrders(): Promise<ApiResponse<any>> {
+      return this.request<any>('/payments/rental-orders/my_orders/', {
+        method: 'GET',
+      });
+    }
+
+    async getRentalOrderDetail(orderId: string): Promise<ApiResponse<any>> {
+      return this.request<any>(`/payments/rental-orders/${orderId}`, {
+        method: 'GET',
+      });
+    }
 
   // Generic GET request
   async get<T>(endpoint: string): Promise<ApiResponse<T>> {
