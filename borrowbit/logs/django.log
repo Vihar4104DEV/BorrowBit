@@ -32361,3 +32361,5 @@ INFO 2025-08-12 06:39:30,909 basehttp 2792 18808 "GET /api/v1/products/products/
 INFO 2025-08-12 06:40:14,940 basehttp 2792 18808 "POST /api/v1/user/login/ HTTP/1.1" 200 1181
 INFO 2025-08-12 06:42:58,250 basehttp 2792 12416 "GET /api/v1/user/profile/ HTTP/1.1" 200 617
 INFO 2025-08-12 06:43:23,445 basehttp 2792 12416 "POST /api/v1/user/login/ HTTP/1.1" 200 1181
+INFO 2025-08-12 06:44:43,111 basehttp 2792 14252 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
+INFO 2025-08-12 06:45:22,297 basehttp 2792 19032 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325

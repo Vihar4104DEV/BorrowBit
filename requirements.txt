@@ -8,6 +8,9 @@ tzdata==2025.2
 djangorestframework
 django-cors-headers
 
+# Data Generation
+Faker==20.1.0
+
 # Async Support
 channels==4.0.0
 channels-redis==4.1.0
