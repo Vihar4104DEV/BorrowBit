@@ -107,6 +107,11 @@ class RentalOrderDetailSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'order_number', 'created_at', 'updated_at']
+        
+    def get_payments(self, obj):
+        """Get related payments for the order."""
+        payments = obj.payments.all()
+        return PaymentSerializer(payments, many=True, context=self.context).data
 
 
 class RentalOrderListSerializer(serializers.ModelSerializer):

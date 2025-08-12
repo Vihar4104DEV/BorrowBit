@@ -1,5 +1,5 @@
 # from celery import shared_task
-# from django.core.mail import send_mail  # Email sending disabled (bypassed)
+from django.core.mail import send_mail  # Email sending disabled (bypassed)
 from django.conf import settings
 from user.models import User, OTPVerification
 from .models import Notification
@@ -31,6 +31,15 @@ def send_otp_notification(email, phone_number, otp_code):
                     recipient=email,
                     message=f"Your OTP is {otp_code}",
                     status="PENDING"
+                )
+                
+                # Send email (disabled)
+                send_mail(
+                    "OTP Verification",
+                    f"Your OTP is {otp_code}",
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False,
                 )
                 
                 # Bypass actual email sending (disabled)

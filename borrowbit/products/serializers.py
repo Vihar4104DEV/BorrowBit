@@ -290,6 +290,13 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     """Serializer for creating and updating products with role-based field access."""
     
+    main_image = serializers.ImageField(
+        required=False, 
+        allow_null=True,
+        allow_empty_file=True,
+        use_url=True
+    )
+    
     class Meta:
         model = Product
         fields = [
@@ -341,6 +348,48 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
                 if field in self.fields:
                     self.fields[field].read_only = True
     
+    def validate_main_image(self, value):
+        """Validate the main image field."""
+        print("Debug - Received main_image value type:", type(value))
+        print("Debug - Received main_image value:", value[:100] if isinstance(value, str) else value)
+        
+        if not value:
+            return None
+            
+        if isinstance(value, str) and value.startswith('data:image'):
+            try:
+                import base64
+                from django.core.files.base import ContentFile
+                import uuid
+                
+                # Get the image format and base64 data
+                format, imgstr = value.split(';base64,') 
+                ext = format.split('/')[-1]
+                
+                # Generate unique filename
+                filename = f"{uuid.uuid4()}.{ext}"
+                
+                # Decode base64 and validate
+                try:
+                    decoded_data = base64.b64decode(imgstr)
+                    if not decoded_data:
+                        raise ValidationError("Invalid base64 image data")
+                except Exception as e:
+                    print("Debug - Base64 decode error:", str(e))
+                    raise ValidationError(f"Invalid base64 image data: {str(e)}")
+                
+                # Convert to ContentFile
+                data = ContentFile(decoded_data, name=filename)
+                print("Debug - Successfully created ContentFile")
+                return data
+                
+            except Exception as e:
+                print("Debug - Error processing image:", str(e))
+                raise ValidationError(f"Error processing image: {str(e)}")
+            
+        print("Debug - Returning original value")
+        return value
+
     def validate(self, data):
         """Validate product data."""
         # Validate rental duration
@@ -364,19 +413,31 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         """Create a new product."""
-        # Set owner to current user
-        validated_data['owner'] = self.context['request'].user
-        
-        # Set initial available quantity
-        validated_data['available_quantity'] = validated_data.get('total_quantity', 1)
-        
-        product = super().create(validated_data)
-        
-        # Clear cache for category products count
-        cache_key = cache_key_generator('category_products_count', str(product.category.id))
-        delete_cache_data(cache_key)
-        
-        return product
+        try:
+            print("Debug - Create method - validated_data:", {k: str(v)[:100] if k == 'main_image' else v for k, v in validated_data.items()})
+            
+            # Set owner to current user
+            validated_data['owner'] = self.context['request'].user
+            
+            # Set initial available quantity
+            validated_data['available_quantity'] = validated_data.get('total_quantity', 1)
+            
+            # Handle main_image specially if it's still a base64 string
+            main_image = validated_data.get('main_image')
+            if main_image and isinstance(main_image, str) and main_image.startswith('data:image'):
+                validated_data['main_image'] = self.validate_main_image(main_image)
+            
+            product = super().create(validated_data)
+            
+            # Clear cache for category products count
+            cache_key = cache_key_generator('category_products_count', str(product.category.id))
+            delete_cache_data(cache_key)
+            
+            return product
+            
+        except Exception as e:
+            print("Debug - Error in create method:", str(e))
+            raise
     
     def update(self, instance, validated_data):
         """Update an existing product."""

@@ -32363,3 +32363,322 @@ INFO 2025-08-12 06:42:58,250 basehttp 2792 12416 "GET /api/v1/user/profile/ HTTP
 INFO 2025-08-12 06:43:23,445 basehttp 2792 12416 "POST /api/v1/user/login/ HTTP/1.1" 200 1181
 INFO 2025-08-12 06:44:43,111 basehttp 2792 14252 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
 INFO 2025-08-12 06:45:22,297 basehttp 2792 19032 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
+INFO 2025-08-12 07:06:09,929 basehttp 2792 14904 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:08:01,214 basehttp 2792 4104 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:08:04,868 basehttp 2792 9008 "GET /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 14372
+INFO 2025-08-12 07:08:10,477 basehttp 2792 1500 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:08:18,432 basehttp 2792 16060 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:08:48,365 basehttp 2792 17788 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:09:04,924 basehttp 2792 16960 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:09:07,044 basehttp 2792 16960 "GET /api/v1/products/products/5c38ad62-d3e0-428c-a105-d6b5d5eb3769/ HTTP/1.1" 200 14734
+INFO 2025-08-12 07:10:08,078 basehttp 2792 8856 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:10:28,743 basehttp 2792 7240 "POST /api/v1/user/login/ HTTP/1.1" 200 1181
+INFO 2025-08-12 07:10:36,983 basehttp 2792 17104 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
+INFO 2025-08-12 07:11:28,596 basehttp 2792 16248 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
+INFO 2025-08-12 07:11:31,541 basehttp 2792 16248 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17325
+INFO 2025-08-12 07:16:20,247 basehttp 2792 18872 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:16:56,318 basehttp 2792 19112 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:17:03,537 basehttp 2792 4460 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:17:14,340 basehttp 2792 8048 "GET /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 14372
+INFO 2025-08-12 07:18:27,621 basehttp 2792 3396 "OPTIONS /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 0
+INFO 2025-08-12 07:18:27,714 basehttp 2792 15616 "GET /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 14372
+WARNING 2025-08-12 07:18:39,386 log 2792 17396 Unauthorized: /api/v1/products/products/
+WARNING 2025-08-12 07:18:39,388 basehttp 2792 17396 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 401 58
+WARNING 2025-08-12 07:18:41,243 log 2792 17396 Unauthorized: /api/v1/products/products/
+WARNING 2025-08-12 07:18:41,244 basehttp 2792 17396 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 401 58
+INFO 2025-08-12 07:19:05,044 basehttp 2792 15008 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:19:08,083 basehttp 2792 15008 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:21:51,384 basehttp 2792 14864 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:21:59,697 basehttp 2792 2332 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:22:02,608 basehttp 2792 4236 "OPTIONS /api/v1/products/products/e54cb0f9-7903-4b3d-818b-e4fdfe199f79/ HTTP/1.1" 200 0
+INFO 2025-08-12 07:22:02,824 basehttp 2792 13464 "GET /api/v1/products/products/e54cb0f9-7903-4b3d-818b-e4fdfe199f79/ HTTP/1.1" 200 13404
+INFO 2025-08-12 07:22:30,077 basehttp 2792 19144 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:24:05,009 basehttp 2792 11384 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:24:13,534 basehttp 2792 488 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:24:20,944 basehttp 2792 16388 "GET /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 14372
+INFO 2025-08-12 07:25:03,504 basehttp 2792 8560 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:25:42,466 basehttp 2792 5092 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:25:56,877 basehttp 2792 17272 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:25:58,752 basehttp 2792 17272 "GET /api/v1/products/products/5c38ad62-d3e0-428c-a105-d6b5d5eb3769/ HTTP/1.1" 200 14734
+INFO 2025-08-12 07:26:57,346 basehttp 2792 3524 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:26:59,616 basehttp 2792 3524 "GET /api/v1/products/categories/ HTTP/1.1" 200 1498
+INFO 2025-08-12 07:27:50,558 basehttp 2792 16928 "OPTIONS /api/v1/products/products/ HTTP/1.1" 200 0
+WARNING 2025-08-12 07:27:50,688 log 2792 9876 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:27:50,689 basehttp 2792 9876 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+WARNING 2025-08-12 07:28:06,197 log 2792 11836 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:28:06,199 basehttp 2792 11836 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+INFO 2025-08-12 07:28:58,383 basehttp 2792 3100 "GET /api/v1/user/profile/ HTTP/1.1" 200 620
+INFO 2025-08-12 07:29:18,605 basehttp 2792 14384 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:35:24,074 autoreload 2792 17032 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\payments\views.py changed, reloading.
+INFO 2025-08-12 07:35:30,326 autoreload 2648 18996 Watching for file changes with StatReloader
+WARNING 2025-08-12 07:35:39,415 log 2648 800 Unauthorized: /api/v1/payments/rental-orders/create_from_cart/
+WARNING 2025-08-12 07:35:39,417 basehttp 2648 800 "POST /api/v1/payments/rental-orders/create_from_cart/ HTTP/1.1" 401 183
+INFO 2025-08-12 07:35:46,071 basehttp 2648 800 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:35:49,456 views 2648 800 Stripe API key set: sk_test_51...
+INFO 2025-08-12 07:35:49,669 views 2648 800 About to create Stripe checkout session
+INFO 2025-08-12 07:35:49,669 views 2648 800 Stripe API key status: True
+INFO 2025-08-12 07:35:50,014 _util 2648 800 message='Request to Stripe api' method=post path=https://api.stripe.com/v1/payment_intents
+INFO 2025-08-12 07:35:51,315 _util 2648 800 message='Stripe API response' path=https://api.stripe.com/v1/payment_intents response_code=200
+ERROR 2025-08-12 07:35:51,340 views 2648 800 Error creating rental order: 'NoneType' object has no attribute 'Secret'
+ERROR 2025-08-12 07:35:51,342 log 2648 800 Internal Server Error: /api/v1/payments/rental-orders/create_from_cart/
+ERROR 2025-08-12 07:35:51,343 basehttp 2648 800 "POST /api/v1/payments/rental-orders/create_from_cart/ HTTP/1.1" 500 112
+INFO 2025-08-12 07:38:49,703 autoreload 2648 18996 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 07:38:53,559 autoreload 1532 10700 Watching for file changes with StatReloader
+WARNING 2025-08-12 07:40:58,980 log 1532 15552 Unauthorized: /api/v1/products/products/
+WARNING 2025-08-12 07:40:58,981 basehttp 1532 15552 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 401 58
+INFO 2025-08-12 07:41:22,470 basehttp 1532 19040 "POST /api/v1/user/login/ HTTP/1.1" 200 1181
+WARNING 2025-08-12 07:43:23,167 log 1532 15344 Bad Request: /api/v1/user/login/
+WARNING 2025-08-12 07:43:23,168 basehttp 1532 15344 "POST /api/v1/user/login/ HTTP/1.1" 400 60
+INFO 2025-08-12 07:46:39,870 autoreload 1532 10700 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 07:46:41,992 autoreload 5028 8908 Watching for file changes with StatReloader
+INFO 2025-08-12 07:47:35,667 basehttp 5028 11336 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 07:47:57,900 basehttp 5028 16444 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:48:05,830 basehttp 5028 16224 "GET /api/v1/products/products/5c38ad62-d3e0-428c-a105-d6b5d5eb3769/ HTTP/1.1" 200 14734
+INFO 2025-08-12 07:48:14,443 basehttp 5028 17336 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:48:23,104 autoreload 5028 8908 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\models.py changed, reloading.
+INFO 2025-08-12 07:48:29,193 autoreload 6064 18996 Watching for file changes with StatReloader
+INFO 2025-08-12 07:48:32,229 basehttp 6064 8560 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:49:07,835 basehttp 6064 18500 "GET /api/v1/products/categories/ HTTP/1.1" 200 1498
+INFO 2025-08-12 07:49:42,290 autoreload 6064 18996 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\views.py changed, reloading.
+INFO 2025-08-12 07:49:47,013 autoreload 10764 5252 Watching for file changes with StatReloader
+WARNING 2025-08-12 07:50:04,590 log 10764 17900 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:50:04,592 basehttp 10764 17900 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+WARNING 2025-08-12 07:50:34,503 log 10764 2152 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:50:34,504 basehttp 10764 2152 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+INFO 2025-08-12 07:50:39,698 basehttp 10764 5060 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:52:35,991 basehttp 10764 800 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:53:11,345 autoreload 10764 5252 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:53:14,926 autoreload 16796 18924 Watching for file changes with StatReloader
+INFO 2025-08-12 07:53:30,927 autoreload 16796 18924 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:53:33,531 autoreload 14648 6156 Watching for file changes with StatReloader
+INFO 2025-08-12 07:53:53,496 autoreload 14648 6156 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:53:55,906 autoreload 18928 19336 Watching for file changes with StatReloader
+INFO 2025-08-12 07:54:03,423 basehttp 18928 1908 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+WARNING 2025-08-12 07:54:37,860 log 18928 1908 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:54:37,860 basehttp 18928 1908 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+INFO 2025-08-12 07:55:16,535 basehttp 18928 1908 "GET /api/v1/products/categories/ HTTP/1.1" 200 1511
+INFO 2025-08-12 07:55:50,741 autoreload 18928 19336 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:55:53,838 autoreload 15512 16676 Watching for file changes with StatReloader
+INFO 2025-08-12 07:56:08,587 autoreload 15512 16676 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:56:11,996 autoreload 8736 16460 Watching for file changes with StatReloader
+INFO 2025-08-12 07:56:25,697 autoreload 8736 16460 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:56:29,155 autoreload 8184 4104 Watching for file changes with StatReloader
+INFO 2025-08-12 07:56:49,247 basehttp 8184 18844 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 07:56:53,462 autoreload 8184 4104 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 07:56:56,620 autoreload 2860 16356 Watching for file changes with StatReloader
+INFO 2025-08-12 07:57:21,276 basehttp 2860 12396 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+WARNING 2025-08-12 07:58:26,885 log 2860 14780 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:58:26,887 basehttp 2860 14780 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+WARNING 2025-08-12 07:58:32,329 log 2860 6760 Bad Request: /api/v1/products/products/
+WARNING 2025-08-12 07:58:32,330 basehttp 2860 6760 "POST /api/v1/products/products/ HTTP/1.1" 400 62
+INFO 2025-08-12 07:59:22,360 basehttp 2860 15260 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:00:15,935 autoreload 2860 16356 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\serializers.py changed, reloading.
+INFO 2025-08-12 08:00:19,092 autoreload 19092 18424 Watching for file changes with StatReloader
+INFO 2025-08-12 08:01:02,104 autoreload 19092 18424 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\core\fields.py changed, reloading.
+INFO 2025-08-12 08:01:06,094 autoreload 14540 5104 Watching for file changes with StatReloader
+INFO 2025-08-12 08:01:50,146 basehttp 14540 15700 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:02:05,011 basehttp 14540 18960 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:04:42,564 basehttp 14540 18604 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:08:17,169 basehttp 14540 4188 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:08:44,880 basehttp 14540 10732 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:11:00,901 autoreload 14540 5104 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\payments\views.py changed, reloading.
+INFO 2025-08-12 08:11:04,026 autoreload 13092 19184 Watching for file changes with StatReloader
+INFO 2025-08-12 08:11:21,231 basehttp 13092 18692 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:11:57,613 basehttp 13092 16396 "OPTIONS /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 0
+INFO 2025-08-12 08:11:57,821 basehttp 13092 16892 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:12:07,082 basehttp 13092 3396 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:12:45,368 autoreload 13092 19184 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\payments\views.py changed, reloading.
+INFO 2025-08-12 08:12:47,777 autoreload 7476 7956 Watching for file changes with StatReloader
+ERROR 2025-08-12 08:12:54,100 views 7476 13088 Error processing order: 'Product' object has no attribute 'is_available_quantity'
+ERROR 2025-08-12 08:12:54,108 log 7476 13088 Internal Server Error: /api/v1/payments/rental-orders/create_from_cart/
+ERROR 2025-08-12 08:12:54,109 basehttp 7476 13088 "POST /api/v1/payments/rental-orders/create_from_cart/ HTTP/1.1" 500 104
+INFO 2025-08-12 08:14:07,121 autoreload 7476 7956 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\models.py changed, reloading.
+INFO 2025-08-12 08:14:12,233 autoreload 19252 4356 Watching for file changes with StatReloader
+INFO 2025-08-12 08:14:23,796 autoreload 19252 4356 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\products\models.py changed, reloading.
+INFO 2025-08-12 08:14:30,325 autoreload 6060 8064 Watching for file changes with StatReloader
+INFO 2025-08-12 08:14:35,395 basehttp 6060 10716 "POST /api/v1/payments/rental-orders/create_from_cart/ HTTP/1.1" 200 269
+INFO 2025-08-12 08:15:48,076 basehttp 6060 11836 "GET /api/v1/payments/rental-orders/my_orders/ HTTP/1.1" 200 415
+INFO 2025-08-12 08:17:18,178 basehttp 6060 13896 "GET /api/v1/payments/rental-orders/486da5d2-322c-45bd-8602-861f031642c0 HTTP/1.1" 301 0
+ERROR 2025-08-12 08:17:18,255 log 6060 13976 Internal Server Error: /api/v1/payments/rental-orders/486da5d2-322c-45bd-8602-861f031642c0/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\mixins.py", line 56, in retrieve
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 573, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 540, in to_representation
+    ret[field.field_name] = field.to_representation(attribute)
+                            ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\fields.py", line 1869, in to_representation
+    method = getattr(self.parent, self.method_name)
+AttributeError: 'RentalOrderDetailSerializer' object has no attribute 'get_payments'
+ERROR 2025-08-12 08:17:18,262 basehttp 6060 13976 "GET /api/v1/payments/rental-orders/486da5d2-322c-45bd-8602-861f031642c0/ HTTP/1.1" 500 137094
+INFO 2025-08-12 08:17:43,551 autoreload 6060 8064 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\payments\serializers.py changed, reloading.
+INFO 2025-08-12 08:17:46,409 autoreload 6840 16756 Watching for file changes with StatReloader
+INFO 2025-08-12 08:17:49,355 basehttp 6840 15208 "GET /api/v1/payments/rental-orders/486da5d2-322c-45bd-8602-861f031642c0 HTTP/1.1" 301 0
+INFO 2025-08-12 08:17:49,457 basehttp 6840 16808 "GET /api/v1/payments/rental-orders/486da5d2-322c-45bd-8602-861f031642c0/ HTTP/1.1" 200 1626
+INFO 2025-08-12 08:22:00,141 basehttp 6840 14904 "GET /api/v1/payments/rental-orders/ HTTP/1.1" 200 399
+INFO 2025-08-12 08:31:07,535 basehttp 6840 18936 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:42:20,722 autoreload 6840 16756 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:42:24,337 autoreload 7620 17664 Watching for file changes with StatReloader
+INFO 2025-08-12 08:42:31,007 autoreload 7620 17664 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:42:35,999 autoreload 4644 17164 Watching for file changes with StatReloader
+INFO 2025-08-12 08:42:56,822 autoreload 4644 17164 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:43:04,282 autoreload 11940 7604 Watching for file changes with StatReloader
+INFO 2025-08-12 08:43:07,552 autoreload 11940 7604 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:43:13,643 autoreload 5788 14032 Watching for file changes with StatReloader
+INFO 2025-08-12 08:43:56,837 autoreload 5788 14032 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:44:00,364 autoreload 17588 16388 Watching for file changes with StatReloader
+INFO 2025-08-12 08:46:47,644 autoreload 17588 16388 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\notifications\email_service.py changed, reloading.
+INFO 2025-08-12 08:46:52,154 autoreload 15468 9464 Watching for file changes with StatReloader
+WARNING 2025-08-12 08:46:56,862 log 15468 3568 Bad Request: /api/v1/user/register/
+WARNING 2025-08-12 08:46:56,863 basehttp 15468 3568 "POST /api/v1/user/register/ HTTP/1.1" 400 64
+ERROR 2025-08-12 08:47:05,951 tasks 15468 3568 Error sending email to talaviyavihar41+3@gmail.com: You must set ANYMAIL_MAILGUN_API_KEY or ANYMAIL = {'MAILGUN_API_KEY': ...} or MAILGUN_API_KEY in your Django settings
+INFO 2025-08-12 08:47:05,958 tasks 15468 3568 SMS OTP 647774 would be sent to 9081522165
+INFO 2025-08-12 08:47:06,784 basehttp 15468 3568 "POST /api/v1/user/register/ HTTP/1.1" 200 1171
+INFO 2025-08-12 08:48:06,382 autoreload 15468 9464 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\borrowbit\settings.py changed, reloading.
+INFO 2025-08-12 08:48:11,691 autoreload 13808 5668 Watching for file changes with StatReloader
+WARNING 2025-08-12 08:48:21,013 log 13808 7824 Bad Request: /api/v1/user/register/
+WARNING 2025-08-12 08:48:21,014 basehttp 13808 7824 "POST /api/v1/user/register/ HTTP/1.1" 400 86
+INFO 2025-08-12 08:48:35,505 tasks 13808 7824 Bypassed email sending to talaviyavihar41+4@gmail.com; OTP: 954161
+INFO 2025-08-12 08:48:35,528 tasks 13808 7824 SMS OTP 954161 would be sent to 9081522169
+INFO 2025-08-12 08:48:36,178 basehttp 13808 7824 "POST /api/v1/user/register/ HTTP/1.1" 200 1171
+INFO 2025-08-12 08:49:31,557 autoreload 13808 5668 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:49:43,706 autoreload 19216 2724 Watching for file changes with StatReloader
+INFO 2025-08-12 08:50:12,909 autoreload 19216 2724 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:50:23,999 autoreload 17640 7088 Watching for file changes with StatReloader
+INFO 2025-08-12 08:50:27,865 autoreload 17640 7088 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:50:41,738 autoreload 18452 17932 Watching for file changes with StatReloader
+INFO 2025-08-12 08:51:22,501 autoreload 18452 17932 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:51:33,827 autoreload 8284 15972 Watching for file changes with StatReloader
+INFO 2025-08-12 08:51:43,382 autoreload 8284 15972 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:51:50,956 autoreload 8560 8464 Watching for file changes with StatReloader
+INFO 2025-08-12 08:52:06,342 autoreload 8560 8464 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:52:15,114 autoreload 18988 11440 Watching for file changes with StatReloader
+INFO 2025-08-12 08:52:52,870 autoreload 18988 11440 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:52:58,583 autoreload 2724 7792 Watching for file changes with StatReloader
+INFO 2025-08-12 08:53:03,314 autoreload 2724 7792 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:53:12,280 autoreload 14948 9656 Watching for file changes with StatReloader
+ERROR 2025-08-12 08:53:18,790 log 14948 4316 Internal Server Error: /api/v1/user/verify-otp/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 129, in post
+    if not serializer.is_valid():
+           ~~~~~~~~~~~~~~~~~~~^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 225, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\serializers.py", line 447, in run_validation
+    value = self.validate(value)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py", line 96, in validate
+    if otp_value != OTPVerification.objects.get(email=data.get("email")).otp:
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\db\models\query.py", line 636, in get
+    raise self.model.MultipleObjectsReturned(
+    ...<5 lines>...
+    )
+user.models.OTPVerification.MultipleObjectsReturned: get() returned more than one OTPVerification -- it returned 2!
+ERROR 2025-08-12 08:53:18,802 basehttp 14948 4316 "POST /api/v1/user/verify-otp/ HTTP/1.1" 500 129649
+INFO 2025-08-12 08:53:30,449 autoreload 14948 9656 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\serializers.py changed, reloading.
+INFO 2025-08-12 08:53:46,546 autoreload 2888 18144 Watching for file changes with StatReloader
+ERROR 2025-08-12 08:54:01,442 log 2888 13904 Internal Server Error: /api/v1/user/verify-otp/
+Traceback (most recent call last):
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 515, in dispatch
+    response = self.handle_exception(exc)
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 475, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 486, in raise_uncaught_exception
+    raise exc
+  File "D:\ODOO_FINAL_8_11_2_19\venv\Lib\site-packages\rest_framework\views.py", line 512, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py", line 137, in post
+    if not user.is_email_verified:
+           ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'User' object has no attribute 'is_email_verified'. Did you mean: 'email_verified_at'?
+ERROR 2025-08-12 08:54:01,451 basehttp 2888 13904 "POST /api/v1/user/verify-otp/ HTTP/1.1" 500 106824
+INFO 2025-08-12 08:54:20,026 autoreload 2888 18144 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:54:27,610 autoreload 18436 1264 Watching for file changes with StatReloader
+INFO 2025-08-12 08:54:34,785 autoreload 18436 1264 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:54:44,851 autoreload 652 14676 Watching for file changes with StatReloader
+WARNING 2025-08-12 08:54:49,208 log 652 18768 Unauthorized: /api/v1/products/products/
+WARNING 2025-08-12 08:54:49,234 basehttp 652 18768 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 401 183
+INFO 2025-08-12 08:54:49,677 autoreload 652 14676 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 08:55:00,207 autoreload 18640 3384 Watching for file changes with StatReloader
+INFO 2025-08-12 08:55:01,569 basehttp 18640 17048 "OPTIONS /api/v1/user/login/ HTTP/1.1" 200 0
+INFO 2025-08-12 08:55:02,941 basehttp 18640 16960 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 08:55:05,731 basehttp 18640 16656 "POST /api/v1/user/verify-otp/ HTTP/1.1" 200 618
+INFO 2025-08-12 08:56:19,158 basehttp 18640 16960 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 08:58:31,970 basehttp 18640 18244 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:00:07,560 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:00:13,982 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:00:36,398 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:00:49,078 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:01:20,231 basehttp 18640 1264 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 09:01:22,365 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:02:42,475 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:03:42,842 basehttp 18640 1264 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:03:47,310 basehttp 18640 18892 "OPTIONS /api/v1/products/products/5c38ad62-d3e0-428c-a105-d6b5d5eb3769/ HTTP/1.1" 200 0
+INFO 2025-08-12 09:03:47,392 basehttp 18640 1264 "GET /api/v1/products/products/5c38ad62-d3e0-428c-a105-d6b5d5eb3769/ HTTP/1.1" 200 14734
+INFO 2025-08-12 09:07:26,800 autoreload 18640 3384 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 09:07:34,100 autoreload 13384 19104 Watching for file changes with StatReloader
+INFO 2025-08-12 09:19:09,302 basehttp 13384 18548 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:19:14,572 basehttp 13384 13508 "OPTIONS /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 0
+INFO 2025-08-12 09:19:14,665 basehttp 13384 18548 "GET /api/v1/products/products/a6d6512f-abf3-40bd-aff9-5f3846d78e48/ HTTP/1.1" 200 14372
+INFO 2025-08-12 09:28:21,754 basehttp 13384 16100 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:28:27,192 basehttp 13384 16100 "GET /api/v1/products/products/?page=1&page_size=6 HTTP/1.1" 200 17370
+INFO 2025-08-12 09:29:26,254 basehttp 13384 12984 "POST /api/v1/user/login/ HTTP/1.1" 200 1184
+INFO 2025-08-12 09:30:01,249 autoreload 13384 19104 D:\ODOO_FINAL_8_11_2_19\BorrowBit\borrowbit\user\views.py changed, reloading.
+INFO 2025-08-12 09:30:05,128 autoreload 8560 6588 Watching for file changes with StatReloader
+INFO 2025-08-12 09:31:15,702 basehttp 8560 16700 "GET /api/v1/payments/rental-orders/my_orders/ HTTP/1.1" 200 68

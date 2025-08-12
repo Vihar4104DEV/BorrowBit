@@ -207,6 +207,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             Response: Standardized response with created product data
         """
         try:
+            print("request.data", request.data)
             serializer = self.get_serializer(data=request.data)
             if not serializer.is_valid():
                 return validation_error_response(serializer.errors)

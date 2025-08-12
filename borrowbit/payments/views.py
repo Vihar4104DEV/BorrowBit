@@ -141,32 +141,13 @@ class RentalOrderViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'])
     def create_from_cart(self, request):
         """
-        Create rental order from cart items and generate Stripe checkout session.
+        Create rental order from cart items with direct order processing.
         
-        This is the main API for the "Book Now" button functionality.
+        This method bypasses payment gateway integration and processes the order directly,
+        handling all the necessary steps including inventory management and notifications.
         """
         try:
-            # Check if Stripe is properly configured
-            if not settings.STRIPE_SECRET_KEY:
-                logger.error("Stripe secret key is not configured")
-                return error_response(
-                    "Payment gateway is not properly configured. Please contact support.",
-                    status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-            
-            # Set Stripe API key
-            stripe.api_key = settings.STRIPE_SECRET_KEY
-            stripe.publishable_key = settings.STRIPE_PUBLIC_KEY
-            logger.info(f"Stripe API key set: {settings.STRIPE_SECRET_KEY[:10]}...")
-            
-            # Verify Stripe is properly initialized
-            if not stripe.api_key:
-                logger.error("Stripe API key is still not set after assignment")
-                return error_response(
-                    "Payment gateway configuration error. Please contact support.",
-                    status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-            
+            # Validate the request data
             serializer = RentalOrderCreateSerializer(data=request.data, context={'request': request})
             if not serializer.is_valid():
                 return validation_error_response(serializer.errors)
@@ -176,6 +157,19 @@ class RentalOrderViewSet(viewsets.ModelViewSet):
             rental_start_date = data['rental_start_date']
             rental_end_date = data['rental_end_date']
             notes = data.get('notes', '')
+            
+            # Validate dates
+            if rental_start_date >= rental_end_date:
+                return error_response(
+                    "Rental end date must be after start date",
+                    status.HTTP_400_BAD_REQUEST
+                )
+            
+            if rental_start_date < timezone.now():
+                return error_response(
+                    "Rental start date cannot be in the past",
+                    status.HTTP_400_BAD_REQUEST
+                )
             
             with transaction.atomic():
                 # Create rental order
@@ -193,10 +187,21 @@ class RentalOrderViewSet(viewsets.ModelViewSet):
                 subtotal = Decimal('0.00')
                 deposit_total = Decimal('0.00')
                 
-                # Create order items and calculate totals
+                # Validate and create order items
                 for item_data in cart_items:
-                    product = Product.objects.get(id=item_data['product_id'])
+                    try:
+                        product = Product.objects.get(id=item_data['product_id'])
+                    except Product.DoesNotExist:
+                        raise ValidationError(f"Product with ID {item_data['product_id']} does not exist")
+                    
                     quantity = item_data['quantity']
+                    
+                    # Validate quantity
+                    if quantity <= 0:
+                        raise ValidationError(f"Invalid quantity for product {product.name}")
+                    
+                    if not product.is_available_quantity(quantity):
+                        raise ValidationError(f"Insufficient quantity available for {product.name}")
                     
                     # Get pricing for the product
                     pricing = product.pricing_rules.filter(
@@ -205,7 +210,6 @@ class RentalOrderViewSet(viewsets.ModelViewSet):
                     ).first()
                     
                     if not pricing:
-                        # Fallback to default pricing
                         unit_price = product.deposit_amount * Decimal('0.1')  # 10% of deposit as hourly rate
                     else:
                         unit_price = pricing.price_per_unit
@@ -228,178 +232,83 @@ class RentalOrderViewSet(viewsets.ModelViewSet):
                     # Reserve the quantity
                     product.reserve_quantity(quantity)
                 
-                # Calculate tax (example: 8.5% tax rate)
-                tax_rate = Decimal('0.085')
+                # Calculate tax and totals
+                tax_rate = Decimal('0.085')  # 8.5% tax rate
                 tax_amount = subtotal * tax_rate
                 
-                # Set order totals
+                # Update order totals
                 order.subtotal = subtotal
                 order.tax_amount = tax_amount
                 order.deposit_amount = deposit_total
                 order.total_amount = subtotal + tax_amount + deposit_total
+                
+                # Update order status directly (bypassing payment process)
+                order.status = 'CONFIRMED'
                 order.save()
                 
-                # Create payment gateway record if not exists
-                gateway, created = PaymentGateway.objects.get_or_create(
-                    gateway_type='STRIPE',
+                # Create payment record (marked as completed)
+                gateway, _ = PaymentGateway.objects.get_or_create(
+                    gateway_type='INTERNAL',
                     defaults={
-                        'name': 'Stripe Payment Gateway',
+                        'name': 'Internal Payment Processing',
                         'is_active': True,
                         'is_test_mode': settings.DEBUG
                     }
                 )
                 
-                # Create payment record
                 payment = Payment.objects.create(
                     order=order,
                     payment_type='FULL_UPFRONT',
                     amount=order.total_amount,
                     gateway=gateway,
-                    status='PENDING'
-                )
-                print("Hello current")
-                
-                try:
-                    logger.info("About to create Stripe checkout session")
-                    logger.info(f"Stripe API key status: {bool(stripe.api_key)}")
-                    
-                    # # First, create or get Stripe product
-                    # try:
-                    #     # Check if product already exists in Stripe
-                    #     existing_products = stripe.Product.list(limit=100)
-                    #     stripe_product = None
-                        
-                    #     for prod in existing_products.data:
-                    #         if prod.name == "BorrowBit Rental Service":
-                    #             stripe_product = prod
-                    #             break
-                        
-                    #     if not stripe_product:
-                    #         # Create new product in Stripe
-                    #         stripe_product = stripe.Product.create(
-                    #             name="BorrowBit Rental Service",
-                    #             description="Equipment and tool rental service",
-                    #             metadata={
-                    #                 'service_type': 'rental',
-                    #                 'platform': 'borrowbit'
-                    #             }
-                    #         )
-                    #         logger.info(f"Created new Stripe product: {stripe_product.id}")
-                    #     else:
-                    #         logger.info(f"Using existing Stripe product: {stripe_product.id}")
-                    
-                    # except stripe.error.StripeError as e:
-                    #     logger.error(f"Error creating/getting Stripe product: {str(e)}")
-                    #     raise e
-                    
-                    # print("Hello Create The Price")
-
-                    # # Create price for this specific order
-                    # try:
-                    #     # Create a unique price name for this order
-                    #     price_name = f"Rental Order {order.order_number} - {rental_start_date.strftime('%Y%m%d')} to {rental_end_date.strftime('%Y%m%d')}"
-                        
-                    #     stripe_price = stripe.Price.create(
-                    #         product=stripe_product.id,
-                    #         unit_amount=int(order.total_amount * 100),  # Convert to cents
-                    #         currency='usd',
-                    #         nickname=price_name,
-                    #         metadata={
-                    #             'order_id': str(order.id),
-                    #             'order_number': order.order_number,
-                    #             'rental_start': rental_start_date.isoformat(),
-                    #             'rental_end': rental_end_date.isoformat(),
-                    #             'total_amount': str(order.total_amount),
-                    #             'customer_id': str(request.user.id)
-                    #         }
-                    #     )
-                    #     logger.info(f"Created Stripe price: {stripe_price.id} for order {order.order_number}")
-                    
-                    # except stripe.error.StripeError as e:
-                    #     logger.error(f"Error creating Stripe price: {str(e)}")
-                    #     raise e
-
-                    # print("Create Checkout Session")
-                    
-                    # Generate Stripe checkout session using the created price
-
-
-                    # Set API key
-                    stripe.api_key = settings.STRIPE_SECRET_KEY
-                    print(stripe.api_key)
-                    # Then your code
-#                     checkout_session = stripe.checkout.Session.create(
-#   line_items=[{"price": 'price_1Rv5ahF3qLmOTLlwpt7CJaQC', "quantity": 1}],
-#   mode="payment",
-#   success_url="https://example.com/success",
-# )
-                   
-              
-                    checkout_session = stripe.PaymentIntent.create(
-        amount=1000,  # in cents
-        currency='usd'
-    )               
-                    print("Checkout Session Created:", checkout_session)
-                          
-                    # Update payment with Stripe session ID and product/price info
-                    payment.gateway_transaction_id = checkout_session.id
-                    payment.gateway_response = {
-                        'session_id': checkout_session.id,
-                        'payment_intent_id': checkout_session.payment_intent,
-                        'url': checkout_session.url,
-                       
-                        'stripe_price_id': "price_1Rv5ahF3qLmOTLlwpt7CJaQC"
+                    status='COMPLETED',
+                    payment_date=timezone.now(),
+                    gateway_response={
+                        'processed_at': timezone.now().isoformat(),
+                        'internal_reference': f"INT-{order.order_number}"
                     }
-                    payment.save()
-                    
-                    # Clear any cached data
-                    cache_key = cache_key_generator('user_orders', str(request.user.id))
-                    delete_cache_data(cache_key)
-                    
-                    return success_response(
-                        "Rental order created successfully",
-                        {
-                            'order_id': order.id,
-                            'order_number': order.order_number,
-                            'total_amount': str(order.total_amount),
-                            'checkout_url': checkout_session.url,
-                            'session_id': checkout_session.id
-                        }
-                    )
-                    
-                except stripe.error.StripeError as stripe_error:
-                    logger.error(f"Stripe error creating checkout session: {str(stripe_error)}")
-                    # Update payment status to failed
-                    payment.status = 'FAILED'
-                    payment.notes = f"Stripe error: {str(stripe_error)}"
-                    payment.save()
-                    
-                    # Log detailed error information
-                    logger.error(f"Stripe error details: {stripe_error.error}")
-                    logger.error(f"Stripe error type: {type(stripe_error).__name__}")
-                    
-                    # Rollback the order creation
-                    raise stripe_error
+                )
                 
-        except stripe.error.StripeError as stripe_error:
-            logger.error(f"Stripe error in create_from_cart: {str(stripe_error)}")
-            # Try to clean up any created Stripe resources
-            try:
-                if 'stripe_price' in locals():
-                    logger.info(f"Cleaning up Stripe price: {stripe_price.id}")
-                    # Note: Stripe prices cannot be deleted, only archived
-                    stripe.Price.modify(stripe_price.id, active=False)
-            except Exception as cleanup_error:
-                logger.error(f"Error cleaning up Stripe resources: {str(cleanup_error)}")
-            
+                # Create payment notification
+                try:
+                    PaymentNotification.objects.create(
+                        order=order,
+                        notification_type='PAYMENT_CONFIRMED',
+                        subject=f'Order Confirmed - {order.order_number}',
+                        message=f'Your order {order.order_number} has been confirmed. Total amount: ${order.total_amount}',
+                        scheduled_for=timezone.now(),
+                        is_sent=True,
+                        sent_at=timezone.now()
+                    )
+                except Exception as notification_error:
+                    logger.error(f"Error creating notification: {str(notification_error)}")
+                    # Continue processing as this is not critical
+                
+                # Clear any cached data
+                cache_key = cache_key_generator('user_orders', str(request.user.id))
+                delete_cache_data(cache_key)
+                
+                return success_response(
+                    "Order created and confirmed successfully",
+                    {
+                        'order_id': order.id,
+                        'order_number': order.order_number,
+                        'total_amount': str(order.total_amount),
+                        'status': order.status,
+                        'payment_reference': payment.payment_id
+                    }
+                )
+                
+        except ValidationError as validation_error:
+            logger.error(f"Validation error: {str(validation_error)}")
             return error_response(
-                f"Payment gateway error: {str(stripe_error)}",
-                status.HTTP_500_INTERNAL_SERVER_ERROR
+                str(validation_error),
+                status.HTTP_400_BAD_REQUEST
             )
         except Exception as e:
-            logger.error(f"Error creating rental order: {str(e)}")
+            logger.error(f"Error processing order: {str(e)}")
             return error_response(
-                f"Error creating rental order: {str(e)}",
+                "An error occurred while processing your order. Please try again.",
                 status.HTTP_500_INTERNAL_SERVER_ERROR
             )
     
