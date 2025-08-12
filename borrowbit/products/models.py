@@ -102,6 +102,7 @@ class Product(BaseModel):
         related_name='owned_products',
         verbose_name=_("Owner")
     )
+    
     category = models.ForeignKey(
         ProductCategory, 
         on_delete=models.PROTECT, 
@@ -173,7 +174,7 @@ class Product(BaseModel):
     )
     
     # Images and media
-    main_image = models.ImageField(
+    main_image = models.FileField(
         upload_to='product_images/', 
         blank=True,
         null=True,
@@ -286,6 +287,10 @@ class Product(BaseModel):
             self.update_status()
             return True
         return False
+    
+    def is_available_quantity(self, quantity):
+        """Check if the specified quantity is available for rental."""
+        return self.available_quantity >= quantity
     
     def update_status(self):
         """Update product status based on availability."""

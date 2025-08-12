@@ -15,34 +15,35 @@ from core.utils import cache_key_generator, set_cache_data, get_cache_data, dele
 class ProductCategorySerializer(serializers.ModelSerializer):
     """Serializer for product categories."""
     
-    products_count = serializers.SerializerMethodField()
-    children = serializers.SerializerMethodField()
+    # products_count = serializers.SerializerMethodField()
+    # children = serializers.SerializerMethodField()
     
     class Meta:
         model = ProductCategory
         fields = [
-            'id', 'name', 'slug', 'description', 'parent', 'image', 
-            'icon', 'sort_order', 'is_featured', 'products_count', 
-            'children', 'created_at', 'updated_at'
+            'id', 'name', 'slug'
+            # , 'description', 'parent', 'image', 
+            # 'icon', 'sort_order', 'is_featured', 'products_count', 
+            # 'children', 'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
     
-    def get_products_count(self, obj):
-        """Get count of active products in category."""
-        cache_key = cache_key_generator('category_products_count', str(obj.id))
-        cached_count = get_cache_data(cache_key)
+    # def get_products_count(self, obj):
+    #     """Get count of active products in category."""
+    #     cache_key = cache_key_generator('category_products_count', str(obj.id))
+    #     cached_count = get_cache_data(cache_key)
         
-        if cached_count is not None:
-            return cached_count
+    #     if cached_count is not None:
+    #         return cached_count
         
-        count = obj.get_products_count()
-        set_cache_data(cache_key, count, timeout=300)  # Cache for 5 minutes
-        return count
+    #     count = obj.get_products_count()
+    #     set_cache_data(cache_key, count, timeout=300)  # Cache for 5 minutes
+    #     return count
     
-    def get_children(self, obj):
-        """Get child categories."""
-        children = obj.children.filter(is_active=True, is_deleted=False)
-        return ProductCategorySerializer(children, many=True).data
+    # def get_children(self, obj):
+    #     """Get child categories."""
+    #     children = obj.children.filter(is_active=True, is_deleted=False)
+    #     return ProductCategorySerializer(children, many=True).data
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -129,14 +130,14 @@ class ProductMaintenanceSerializer(serializers.ModelSerializer):
 
 
 class ProductListSerializer(serializers.ModelSerializer):
-    """Serializer for product listing with basic information."""
+    """Serializer for product listing with basic information for cart and listing."""
     
     category_name = serializers.CharField(source='category.name', read_only=True)
     owner_name = serializers.CharField(source='owner.get_full_name', read_only=True)
     main_image_url = serializers.SerializerMethodField()
     average_rating = serializers.SerializerMethodField()
     review_count = serializers.SerializerMethodField()
-    pricing_info = serializers.SerializerMethodField()
+    basic_pricing = serializers.SerializerMethodField()
     
     class Meta:
         model = Product
@@ -145,7 +146,7 @@ class ProductListSerializer(serializers.ModelSerializer):
             'owner', 'owner_name', 'short_description', 'condition',
             'status', 'available_quantity', 'deposit_amount',
             'main_image_url', 'average_rating', 'review_count',
-            'pricing_info', 'is_featured', 'is_popular', 'admin_approved',
+            'basic_pricing', 'is_featured', 'is_popular', 'admin_approved',
             'created_at', 'updated_at'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
@@ -183,10 +184,49 @@ class ProductListSerializer(serializers.ModelSerializer):
         set_cache_data(cache_key, count, timeout=600)  # Cache for 10 minutes
         return count
     
-    def get_pricing_info(self, obj):
-        """Get basic pricing information."""
-        pricing_rules = obj.pricing_rules.filter(is_active=True).order_by('priority')[:3]
-        return ProductPricingSerializer(pricing_rules, many=True).data
+    def get_basic_pricing(self, obj):
+        """Get basic pricing information for listing and cart."""
+        try:
+            # Get the most common pricing rule (REGULAR customer, DAILY duration)
+            pricing_rule = obj.pricing_rules.filter(
+                customer_type='REGULAR',
+                duration_type='DAILY'
+            ).first()
+            
+            if not pricing_rule:
+                # Fallback to any available pricing rule
+                pricing_rule = obj.pricing_rules.filter(is_active=True).first()
+            
+            if pricing_rule:
+                return {
+                    'daily_rate': str(pricing_rule.daily_rate) if pricing_rule.daily_rate else str(pricing_rule.base_price),
+                    'hourly_rate': str(pricing_rule.hourly_rate) if pricing_rule.hourly_rate else None,
+                    'weekly_rate': str(pricing_rule.weekly_rate) if pricing_rule.weekly_rate else None,
+                    'monthly_rate': str(pricing_rule.monthly_rate) if pricing_rule.monthly_rate else None,
+                    'setup_fee': str(pricing_rule.setup_fee),
+                    'delivery_fee': str(pricing_rule.delivery_fee),
+                    'currency': 'USD'  # You can make this configurable
+                }
+            
+            return {
+                'daily_rate': None,
+                'hourly_rate': None,
+                'weekly_rate': None,
+                'monthly_rate': None,
+                'setup_fee': '0.00',
+                'delivery_fee': '0.00',
+                'currency': 'USD'
+            }
+        except Exception:
+            return {
+                'daily_rate': None,
+                'hourly_rate': None,
+                'weekly_rate': None,
+                'monthly_rate': None,
+                'setup_fee': '0.00',
+                'delivery_fee': '0.00',
+                'currency': 'USD'
+            }
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -219,9 +259,43 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
 
+    def get_average_rating(self, obj):
+        """Get average rating for the product."""
+        cache_key = cache_key_generator('product_avg_rating', str(obj.id))
+        cached_rating = get_cache_data(cache_key)
+        
+        if cached_rating is not None:
+            return cached_rating
+        
+        reviews = obj.reviews.filter(is_approved=True)
+        if reviews.exists():
+            avg_rating = sum(review.rating for review in reviews) / reviews.count()
+            set_cache_data(cache_key, round(avg_rating, 1), timeout=600)  # Cache for 10 minutes
+            return round(avg_rating, 1)
+        return 0.0
+    
+    def get_review_count(self, obj):
+        """Get count of approved reviews."""
+        cache_key = cache_key_generator('product_review_count', str(obj.id))
+        cached_count = get_cache_data(cache_key)
+        
+        if cached_count is not None:
+            return cached_count
+        
+        count = obj.reviews.filter(is_approved=True).count()
+        set_cache_data(cache_key, count, timeout=600)  # Cache for 10 minutes
+        return count
+
 
 class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     """Serializer for creating and updating products with role-based field access."""
+    
+    main_image = serializers.ImageField(
+        required=False, 
+        allow_null=True,
+        allow_empty_file=True,
+        use_url=True
+    )
     
     class Meta:
         model = Product
@@ -274,6 +348,48 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
                 if field in self.fields:
                     self.fields[field].read_only = True
     
+    def validate_main_image(self, value):
+        """Validate the main image field."""
+        print("Debug - Received main_image value type:", type(value))
+        print("Debug - Received main_image value:", value[:100] if isinstance(value, str) else value)
+        
+        if not value:
+            return None
+            
+        if isinstance(value, str) and value.startswith('data:image'):
+            try:
+                import base64
+                from django.core.files.base import ContentFile
+                import uuid
+                
+                # Get the image format and base64 data
+                format, imgstr = value.split(';base64,') 
+                ext = format.split('/')[-1]
+                
+                # Generate unique filename
+                filename = f"{uuid.uuid4()}.{ext}"
+                
+                # Decode base64 and validate
+                try:
+                    decoded_data = base64.b64decode(imgstr)
+                    if not decoded_data:
+                        raise ValidationError("Invalid base64 image data")
+                except Exception as e:
+                    print("Debug - Base64 decode error:", str(e))
+                    raise ValidationError(f"Invalid base64 image data: {str(e)}")
+                
+                # Convert to ContentFile
+                data = ContentFile(decoded_data, name=filename)
+                print("Debug - Successfully created ContentFile")
+                return data
+                
+            except Exception as e:
+                print("Debug - Error processing image:", str(e))
+                raise ValidationError(f"Error processing image: {str(e)}")
+            
+        print("Debug - Returning original value")
+        return value
+
     def validate(self, data):
         """Validate product data."""
         # Validate rental duration
@@ -297,19 +413,31 @@ class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         """Create a new product."""
-        # Set owner to current user
-        validated_data['owner'] = self.context['request'].user
-        
-        # Set initial available quantity
-        validated_data['available_quantity'] = validated_data.get('total_quantity', 1)
-        
-        product = super().create(validated_data)
-        
-        # Clear cache for category products count
-        cache_key = cache_key_generator('category_products_count', str(product.category.id))
-        delete_cache_data(cache_key)
-        
-        return product
+        try:
+            print("Debug - Create method - validated_data:", {k: str(v)[:100] if k == 'main_image' else v for k, v in validated_data.items()})
+            
+            # Set owner to current user
+            validated_data['owner'] = self.context['request'].user
+            
+            # Set initial available quantity
+            validated_data['available_quantity'] = validated_data.get('total_quantity', 1)
+            
+            # Handle main_image specially if it's still a base64 string
+            main_image = validated_data.get('main_image')
+            if main_image and isinstance(main_image, str) and main_image.startswith('data:image'):
+                validated_data['main_image'] = self.validate_main_image(main_image)
+            
+            product = super().create(validated_data)
+            
+            # Clear cache for category products count
+            cache_key = cache_key_generator('category_products_count', str(product.category.id))
+            delete_cache_data(cache_key)
+            
+            return product
+            
+        except Exception as e:
+            print("Debug - Error in create method:", str(e))
+            raise
     
     def update(self, instance, validated_data):
         """Update an existing product."""
@@ -375,3 +503,143 @@ class ProductBulkActionSerializer(serializers.Serializer):
             raise ValidationError(_("Only administrators can delete products."))
         
         return data
+
+
+class ProductCartSerializer(serializers.ModelSerializer):
+    """Minimal serializer for cart operations."""
+    
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    main_image_url = serializers.SerializerMethodField()
+    basic_pricing = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'name', 'slug', 'sku', 'category_name',
+            'available_quantity', 'deposit_amount', 'main_image_url',
+            'basic_pricing', 'is_rentable', 'minimum_rental_duration'
+        ]
+        read_only_fields = ['id']
+    
+    def get_main_image_url(self, obj):
+        """Get main image URL."""
+        if obj.main_image:
+            return self.context['request'].build_absolute_uri(obj.main_image.url)
+        return None
+    
+    def get_basic_pricing(self, obj):
+        """Get basic pricing information for cart."""
+        try:
+            # Get the most common pricing rule (REGULAR customer, DAILY duration)
+            pricing_rule = obj.pricing_rules.filter(
+                customer_type='REGULAR',
+                duration_type='DAILY'
+            ).first()
+            
+            if not pricing_rule:
+                # Fallback to any available pricing rule
+                pricing_rule = obj.pricing_rules.filter(is_active=True).first()
+            
+            if pricing_rule:
+                return {
+                    'daily_rate': str(pricing_rule.daily_rate) if pricing_rule.daily_rate else str(pricing_rule.base_price),
+                    'setup_fee': str(pricing_rule.setup_fee),
+                    'delivery_fee': str(pricing_rule.delivery_fee),
+                    'currency': 'USD'
+                }
+            
+            return {
+                'daily_rate': None,
+                'setup_fee': '0.00',
+                'delivery_fee': '0.00',
+                'currency': 'USD'
+            }
+        except Exception:
+            return {
+                'daily_rate': None,
+                'setup_fee': '0.00',
+                'delivery_fee': '0.00',
+                'currency': 'USD'
+            }
+
+
+class ProductSearchSerializer(serializers.ModelSerializer):
+    """Serializer for search results with minimal information."""
+    
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    main_image_url = serializers.SerializerMethodField()
+    average_rating = serializers.SerializerMethodField()
+    review_count = serializers.SerializerMethodField()
+    basic_pricing = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Product
+        fields = [
+            'id', 'name', 'slug', 'category_name', 'short_description',
+            'condition', 'status', 'available_quantity', 'deposit_amount',
+            'main_image_url', 'average_rating', 'review_count',
+            'basic_pricing', 'is_featured', 'admin_approved'
+        ]
+        read_only_fields = ['id']
+    
+    def get_main_image_url(self, obj):
+        """Get main image URL."""
+        if obj.main_image:
+            return self.context['request'].build_absolute_uri(obj.main_image.url)
+        return None
+    
+    def get_average_rating(self, obj):
+        """Get average rating for the product."""
+        cache_key = cache_key_generator('product_avg_rating', str(obj.id))
+        cached_rating = get_cache_data(cache_key)
+        
+        if cached_rating is not None:
+            return cached_rating
+        
+        reviews = obj.reviews.filter(is_approved=True)
+        if reviews.exists():
+            avg_rating = sum(review.rating for review in reviews) / reviews.count()
+            set_cache_data(cache_key, round(avg_rating, 1), timeout=600)
+            return round(avg_rating, 1)
+        return 0.0
+    
+    def get_review_count(self, obj):
+        """Get count of approved reviews."""
+        cache_key = cache_key_generator('product_review_count', str(obj.id))
+        cached_count = get_cache_data(cache_key)
+        
+        if cached_count is not None:
+            return cached_count
+        
+        count = obj.reviews.filter(is_approved=True).count()
+        set_cache_data(cache_key, count, timeout=600)
+        return count
+    
+    def get_basic_pricing(self, obj):
+        """Get basic pricing information for search results."""
+        try:
+            # Get the most common pricing rule (REGULAR customer, DAILY duration)
+            pricing_rule = obj.pricing_rules.filter(
+                customer_type='REGULAR',
+                duration_type='DAILY'
+            ).first()
+            
+            if not pricing_rule:
+                # Fallback to any available pricing rule
+                pricing_rule = obj.pricing_rules.filter(is_active=True).first()
+            
+            if pricing_rule:
+                return {
+                    'daily_rate': str(pricing_rule.daily_rate) if pricing_rule.daily_rate else str(pricing_rule.base_price),
+                    'currency': 'USD'
+                }
+            
+            return {
+                'daily_rate': None,
+                'currency': 'USD'
+            }
+        except Exception:
+            return {
+                'daily_rate': None,
+                'currency': 'USD'
+            }

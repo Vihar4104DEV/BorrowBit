@@ -1,5 +1,5 @@
 # from celery import shared_task
-# from django.core.mail import send_mail  # Email sending disabled (bypassed)
+from django.core.mail import send_mail  # Email sending disabled (bypassed)
 from django.conf import settings
 from user.models import User, OTPVerification
 from .models import Notification
@@ -26,15 +26,29 @@ def send_otp_notification(email, phone_number, otp_code):
         # Email notification using new service
         if email:
             try:
-                # Use the new notification service
-                success = NotificationService.send_otp_email(user, otp_code)
+                # Create notification record
+                notification = Notification.objects.create(
+                    user=user,
+                    notification_type="EMAIL",
+                    recipient=email,
+                    message=f"Your OTP is {otp_code}",
+                    status="PENDING"
+                )
                 
-                if success:
-                    logger.info(f"OTP email sent successfully to {email}: {otp_code}")
-                    print(f"📧 OTP email sent to {email}: {otp_code}")
-                else:
-                    logger.error(f"Failed to send OTP email to {email}")
-                    print(f"❌ Failed to send OTP email to {email}")
+                # Send email (disabled)
+                send_mail(
+                    "OTP Verification",
+                    f"Your OTP is {otp_code}",
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False,
+                )
+                
+                # Bypass actual email sending (disabled)
+                notification.status = "SENT"
+                notification.save(update_fields=['status'])
+                logger.info(f"Bypassed email sending to {email}; OTP: {otp_code}")
+                print(f"📧 Email sending bypassed for {email}: {otp_code}")
                     
             except Exception as e:
                 logger.error(f"Error sending email to {email}: {str(e)}")

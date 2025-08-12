@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,easily-bold-elephant.ngrok-free.app', cast=Csv())
 
 # Custom user model
 AUTH_USER_MODEL = 'user.User'
@@ -72,6 +72,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Must be placed as high as possible
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -230,6 +231,9 @@ SIMPLE_JWT = {
 }
 
 
+
+
+
 # Redis Configuration
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
@@ -293,41 +297,17 @@ CHANNEL_LAYERS = {
 
 # Email Configuration
 
-# Email Provider Configuration
-# Set EMAIL_PROVIDER to 'SMTP' or 'RESEND' to choose the email service
-EMAIL_PROVIDER = os.environ.get('EMAIL_PROVIDER', 'SMTP').upper()
-# EMAIL_PROVIDER=smtp
-
-# Resend API Configuration (Free tier: 100 emails/day)
-RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', '')
-FROM_NAME = os.environ.get('FROM_NAME', 'borrowbits')
-
-# SMTP Configuration (for Gmail, Outlook, custom SMTP servers)
-SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
-SMTP_PORT = int(os.environ.get('SMTP_PORT', 587))
-SMTP_USERNAME = os.environ.get('SMTP_USERNAME', '')
-SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
-SMTP_USE_TLS = os.environ.get('SMTP_USE_TLS', 'True').lower() == 'true'
-SMTP_USE_SSL = os.environ.get('SMTP_USE_SSL', 'False').lower() == 'true'
-
-
-# SMTP_HOST=smtp.gmail.com
-# SMTP_PORT=587
-# SMTP_USERNAME=jjay57326@gmail.com
-# SMTP_PASSWORD=oszpjeehzlmmucby
-# SMTP_USE_TLS=True
-# SMTP_USE_SSL=False
-
-
-# Fallback Django SMTP configuration (if Resend is not available)
+    # Use SMTP backend for production
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = SMTP_HOST
-EMAIL_PORT = SMTP_PORT
-EMAIL_HOST_USER = SMTP_USERNAME
-EMAIL_HOST_PASSWORD = SMTP_PASSWORD
-EMAIL_USE_TLS = SMTP_USE_TLS
-EMAIL_USE_SSL = SMTP_USE_SSL
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
+
+# Default from email (used in all cases)
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='vihar_4104@yopmail.com')
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
@@ -343,7 +323,14 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
+CORS_ALLOW_ALL_ORIGINS = False  # Set to False for security
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8080",
+    "http://localhost:8082",
+    "https://easily-bold-elephant.ngrok-free.app",
+]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_METHODS = [
     'DELETE',
@@ -353,6 +340,24 @@ CORS_ALLOWED_METHODS = [
     'POST',
     'PUT',
 ]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'ngrok-skip-browser-warning',
+]
+CORS_EXPOSE_HEADERS = [
+    'access-control-allow-origin',
+    'access-control-allow-headers',
+    'access-control-allow-methods',
+]
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Logging Configuration
 LOGGING = {
@@ -396,6 +401,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'corsheaders': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }
 
@@ -417,10 +427,10 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 
 # Payment Gateway Settings
-STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
-RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', '')
-RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET', '')
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_WEBHOOK_SECRET=config("STRIPE_WEBHOOK_SECRET",default='')
+SITE_URL = "http:localhost:8000"
 
 # Rental Application Settings
 RENTAL_REMINDER_DAYS = int(os.environ.get('RENTAL_REMINDER_DAYS', '3'))

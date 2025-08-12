@@ -3,7 +3,7 @@ Serializers for user registration, login, OTP, and password reset.
 """
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import User
+from .models import User,OTPVerification
 
 class RegisterSerializer(serializers.ModelSerializer):
     """
@@ -90,9 +90,11 @@ class OTPVerificationSerializer(serializers.Serializer):
         # - For phone OTP, accept '4567'
         otp_type = data.get("otp_type")
         otp_value = data.get("otp")
-        if otp_type == "email" and otp_value == "1234":
+        if otp_type == "email":
             if not data.get("email"):
                 raise serializers.ValidationError("Email is required for email OTP.")
+            if otp_value != OTPVerification.objects.filter(email=data.get("email")).first().otp:
+                raise serializers.ValidationError("Invalid OTP for email.")
             return data
         if otp_type == "phone" and otp_value == "4567":
             if not data.get("phone_number"):

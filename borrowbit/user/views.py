@@ -3,17 +3,19 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
 from .serializers import RegisterSerializer, LoginSerializer, ForgotPasswordSerializer, OTPVerificationSerializer
-from .models import User, OTPVerification
-from core.utils import success_response, validation_error_response, error_response, prepare_user_data
-# from notifications.tasks import send_otp_notification
-import random
+from .models import User, OTPVerification,UserRole
 
+from core.utils import success_response, validation_error_response, error_response, prepare_user_data
+from notifications.tasks import send_otp_notification
+import random
+from django.db import transaction
 class RegisterView(APIView):
     """
     API endpoint for user registration.
     """
     permission_classes = [AllowAny]
 
+    @transaction.atomic
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if not serializer.is_valid():
@@ -21,33 +23,35 @@ class RegisterView(APIView):
         
         user = serializer.save()
         
+        UserRole.objects.create(user=user, role="CUSTOMER")
 
         # TODO: Currently OTP Related Code Is Commented But in Actual Production It will Be Uncommented.
 
-        # # Generate OTP for email and phone
-        # otp_code = str(random.randint(100000, 999999))
-        # expires_at = timezone.now() + timezone.timedelta(minutes=10)
+        # Generate OTP for email and phone
+        otp_code = str(random.randint(100000, 999999))
+        expires_at = timezone.now() + timezone.timedelta(minutes=10)
         
-        # OTPVerification.objects.create(
-        #     user=user,
-        #     email=user.email,
-        #     phone_number=user.phone_number,
-        #     otp=otp_code,
-        #     otp_type="email",
-        #     expires_at=expires_at
-        # )
+        OTPVerification.objects.create(
+            user=user,
+            email=user.email,
+            phone_number=user.phone_number,
+            otp=otp_code,
+            otp_type="email",
+            expires_at=expires_at
+        )
         
-        # OTPVerification.objects.create(
-        #     user=user,
-        #     email=user.email,
-        #     phone_number=user.phone_number,
-        #     otp=otp_code,
-        #     otp_type="phone",
-        #     expires_at=expires_at
-        # )
+        OTPVerification.objects.create(
+            user=user,
+            email=user.email,
+            phone_number=user.phone_number,
+            otp=otp_code,
+            otp_type="phone",
+            expires_at=expires_at
+        )
+        
         
         # Send OTP synchronously (no Celery)
-        # send_otp_notification(user.email, user.phone_number, otp_code)
+        send_otp_notification(user.email, user.phone_number, otp_code)
         
         refresh = RefreshToken.for_user(user)
         
@@ -64,6 +68,7 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("request.data", request.data)
         serializer = LoginSerializer(data=request.data)
         if not serializer.is_valid():
             return validation_error_response(serializer.errors)
@@ -130,10 +135,22 @@ class OTPVerificationView(APIView):
         # Mark user as verified if both email and phone are verified
         if otp_type == "email":
 
-            # user = User.objects.get(email=validated_data["email"])
+            user = User.objects.filter(email=validated_data["email"]).first()
             user.verify_email()
+            user.verify_phone()  
         else:
             # user = User.objects.get(phone_number=validated_data["phone_number"])
-            user.verify_phone()  
+            user.verify_phone()     
         
         return success_response(f"{otp_type.capitalize()} OTP verified successfully.",{"user": prepare_user_data(user)})
+    
+
+class UserProfileView(APIView):
+    """
+    API endpoint for user profile.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return success_response("User profile fetched successfully.",{"user": prepare_user_data(user)})

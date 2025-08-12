@@ -148,3 +148,4 @@ def product_exception_handler(exc, context):
     
     # Call the default exception handler for other exceptions
     return exception_handler(exc, context)
+    

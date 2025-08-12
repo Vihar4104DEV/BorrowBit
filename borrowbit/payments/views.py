@@ -1,371 +1,382 @@
 """
-Views for payment management with role-based access control and caching.
+Views for payment management with role-based access control and optimization.
 
-This module contains views for payment processing, checkout sessions, 
-payment methods, and webhook handling with enterprise-grade security.
+This module provides comprehensive payment operations including rental order creation,
+Stripe checkout sessions, webhook handling, and order management with proper
+permission handling and database query optimization.
 """
+import stripe
+import logging
+from django.conf import settings
+from django.db import transaction
+from django.utils import timezone
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
+from django.db.models import Q, Sum, Prefetch
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from django.http import HttpResponse, JsonResponse
+from django.views import View
 from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q, Sum, Count, Avg
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
-from django.utils import timezone
-from django.shortcuts import get_object_or_404
-from django.db import transaction
-from django.http import HttpResponse
-import json
-import logging
+from decimal import Decimal
 
 from .models import (
-    PaymentMethod, CheckoutSession, Payment, PaymentWebhook, PaymentRefund
+    RentalOrder, RentalOrderItem, Payment, PaymentGateway, 
+    PaymentSchedule, PaymentNotification
 )
 from .serializers import (
-    PaymentMethodSerializer, PaymentMethodListSerializer,
-    CheckoutSessionCreateSerializer, CheckoutSessionDetailSerializer, CheckoutSessionListSerializer,
-    PaymentCreateSerializer, PaymentDetailSerializer, PaymentListSerializer,
-    PaymentRefundCreateSerializer, PaymentRefundDetailSerializer, PaymentRefundListSerializer,
-    PaymentWebhookSerializer, UserPaymentSummarySerializer, PaymentAnalyticsSerializer
+    RentalOrderCreateSerializer, RentalOrderDetailSerializer, RentalOrderListSerializer,
+    PaymentSerializer, StripeCheckoutSessionSerializer, StripeWebhookSerializer,
+    PaymentGatewaySerializer, PaymentScheduleSerializer, PaymentNotificationSerializer
 )
-from .permissions import (
-    PaymentMethodPermission, PaymentMethodCreatePermission, PaymentMethodUpdatePermission, PaymentMethodDeletePermission,
-    CheckoutSessionPermission, CheckoutSessionCreatePermission, CheckoutSessionUpdatePermission,
-    PaymentPermission, PaymentCreatePermission, PaymentUpdatePermission,
-    PaymentRefundPermission, PaymentRefundCreatePermission, PaymentRefundUpdatePermission,
-    PaymentWebhookPermission, PaymentWebhookCreatePermission, PaymentAnalyticsPermission, PaymentBulkActionPermission
-)
+# from .permissions import (
+#     PaymentListPermission, PaymentDetailPermission, PaymentCreatePermission,
+#     PaymentUpdatePermission, PaymentDeletePermission, PaymentAdminPermission
+# )
+from products.models import Product, ProductPricing
 from user.models import UserRole
 from core.utils import (
-    success_response, error_response, cache_key_generator, 
+    success_response, error_response, validation_error_response, cache_key_generator,
     set_cache_data, get_cache_data, delete_cache_data
 )
 
+# Configure Stripe - will be set dynamically in methods
 logger = logging.getLogger(__name__)
 
+# Static Stripe Product ID for rental service
+RENTAL_PRODUCT_ID = 'prod_SqnBA4PTShxxKT'  # You can change this ID as needed
 
-class PaymentMethodViewSet(viewsets.ModelViewSet):
+
+class RentalOrderViewSet(viewsets.ModelViewSet):
     """
-    ViewSet for payment method management with role-based access control.
+    ViewSet for rental order management with role-based access control.
     
-    Provides CRUD operations for payment methods with different permission levels:
-    - Customers: Can view active payment methods
-    - Staff/Managers: Can manage payment methods
+    Provides CRUD operations for rental orders with different permission levels:
+    - Customers: Can view their own orders, create orders
+    - Staff/Managers: Can view all orders, manage orders
     - Admins: Full access to all operations
+    
+    Features:
+    - Role-based access control
+    - Cart to order conversion
+    - Stripe checkout integration
+    - Order status management
+    - Inventory management
     """
     
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['method_type', 'provider', 'is_active', 'is_default']
-    search_fields = ['name', 'description']
-    ordering_fields = ['name', 'sort_order', 'created_at']
-    ordering = ['sort_order', 'name']
-    
-    def get_queryset(self):
-        """Get queryset based on user role and permissions."""
-        user = self.request.user
-        
-        if not user.is_authenticated:
-            return PaymentMethod.objects.none()
-        
-        # Get user roles
-        user_roles = UserRole.objects.filter(user=user, is_active=True)
-        role_names = [role.role for role in user_roles]
-        
-        # Base queryset
-        queryset = PaymentMethod.objects.filter(is_deleted=False)
-        
-        # Admins and staff can see all payment methods
-        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names:
-            return queryset
-        
-        # Customers can only see active payment methods
-        if 'CUSTOMER' in role_names:
-            return queryset.filter(is_active=True)
-        
-        return PaymentMethod.objects.none()
-    
-    def get_serializer_class(self):
-        """Get appropriate serializer based on action."""
-        if self.action == 'list':
-            return PaymentMethodListSerializer
-        elif self.action == 'retrieve':
-            return PaymentMethodSerializer
-        elif self.action in ['create', 'update', 'partial_update']:
-            return PaymentMethodSerializer
-        return PaymentMethodListSerializer
-    
-    def get_permissions(self):
-        """Get permissions based on action."""
-        if self.action == 'list':
-            permission_classes = [PaymentMethodPermission]
-        elif self.action == 'retrieve':
-            permission_classes = [PaymentMethodPermission]
-        elif self.action == 'create':
-            permission_classes = [PaymentMethodCreatePermission]
-        elif self.action in ['update', 'partial_update']:
-            permission_classes = [PaymentMethodUpdatePermission]
-        elif self.action == 'destroy':
-            permission_classes = [PaymentMethodDeletePermission]
-        else:
-            permission_classes = [PaymentMethodPermission]
-        
-        return [permission() for permission in permission_classes]
-    
-    @method_decorator(cache_page(60 * 10))  # Cache for 10 minutes
-    def list(self, request, *args, **kwargs):
-        """List payment methods with caching."""
-        return super().list(request, *args, **kwargs)
-    
-    def retrieve(self, request, *args, **kwargs):
-        """Retrieve payment method details with caching."""
-        payment_method_id = kwargs.get('pk')
-        cache_key = cache_key_generator('payment_method_detail', str(payment_method_id))
-        
-        # Try to get from cache
-        cached_data = get_cache_data(cache_key)
-        if cached_data:
-            return success_response("Payment method retrieved successfully", cached_data)
-        
-        # Get from database
-        response = super().retrieve(request, *args, **kwargs)
-        
-        # Cache the response
-        set_cache_data(cache_key, response.data, timeout=600)  # Cache for 10 minutes
-        
-        return response
-    
-    def create(self, request, *args, **kwargs):
-        """Create a new payment method."""
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            return error_response(str(serializer.errors))
-        
-        payment_method = serializer.save()
-        
-        # Clear related caches
-        self._clear_payment_method_caches(payment_method)
-        
-        return success_response(
-            "Payment method created successfully",
-            PaymentMethodSerializer(payment_method, context={'request': request}).data
-        )
-    
-    def update(self, request, *args, **kwargs):
-        """Update an existing payment method."""
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        
-        if not serializer.is_valid():
-            return error_response(str(serializer.errors))
-        
-        payment_method = serializer.save()
-        
-        # Clear related caches
-        self._clear_payment_method_caches(payment_method)
-        
-        return success_response(
-            "Payment method updated successfully",
-            PaymentMethodSerializer(payment_method, context={'request': request}).data
-        )
-    
-    def destroy(self, request, *args, **kwargs):
-        """Soft delete a payment method."""
-        payment_method = self.get_object()
-        payment_method.soft_delete()
-        
-        # Clear related caches
-        self._clear_payment_method_caches(payment_method)
-        
-        return success_response("Payment method deleted successfully")
-    
-    @action(detail=False, methods=['get'])
-    def active(self, request):
-        """Get active payment methods."""
-        cache_key = cache_key_generator('active_payment_methods', 'list')
-        cached_data = get_cache_data(cache_key)
-        
-        if cached_data:
-            return success_response("Active payment methods retrieved successfully", cached_data)
-        
-        payment_methods = self.get_queryset().filter(is_active=True)
-        serializer = PaymentMethodListSerializer(payment_methods, many=True, context={'request': request})
-        data = serializer.data
-        
-        # Cache the response
-        set_cache_data(cache_key, data, timeout=300)  # Cache for 5 minutes
-        
-        return success_response("Active payment methods retrieved successfully", data)
-    
-    @action(detail=False, methods=['get'])
-    def by_provider(self, request):
-        """Get payment methods grouped by provider."""
-        provider = request.query_params.get('provider')
-        if not provider:
-            return error_response("Provider parameter is required")
-        
-        payment_methods = self.get_queryset().filter(provider=provider, is_active=True)
-        serializer = PaymentMethodListSerializer(payment_methods, many=True, context={'request': request})
-        
-        return success_response(f"Payment methods for {provider} retrieved successfully", serializer.data)
-    
-    def _clear_payment_method_caches(self, payment_method):
-        """Clear all caches related to a payment method."""
-        # Clear payment method detail cache
-        cache_key = cache_key_generator('payment_method_detail', str(payment_method.id))
-        delete_cache_data(cache_key)
-        
-        # Clear active payment methods cache
-        cache_key = cache_key_generator('active_payment_methods', 'list')
-        delete_cache_data(cache_key)
-
-
-class CheckoutSessionViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for checkout session management with role-based access control.
-    
-    Provides CRUD operations for checkout sessions with different permission levels:
-    - Customers: Can create and view their own checkout sessions
-    - Staff/Managers: Can manage all checkout sessions
-    - Admins: Full access to all operations
-    """
-    
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'payment_method', 'currency']
-    search_fields = ['session_id', 'description']
-    ordering_fields = ['created_at', 'expires_at', 'amount', 'total_amount']
+    filterset_fields = ['status', 'customer', 'rental_start_date', 'rental_end_date']
+    search_fields = ['order_number', 'customer__email', 'customer__first_name', 'customer__last_name']
+    ordering_fields = ['created_at', 'rental_start_date', 'total_amount', 'status']
     ordering = ['-created_at']
     
     def get_queryset(self):
-        """Get queryset based on user role and permissions."""
+        """
+        Get queryset based on user role and permissions with optimization.
+        
+        Returns:
+            QuerySet: Filtered rental orders based on user role and permissions
+        """
         user = self.request.user
         
         if not user.is_authenticated:
-            return CheckoutSession.objects.none()
+            return RentalOrder.objects.none()
         
         # Get user roles
         user_roles = UserRole.objects.filter(user=user, is_active=True)
         role_names = [role.role for role in user_roles]
         
-        # Base queryset
-        queryset = CheckoutSession.objects.select_related('user', 'payment_method').filter(is_deleted=False)
+        # Base queryset with optimized select_related and prefetch_related
+        queryset = RentalOrder.objects.select_related(
+            'customer'
+        ).prefetch_related(
+            Prefetch('items', queryset=RentalOrderItem.objects.select_related('product')),
+            Prefetch('payments', queryset=Payment.objects.select_related('gateway')),
+            'items__product__category'
+        ).filter(is_deleted=False)
         
-        # Admins and staff can see all checkout sessions
-        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names:
+        # Admin and Super Admin can see all orders
+        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names:
             return queryset
         
-        # Users can only see their own checkout sessions
-        return queryset.filter(user=user)
+        # Staff and Manager can see all orders
+        if 'STAFF' in role_names or 'MANAGER' in role_names:
+            return queryset
+        
+        # Customers can only see their own orders
+        if 'CUSTOMER' in role_names:
+            return queryset.filter(customer=user)
+        
+        return RentalOrder.objects.none()
     
     def get_serializer_class(self):
         """Get appropriate serializer based on action."""
         if self.action == 'create':
-            return CheckoutSessionCreateSerializer
-        elif self.action == 'list':
-            return CheckoutSessionListSerializer
-        elif self.action == 'retrieve':
-            return CheckoutSessionDetailSerializer
-        elif self.action in ['update', 'partial_update']:
-            return CheckoutSessionCreateSerializer
-        return CheckoutSessionListSerializer
+            return RentalOrderCreateSerializer
+        elif self.action in ['retrieve', 'update', 'partial_update']:
+            return RentalOrderDetailSerializer
+        else:
+            return RentalOrderListSerializer
     
     def get_permissions(self):
         """Get permissions based on action."""
-        if self.action == 'list':
-            permission_classes = [CheckoutSessionPermission]
-        elif self.action == 'retrieve':
-            permission_classes = [CheckoutSessionPermission]
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [IsAuthenticated] # This Permission is For Only Admin Currently IsAuthenticated For Dev Purpose.
         elif self.action == 'create':
-            permission_classes = [CheckoutSessionCreatePermission]
+            permission_classes = [IsAuthenticated]
         elif self.action in ['update', 'partial_update']:
-            permission_classes = [CheckoutSessionUpdatePermission]
+            permission_classes = [IsAuthenticated] # This Permission is For Only Admin Currently IsAuthenticated For Dev Purpose.
         elif self.action == 'destroy':
-            permission_classes = [CheckoutSessionUpdatePermission]
+            permission_classes = [IsAuthenticated] # This Permission is For Only Admin Currently IsAuthenticated For Dev Purpose.
         else:
-            permission_classes = [CheckoutSessionPermission]
+            permission_classes = [IsAuthenticated]
         
         return [permission() for permission in permission_classes]
     
-    def create(self, request, *args, **kwargs):
-        """Create a new checkout session."""
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            return error_response(str(serializer.errors))
+    @action(detail=False, methods=['post'])
+    def create_from_cart(self, request):
+        """
+        Create rental order from cart items with direct order processing.
         
-        checkout_session = serializer.save()
-        
-        # Clear related caches
-        self._clear_checkout_session_caches(checkout_session)
-        
-        return success_response(
-            "Checkout session created successfully",
-            CheckoutSessionDetailSerializer(checkout_session, context={'request': request}).data
-        )
-    
-    def retrieve(self, request, *args, **kwargs):
-        """Retrieve checkout session details."""
-        checkout_session = self.get_object()
-        
-        # Check if session is expired
-        if checkout_session.is_expired() and checkout_session.status == 'PENDING':
-            checkout_session.status = 'EXPIRED'
-            checkout_session.save(update_fields=['status', 'updated_at'])
-        
-        serializer = CheckoutSessionDetailSerializer(checkout_session, context={'request': request})
-        return success_response("Checkout session retrieved successfully", serializer.data)
+        This method bypasses payment gateway integration and processes the order directly,
+        handling all the necessary steps including inventory management and notifications.
+        """
+        try:
+            # Validate the request data
+            serializer = RentalOrderCreateSerializer(data=request.data, context={'request': request})
+            if not serializer.is_valid():
+                return validation_error_response(serializer.errors)
+            
+            data = serializer.validated_data
+            cart_items = data['cart_items']
+            rental_start_date = data['rental_start_date']
+            rental_end_date = data['rental_end_date']
+            notes = data.get('notes', '')
+            
+            # Validate dates
+            if rental_start_date >= rental_end_date:
+                return error_response(
+                    "Rental end date must be after start date",
+                    status.HTTP_400_BAD_REQUEST
+                )
+            
+            if rental_start_date < timezone.now():
+                return error_response(
+                    "Rental start date cannot be in the past",
+                    status.HTTP_400_BAD_REQUEST
+                )
+            
+            with transaction.atomic():
+                # Create rental order
+                order = RentalOrder.objects.create(
+                    customer=request.user,
+                    rental_start_date=rental_start_date,
+                    rental_end_date=rental_end_date,
+                    notes=notes,
+                    status='DRAFT'
+                )
+                
+                # Calculate rental duration in hours
+                duration = (rental_end_date - rental_start_date).total_seconds() / 3600
+                
+                subtotal = Decimal('0.00')
+                deposit_total = Decimal('0.00')
+                
+                # Validate and create order items
+                for item_data in cart_items:
+                    try:
+                        product = Product.objects.get(id=item_data['product_id'])
+                    except Product.DoesNotExist:
+                        raise ValidationError(f"Product with ID {item_data['product_id']} does not exist")
+                    
+                    quantity = item_data['quantity']
+                    
+                    # Validate quantity
+                    if quantity <= 0:
+                        raise ValidationError(f"Invalid quantity for product {product.name}")
+                    
+                    if not product.is_available_quantity(quantity):
+                        raise ValidationError(f"Insufficient quantity available for {product.name}")
+                    
+                    # Get pricing for the product
+                    pricing = product.pricing_rules.filter(
+                        customer_type='REGULAR',
+                        duration_type='HOURLY'
+                    ).first()
+                    
+                    if not pricing:
+                        unit_price = product.deposit_amount * Decimal('0.1')  # 10% of deposit as hourly rate
+                    else:
+                        unit_price = pricing.price_per_unit
+                    
+                    # Calculate total price for this item
+                    item_total = unit_price * Decimal(str(duration)) * quantity
+                    subtotal += item_total
+                    deposit_total += product.deposit_amount * quantity
+                    
+                    # Create order item
+                    RentalOrderItem.objects.create(
+                        order=order,
+                        product=product,
+                        quantity=quantity,
+                        unit_price=unit_price,
+                        total_price=item_total,
+                        deposit_per_unit=product.deposit_amount
+                    )
+                    
+                    # Reserve the quantity
+                    product.reserve_quantity(quantity)
+                
+                # Calculate tax and totals
+                tax_rate = Decimal('0.085')  # 8.5% tax rate
+                tax_amount = subtotal * tax_rate
+                
+                # Update order totals
+                order.subtotal = subtotal
+                order.tax_amount = tax_amount
+                order.deposit_amount = deposit_total
+                order.total_amount = subtotal + tax_amount + deposit_total
+                
+                # Update order status directly (bypassing payment process)
+                order.status = 'CONFIRMED'
+                order.save()
+                
+                # Create payment record (marked as completed)
+                gateway, _ = PaymentGateway.objects.get_or_create(
+                    gateway_type='INTERNAL',
+                    defaults={
+                        'name': 'Internal Payment Processing',
+                        'is_active': True,
+                        'is_test_mode': settings.DEBUG
+                    }
+                )
+                
+                payment = Payment.objects.create(
+                    order=order,
+                    payment_type='FULL_UPFRONT',
+                    amount=order.total_amount,
+                    gateway=gateway,
+                    status='COMPLETED',
+                    payment_date=timezone.now(),
+                    gateway_response={
+                        'processed_at': timezone.now().isoformat(),
+                        'internal_reference': f"INT-{order.order_number}"
+                    }
+                )
+                
+                # Create payment notification
+                try:
+                    PaymentNotification.objects.create(
+                        order=order,
+                        notification_type='PAYMENT_CONFIRMED',
+                        subject=f'Order Confirmed - {order.order_number}',
+                        message=f'Your order {order.order_number} has been confirmed. Total amount: ${order.total_amount}',
+                        scheduled_for=timezone.now(),
+                        is_sent=True,
+                        sent_at=timezone.now()
+                    )
+                except Exception as notification_error:
+                    logger.error(f"Error creating notification: {str(notification_error)}")
+                    # Continue processing as this is not critical
+                
+                # Clear any cached data
+                cache_key = cache_key_generator('user_orders', str(request.user.id))
+                delete_cache_data(cache_key)
+                
+                return success_response(
+                    "Order created and confirmed successfully",
+                    {
+                        'order_id': order.id,
+                        'order_number': order.order_number,
+                        'total_amount': str(order.total_amount),
+                        'status': order.status,
+                        'payment_reference': payment.payment_id
+                    }
+                )
+                
+        except ValidationError as validation_error:
+            logger.error(f"Validation error: {str(validation_error)}")
+            return error_response(
+                str(validation_error),
+                status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            logger.error(f"Error processing order: {str(e)}")
+            return error_response(
+                "An error occurred while processing your order. Please try again.",
+                status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
     @action(detail=True, methods=['post'])
-    def cancel(self, request, pk=None):
-        """Cancel a checkout session."""
-        checkout_session = self.get_object()
-        
-        if checkout_session.status not in ['PENDING', 'PROCESSING']:
-            return error_response("Checkout session cannot be cancelled")
-        
-        checkout_session.mark_as_cancelled()
-        
-        # Clear related caches
-        self._clear_checkout_session_caches(checkout_session)
-        
-        return success_response("Checkout session cancelled successfully")
-    
-    @action(detail=True, methods=['post'])
-    def extend(self, request, pk=None):
-        """Extend checkout session expiration."""
-        checkout_session = self.get_object()
-        
-        if checkout_session.status != 'PENDING':
-            return error_response("Only pending sessions can be extended")
-        
-        # Extend by 30 minutes
-        checkout_session.expires_at = timezone.now() + timezone.timedelta(minutes=30)
-        checkout_session.save(update_fields=['expires_at', 'updated_at'])
-        
-        # Clear related caches
-        self._clear_checkout_session_caches(checkout_session)
-        
-        return success_response("Checkout session extended successfully")
+    def cancel_order(self, request, pk=None):
+        """Cancel a rental order and release reserved quantities."""
+        try:
+            order = self.get_object()
+            
+            if order.status not in ['DRAFT', 'CONFIRMED']:
+                return error_response(
+                    "Order cannot be cancelled in its current status",
+                    status.HTTP_400_BAD_REQUEST
+                )
+            
+            with transaction.atomic():
+                # Release reserved quantities
+                for item in order.items.all():
+                    item.product.release_reservation(item.quantity)
+                
+                # Update order status
+                order.status = 'CANCELLED'
+                order.save()
+                
+                # Cancel any pending payments
+                pending_payments = order.payments.filter(status='PENDING')
+                for payment in pending_payments:
+                    payment.status = 'FAILED'
+                    payment.notes = 'Order cancelled by customer'
+                    payment.save()
+                
+                # Clear cache
+                cache_key = cache_key_generator('user_orders', str(request.user.id))
+                delete_cache_data(cache_key)
+                
+                return success_response("Order cancelled successfully")
+                
+        except Exception as e:
+            logger.error(f"Error cancelling order: {str(e)}")
+            return error_response(
+                f"Error cancelling order: {str(e)}",
+                status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
     
     @action(detail=False, methods=['get'])
-    def my_sessions(self, request):
-        """Get current user's checkout sessions."""
-        sessions = self.get_queryset().filter(user=request.user)
-        serializer = CheckoutSessionListSerializer(sessions, many=True, context={'request': request})
-        return success_response("Your checkout sessions retrieved successfully", serializer.data)
-    
-    @action(detail=False, methods=['get'])
-    def pending(self, request):
-        """Get pending checkout sessions."""
-        sessions = self.get_queryset().filter(status='PENDING')
-        serializer = CheckoutSessionListSerializer(sessions, many=True, context={'request': request})
-        return success_response("Pending checkout sessions retrieved successfully", serializer.data)
-    
-    def _clear_checkout_session_caches(self, checkout_session):
-        """Clear all caches related to a checkout session."""
-        # Clear user sessions cache
-        cache_key = cache_key_generator('user_checkout_sessions', str(checkout_session.user.id))
-        delete_cache_data(cache_key)
+    def my_orders(self, request):
+        """Get orders for the current user with caching."""
+        try:
+            cache_key = cache_key_generator('user_orders', str(request.user.id))
+            cached_orders = get_cache_data(cache_key)
+            
+            if cached_orders is not None:
+                return success_response("Orders retrieved from cache", cached_orders)
+            
+            orders = self.get_queryset().filter(customer=request.user)
+            serializer = RentalOrderListSerializer(orders, many=True, context={'request': request})
+            
+            # Cache the results for 5 minutes
+            set_cache_data(cache_key, serializer.data, timeout=300)
+            
+            return success_response("Orders retrieved successfully", serializer.data)
+            
+        except Exception as e:
+            logger.error(f"Error retrieving user orders: {str(e)}")
+            return error_response(
+                f"Error retrieving orders: {str(e)}",
+                status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
@@ -373,15 +384,16 @@ class PaymentViewSet(viewsets.ModelViewSet):
     ViewSet for payment management with role-based access control.
     
     Provides CRUD operations for payments with different permission levels:
-    - Customers: Can create and view their own payments
-    - Staff/Managers: Can manage all payments
+    - Customers: Can view their own payments
+    - Staff/Managers: Can view all payments, manage payments
     - Admins: Full access to all operations
     """
     
+    serializer_class = PaymentSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'transaction_type', 'payment_method', 'currency']
-    search_fields = ['payment_id', 'description']
-    ordering_fields = ['created_at', 'completed_at', 'amount', 'total_amount']
+    filterset_fields = ['status', 'payment_type', 'gateway', 'order']
+    search_fields = ['payment_id', 'gateway_transaction_id', 'order__order_number']
+    ordering_fields = ['created_at', 'amount', 'payment_date']
     ordering = ['-created_at']
     
     def get_queryset(self):
@@ -395,432 +407,435 @@ class PaymentViewSet(viewsets.ModelViewSet):
         user_roles = UserRole.objects.filter(user=user, is_active=True)
         role_names = [role.role for role in user_roles]
         
-        # Base queryset
-        queryset = Payment.objects.select_related('user', 'payment_method', 'checkout_session').filter(is_deleted=False)
+        # Base queryset with optimization
+        queryset = Payment.objects.select_related(
+            'order', 'gateway'
+        ).filter(is_deleted=False)
         
-        # Admins and staff can see all payments
-        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names:
+        # Admin and Super Admin can see all payments
+        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names:
             return queryset
         
-        # Users can only see their own payments
-        return queryset.filter(user=user)
-    
-    def get_serializer_class(self):
-        """Get appropriate serializer based on action."""
-        if self.action == 'create':
-            return PaymentCreateSerializer
-        elif self.action == 'list':
-            return PaymentListSerializer
-        elif self.action == 'retrieve':
-            return PaymentDetailSerializer
-        elif self.action in ['update', 'partial_update']:
-            return PaymentCreateSerializer
-        return PaymentListSerializer
+        # Staff and Manager can see all payments
+        if 'STAFF' in role_names or 'MANAGER' in role_names:
+            return queryset
+        
+        # Customers can only see their own payments
+        if 'CUSTOMER' in role_names:
+            return queryset.filter(order__customer=user)
+        
+        return Payment.objects.none()
     
     def get_permissions(self):
         """Get permissions based on action."""
-        if self.action == 'list':
-            permission_classes = [PaymentPermission]
-        elif self.action == 'retrieve':
-            permission_classes = [PaymentPermission]
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [PaymentListPermission]
         elif self.action == 'create':
             permission_classes = [PaymentCreatePermission]
         elif self.action in ['update', 'partial_update']:
             permission_classes = [PaymentUpdatePermission]
         elif self.action == 'destroy':
-            permission_classes = [PaymentUpdatePermission]
+            permission_classes = [PaymentDeletePermission]
         else:
-            permission_classes = [PaymentPermission]
+            permission_classes = [PaymentAdminPermission]
         
         return [permission() for permission in permission_classes]
+
+
+class StripeWebhookView(View):
+    """
+    Handle Stripe webhooks for payment status updates.
     
-    def create(self, request, *args, **kwargs):
-        """Create a new payment."""
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            return error_response(str(serializer.errors))
-        
-        payment = serializer.save()
-        
-        # Clear related caches
-        self._clear_payment_caches(payment)
-        
-        return success_response(
-            "Payment created successfully",
-            PaymentDetailSerializer(payment, context={'request': request}).data
-        )
+    This view processes Stripe webhook events to update payment statuses,
+    manage inventory, and handle order status changes.
+    """
     
-    def retrieve(self, request, *args, **kwargs):
-        """Retrieve payment details."""
-        payment = self.get_object()
-        serializer = PaymentDetailSerializer(payment, context={'request': request})
-        return success_response("Payment retrieved successfully", serializer.data)
+    @method_decorator(csrf_exempt)
+    @method_decorator(require_http_methods(["POST"]))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
-    @action(detail=True, methods=['post'])
-    def process_payment(self, request, pk=None):
-        """Process a payment (simulate payment processing)."""
-        payment = self.get_object()
-        
-        if payment.status != 'PROCESSING':
-            return error_response("Payment is not in processing status")
-        
-        # Simulate payment processing
+    def post(self, request, *args, **kwargs):
+        """Process Stripe webhook events."""
         try:
-            # Simulate successful payment
-            payment.mark_as_completed(
-                provider_payment_id=f"prov_{payment.payment_id}",
-                provider_transaction_id=f"txn_{payment.payment_id}"
-            )
+            # Check if Stripe webhook secret is configured
+            if not settings.STRIPE_WEBHOOK_SECRET:
+                logger.error("Stripe webhook secret is not configured")
+                return HttpResponse(status=500)
             
-            # Update checkout session
-            payment.checkout_session.mark_as_paid()
+            payload = request.body
+            sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
             
-            # Clear related caches
-            self._clear_payment_caches(payment)
+            if not sig_header:
+                logger.error("Missing Stripe signature header")
+                return HttpResponse(status=400)
             
-            return success_response("Payment processed successfully")
+            # Verify webhook signature
+            try:
+                event = stripe.Webhook.construct_event(
+                    payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+                )
+            except ValueError as e:
+                logger.error(f"Invalid payload: {e}")
+                return HttpResponse(status=400)
+            except stripe.error.SignatureVerificationError as e:
+                logger.error(f"Invalid signature: {e}")
+                return HttpResponse(status=400)
+            
+            # Handle the event
+            if event['type'] == 'checkout.session.completed':
+                return self.handle_checkout_session_completed(event)
+            elif event['type'] == 'payment_intent.succeeded':
+                return self.handle_payment_intent_succeeded(event)
+            elif event['type'] == 'payment_intent.payment_failed':
+                return self.handle_payment_intent_failed(event)
+            elif event['type'] == 'charge.refunded':
+                return self.handle_charge_refunded(event)
+            else:
+                logger.info(f"Unhandled event type: {event['type']}")
+            
+            return HttpResponse(status=200)
             
         except Exception as e:
-            logger.error(f"Payment processing failed: {str(e)}")
-            payment.mark_as_failed(error_code="PROCESSING_ERROR", error_message=str(e))
-            return error_response("Payment processing failed")
+            logger.error(f"Error processing webhook: {str(e)}")
+            return HttpResponse(status=500)
     
-    @action(detail=False, methods=['get'])
-    def my_payments(self, request):
-        """Get current user's payments."""
-        payments = self.get_queryset().filter(user=request.user)
-        serializer = PaymentListSerializer(payments, many=True, context={'request': request})
-        return success_response("Your payments retrieved successfully", serializer.data)
+    def handle_checkout_session_completed(self, event):
+        """Handle successful checkout session completion."""
+        try:
+            session = event['data']['object']
+            order_id = session['metadata']['order_id']
+            payment_id = session['metadata']['payment_id']
+            
+            with transaction.atomic():
+                # Get the order and payment
+                order = RentalOrder.objects.get(id=order_id)
+                payment = Payment.objects.get(payment_id=payment_id)
+                
+                # Update payment status
+                payment.status = 'COMPLETED'
+                payment.payment_date = timezone.now()
+                payment.gateway_response.update({
+                    'webhook_received': True,
+                    'webhook_type': 'checkout.session.completed'
+                })
+                payment.save()
+                
+                # Update order status
+                order.status = 'CONFIRMED'
+                order.save()
+                
+                # Create payment schedule for future payments if needed
+                self.create_payment_schedule(order)
+                
+                # Send confirmation notification
+                self.send_payment_confirmation_notification(order)
+                
+                # Clear cache
+                cache_key = cache_key_generator('user_orders', str(order.customer.id))
+                delete_cache_data(cache_key)
+                
+                logger.info(f"Order {order.order_number} confirmed and payment completed")
+                
+        except Exception as e:
+            logger.error(f"Error handling checkout session completed: {str(e)}")
+            raise
+        
+        return HttpResponse(status=200)
     
-    @action(detail=False, methods=['get'])
-    def summary(self, request):
-        """Get user payment summary."""
-        user = request.user
+    def handle_payment_intent_succeeded(self, event):
+        """Handle successful payment intent."""
+        try:
+            payment_intent = event['data']['object']
+            session_id = payment_intent.get('metadata', {}).get('session_id')
+            
+            if session_id:
+                # Find payment by session ID
+                payment = Payment.objects.get(gateway_transaction_id=session_id)
+                payment.status = 'COMPLETED'
+                payment.payment_date = timezone.now()
+                payment.save()
+                
+                logger.info(f"Payment {payment.payment_id} completed via payment intent")
+            
+        except Exception as e:
+            logger.error(f"Error handling payment intent succeeded: {str(e)}")
         
-        # Get user roles
-        user_roles = UserRole.objects.filter(user=user, is_active=True)
-        role_names = [role.role for role in user_roles]
-        
-        # Determine if user can see all payments or just their own
-        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names:
-            payments_queryset = Payment.objects.filter(is_deleted=False)
-        else:
-            payments_queryset = Payment.objects.filter(user=user, is_deleted=False)
-        
-        # Calculate summary
-        total_payments = payments_queryset.count()
-        total_amount = payments_queryset.aggregate(total=Sum('total_amount'))['total'] or 0
-        successful_payments = payments_queryset.filter(status='COMPLETED').count()
-        failed_payments = payments_queryset.filter(status='FAILED').count()
-        pending_payments = payments_queryset.filter(status__in=['PENDING', 'PROCESSING']).count()
-        
-        # Refunds
-        refunds_queryset = PaymentRefund.objects.filter(payment__in=payments_queryset, is_deleted=False)
-        total_refunds = refunds_queryset.count()
-        refunded_amount = refunds_queryset.aggregate(total=Sum('amount'))['total'] or 0
-        
-        summary_data = {
-            'total_payments': total_payments,
-            'total_amount': total_amount,
-            'successful_payments': successful_payments,
-            'failed_payments': failed_payments,
-            'pending_payments': pending_payments,
-            'total_refunds': total_refunds,
-            'refunded_amount': refunded_amount,
-            'currency': 'INR'
-        }
-        
-        serializer = UserPaymentSummarySerializer(summary_data)
-        return success_response("Payment summary retrieved successfully", serializer.data)
+        return HttpResponse(status=200)
     
-    def _clear_payment_caches(self, payment):
-        """Clear all caches related to a payment."""
-        # Clear user payments cache
-        cache_key = cache_key_generator('user_payments', str(payment.user.id))
-        delete_cache_data(cache_key)
+    def handle_payment_intent_failed(self, event):
+        """Handle failed payment intent."""
+        try:
+            payment_intent = event['data']['object']
+            session_id = payment_intent.get('metadata', {}).get('session_id')
+            
+            if session_id:
+                # Find payment by session ID
+                payment = Payment.objects.get(gateway_transaction_id=session_id)
+                payment.status = 'FAILED'
+                payment.notes = f"Payment failed: {payment_intent.get('last_payment_error', {}).get('message', 'Unknown error')}"
+                payment.save()
+                
+                # Release reserved quantities
+                order = payment.order
+                for item in order.items.all():
+                    item.product.release_reservation(item.quantity)
+                
+                logger.info(f"Payment {payment.payment_id} failed")
+            
+        except Exception as e:
+            logger.error(f"Error handling payment intent failed: {str(e)}")
         
-        # Clear payment summary cache
-        cache_key = cache_key_generator('payment_summary', str(payment.user.id))
-        delete_cache_data(cache_key)
+        return HttpResponse(status=200)
+    
+    def handle_charge_refunded(self, event):
+        """Handle charge refunds."""
+        try:
+            charge = event['data']['object']
+            session_id = charge.get('metadata', {}).get('session_id')
+            
+            if session_id:
+                # Find payment by session ID
+                payment = Payment.objects.get(gateway_transaction_id=session_id)
+                payment.status = 'REFUNDED'
+                payment.notes = f"Payment refunded: {charge.get('reason', 'Unknown reason')}"
+                payment.save()
+                
+                # Update order status
+                order = payment.order
+                order.status = 'CANCELLED'
+                order.save()
+                
+                # Release reserved quantities
+                for item in order.items.all():
+                    item.product.release_reservation(item.quantity)
+                
+                logger.info(f"Payment {payment.payment_id} refunded")
+            
+        except Exception as e:
+            logger.error(f"Error handling charge refunded: {str(e)}")
+        
+        return HttpResponse(status=200)
+    
+    def create_payment_schedule(self, order):
+        """Create payment schedule for the order if needed."""
+        try:
+            # For now, we only handle one-time payments
+            # Future enhancement: Add support for installment payments
+            pass
+        except Exception as e:
+            logger.error(f"Error creating payment schedule: {str(e)}")
+    
+    def send_payment_confirmation_notification(self, order):
+        """Send payment confirmation notification."""
+        try:
+            # Create notification record
+            PaymentNotification.objects.create(
+                order=order,
+                notification_type='PAYMENT_CONFIRMED',
+                subject=f'Payment Confirmed - Order {order.order_number}',
+                message=f'Your payment of ${order.total_amount} has been confirmed for order {order.order_number}.',
+                scheduled_for=timezone.now(),
+                is_sent=True,
+                sent_at=timezone.now()
+            )
+            
+            # TODO: Send actual email/SMS notification
+            logger.info(f"Payment confirmation notification created for order {order.order_number}")
+            
+        except Exception as e:
+            logger.error(f"Error sending payment confirmation notification: {str(e)}")
 
 
-class PaymentRefundViewSet(viewsets.ModelViewSet):
-    """
-    ViewSet for payment refund management with role-based access control.
+class PaymentGatewayViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for payment gateways (read-only)."""
     
-    Provides CRUD operations for payment refunds with different permission levels:
-    - Customers: Can request refunds for their own payments
-    - Staff/Managers: Can manage all refunds
-    - Admins: Full access to all operations
-    """
+    queryset = PaymentGateway.objects.filter(is_active=True, is_deleted=False)
+    serializer_class = PaymentGatewaySerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['gateway_type', 'is_test_mode']
+
+
+class PaymentScheduleViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for payment schedules (read-only)."""
     
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'reason', 'payment__transaction_type']
-    search_fields = ['refund_id', 'description']
-    ordering_fields = ['created_at', 'completed_at', 'amount']
-    ordering = ['-created_at']
+    serializer_class = PaymentScheduleSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['order', 'payment_type', 'is_paid']
+    ordering_fields = ['due_date', 'amount']
+    ordering = ['due_date']
     
     def get_queryset(self):
         """Get queryset based on user role and permissions."""
         user = self.request.user
         
         if not user.is_authenticated:
-            return PaymentRefund.objects.none()
+            return PaymentSchedule.objects.none()
         
         # Get user roles
         user_roles = UserRole.objects.filter(user=user, is_active=True)
         role_names = [role.role for role in user_roles]
         
-        # Base queryset
-        queryset = PaymentRefund.objects.select_related('payment', 'user').filter(is_deleted=False)
+        # Base queryset with optimization
+        queryset = PaymentSchedule.objects.select_related(
+            'order', 'payment'
+        ).filter(is_deleted=False)
         
-        # Admins and staff can see all refunds
-        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names or 'STAFF' in role_names:
+        # Admin and Super Admin can see all schedules
+        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names:
             return queryset
         
-        # Users can only see their own refunds
-        return queryset.filter(user=user)
-    
-    def get_serializer_class(self):
-        """Get appropriate serializer based on action."""
-        if self.action == 'create':
-            return PaymentRefundCreateSerializer
-        elif self.action == 'list':
-            return PaymentRefundListSerializer
-        elif self.action == 'retrieve':
-            return PaymentRefundDetailSerializer
-        elif self.action in ['update', 'partial_update']:
-            return PaymentRefundCreateSerializer
-        return PaymentRefundListSerializer
-    
-    def get_permissions(self):
-        """Get permissions based on action."""
-        if self.action == 'list':
-            permission_classes = [PaymentRefundPermission]
-        elif self.action == 'retrieve':
-            permission_classes = [PaymentRefundPermission]
-        elif self.action == 'create':
-            permission_classes = [PaymentRefundCreatePermission]
-        elif self.action in ['update', 'partial_update']:
-            permission_classes = [PaymentRefundUpdatePermission]
-        elif self.action == 'destroy':
-            permission_classes = [PaymentRefundUpdatePermission]
-        else:
-            permission_classes = [PaymentRefundPermission]
+        # Staff and Manager can see all schedules
+        if 'STAFF' in role_names or 'MANAGER' in role_names:
+            return queryset
         
-        return [permission() for permission in permission_classes]
-    
-    def create(self, request, *args, **kwargs):
-        """Create a new payment refund."""
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            return error_response(str(serializer.errors))
+        # Customers can only see their own schedules
+        if 'CUSTOMER' in role_names:
+            return queryset.filter(order__customer=user)
         
-        refund = serializer.save()
-        
-        # Clear related caches
-        self._clear_refund_caches(refund)
-        
-        return success_response(
-            "Refund request created successfully",
-            PaymentRefundDetailSerializer(refund, context={'request': request}).data
-        )
-    
-    def retrieve(self, request, *args, **kwargs):
-        """Retrieve refund details."""
-        refund = self.get_object()
-        serializer = PaymentRefundDetailSerializer(refund, context={'request': request})
-        return success_response("Refund retrieved successfully", serializer.data)
-    
-    @action(detail=True, methods=['post'])
-    def process_refund(self, request, pk=None):
-        """Process a refund (simulate refund processing)."""
-        refund = self.get_object()
-        
-        if refund.status != 'PENDING':
-            return error_response("Refund is not in pending status")
-        
-        # Simulate refund processing
-        try:
-            refund.mark_as_processing()
-            
-            # Simulate successful refund
-            refund.mark_as_completed(provider_refund_id=f"ref_{refund.refund_id}")
-            
-            # Clear related caches
-            self._clear_refund_caches(refund)
-            
-            return success_response("Refund processed successfully")
-            
-        except Exception as e:
-            logger.error(f"Refund processing failed: {str(e)}")
-            refund.mark_as_failed(error_code="PROCESSING_ERROR", error_message=str(e))
-            return error_response("Refund processing failed")
-    
-    @action(detail=False, methods=['get'])
-    def my_refunds(self, request):
-        """Get current user's refunds."""
-        refunds = self.get_queryset().filter(user=request.user)
-        serializer = PaymentRefundListSerializer(refunds, many=True, context={'request': request})
-        return success_response("Your refunds retrieved successfully", serializer.data)
-    
-    def _clear_refund_caches(self, refund):
-        """Clear all caches related to a refund."""
-        # Clear user refunds cache
-        cache_key = cache_key_generator('user_refunds', str(refund.user.id))
-        delete_cache_data(cache_key)
-        
-        # Clear payment summary cache
-        cache_key = cache_key_generator('payment_summary', str(refund.user.id))
-        delete_cache_data(cache_key)
+        return PaymentSchedule.objects.none()
 
 
-class PaymentWebhookViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    ViewSet for payment webhook management with role-based access control.
+class PaymentNotificationViewSet(viewsets.ReadOnlyModelViewSet):
+    """ViewSet for payment notifications (read-only)."""
     
-    Provides read operations for webhooks with admin/staff access only.
-    """
+    serializer_class = PaymentNotificationSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['order', 'notification_type', 'is_sent']
+    ordering_fields = ['scheduled_for', 'sent_at']
+    ordering = ['-scheduled_for']
     
-    queryset = PaymentWebhook.objects.select_related().filter(is_deleted=False)
-    serializer_class = PaymentWebhookSerializer
-    permission_classes = [PaymentWebhookPermission]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['provider', 'event_type', 'status']
-    search_fields = ['webhook_id', 'event_id']
-    ordering_fields = ['created_at', 'processed_at']
-    ordering = ['-created_at']
-    
-    @action(detail=False, methods=['post'], permission_classes=[PaymentWebhookCreatePermission])
-    def stripe_webhook(self, request):
-        """Handle Stripe webhook events."""
-        try:
-            # Get webhook payload
-            payload = request.body.decode('utf-8')
-            signature = request.headers.get('Stripe-Signature', '')
-            
-            # Create webhook record
-            webhook = PaymentWebhook.objects.create(
-                provider='STRIPE',
-                event_type='PAYMENT_INTENT_SUCCEEDED',  # This would be determined from payload
-                event_id='evt_test',  # This would be extracted from payload
-                raw_payload=payload,
-                headers=dict(request.headers),
-                signature=signature
-            )
-            
-            # Process webhook (simplified)
-            webhook.mark_as_processed()
-            
-            return HttpResponse(status=200)
-            
-        except Exception as e:
-            logger.error(f"Stripe webhook processing failed: {str(e)}")
-            return HttpResponse(status=400)
-    
-    @action(detail=False, methods=['post'], permission_classes=[PaymentWebhookCreatePermission])
-    def razorpay_webhook(self, request):
-        """Handle Razorpay webhook events."""
-        try:
-            # Get webhook payload
-            payload = request.body.decode('utf-8')
-            signature = request.headers.get('X-Razorpay-Signature', '')
-            
-            # Create webhook record
-            webhook = PaymentWebhook.objects.create(
-                provider='RAZORPAY',
-                event_type='PAYMENT_INTENT_SUCCEEDED',  # This would be determined from payload
-                event_id='evt_test',  # This would be extracted from payload
-                raw_payload=payload,
-                headers=dict(request.headers),
-                signature=signature
-            )
-            
-            # Process webhook (simplified)
-            webhook.mark_as_processed()
-            
-            return HttpResponse(status=200)
-            
-        except Exception as e:
-            logger.error(f"Razorpay webhook processing failed: {str(e)}")
-            return HttpResponse(status=400)
+    def get_queryset(self):
+        """Get queryset based on user role and permissions."""
+        user = self.request.user
+        
+        if not user.is_authenticated:
+            return PaymentNotification.objects.none()
+        
+        # Get user roles
+        user_roles = UserRole.objects.filter(user=user, is_active=True)
+        role_names = [role.role for role in user_roles]
+        
+        # Base queryset with optimization
+        queryset = PaymentNotification.objects.select_related(
+            'order'
+        ).filter(is_deleted=False)
+        
+        # Admin and Super Admin can see all notifications
+        if 'ADMIN' in role_names or 'SUPER_ADMIN' in role_names:
+            return queryset
+        
+        # Staff and Manager can see all notifications
+        if 'STAFF' in role_names or 'MANAGER' in role_names:
+            return queryset
+        
+        # Customers can only see their own notifications
+        if 'CUSTOMER' in role_names:
+            return queryset.filter(order__customer=user)
+        
+        return PaymentNotification.objects.none()
 
 
-class PaymentAnalyticsViewSet(viewsets.ViewSet):
-    """
-    ViewSet for payment analytics with role-based access control.
+class PaymentSuccessView(View):
+    """Handle successful payment redirects."""
     
-    Provides analytics endpoints for payment data with admin/staff access only.
-    """
+    def get(self, request, *args, **kwargs):
+        """Handle successful payment redirect."""
+        # Check if Stripe is properly configured
+        if not settings.STRIPE_SECRET_KEY:
+            logger.error("Stripe secret key is not configured")
+            return JsonResponse({
+                'success': False,
+                'message': 'Payment gateway is not properly configured'
+            }, status=500)
+        
+        session_id = request.GET.get('session_id')
+        
+        if session_id:
+            try:
+                # Verify the session with Stripe
+                session = stripe.checkout.Session.retrieve(session_id)
+                
+                if session.payment_status == 'paid':
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Payment completed successfully!',
+                        'session_id': session_id
+                    })
+                else:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Payment not completed'
+                    }, status=400)
+                    
+            except stripe.error.StripeError as e:
+                logger.error(f"Error verifying Stripe session: {str(e)}")
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error verifying payment'
+                }, status=500)
+        
+        return JsonResponse({
+            'success': False,
+            'message': 'No session ID provided'
+        }, status=400)
+
+
+class PaymentCancelView(View):
+    """Handle cancelled payment redirects."""
     
-    permission_classes = [PaymentAnalyticsPermission]
-    
-    @action(detail=False, methods=['get'])
-    def revenue_summary(self, request):
-        """Get revenue summary analytics."""
-        # Get date range from query params
-        start_date = request.query_params.get('start_date')
-        end_date = request.query_params.get('end_date')
+    def get(self, request, *args, **kwargs):
+        """Handle cancelled payment redirect."""
+        order_id = request.GET.get('order_id')
         
-        # Base queryset
-        payments_queryset = Payment.objects.filter(status='COMPLETED', is_deleted=False)
+        if order_id:
+            try:
+                # Get the order and update status if needed
+                order = RentalOrder.objects.get(id=order_id, customer=request.user)
+                
+                if order.status == 'DRAFT':
+                    # Release reserved quantities
+                    with transaction.atomic():
+                        for item in order.items.all():
+                            item.product.release_reservation(item.quantity)
+                        
+                        order.status = 'CANCELLED'
+                        order.save()
+                        
+                        # Cancel pending payments
+                        pending_payments = order.payments.filter(status='PENDING')
+                        for payment in pending_payments:
+                            payment.status = 'FAILED'
+                            payment.notes = 'Payment cancelled by customer'
+                            payment.save()
+                    
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Order cancelled successfully',
+                        'order_id': str(order_id)
+                    })
+                else:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Order cannot be cancelled'
+                    }, status=400)
+                    
+            except RentalOrder.DoesNotExist:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Order not found'
+                }, status=404)
+            except Exception as e:
+                logger.error(f"Error cancelling order: {str(e)}")
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error cancelling order'
+                }, status=500)
         
-        # Apply date filters if provided
-        if start_date:
-            payments_queryset = payments_queryset.filter(completed_at__gte=start_date)
-        if end_date:
-            payments_queryset = payments_queryset.filter(completed_at__lte=end_date)
-        
-        # Calculate analytics
-        total_revenue = payments_queryset.aggregate(total=Sum('total_amount'))['total'] or 0
-        total_transactions = payments_queryset.count()
-        
-        # Calculate success rate
-        total_attempts = Payment.objects.filter(is_deleted=False).count()
-        success_rate = (total_transactions / total_attempts * 100) if total_attempts > 0 else 0
-        
-        # Calculate average transaction value
-        avg_transaction_value = payments_queryset.aggregate(avg=Avg('total_amount'))['avg'] or 0
-        
-        analytics_data = {
-            'total_revenue': total_revenue,
-            'total_transactions': total_transactions,
-            'success_rate': round(success_rate, 2),
-            'average_transaction_value': avg_transaction_value,
-            'currency': 'INR',
-            'period': f"{start_date or 'all'} to {end_date or 'now'}",
-            'data_points': []  # This would contain time-series data
-        }
-        
-        serializer = PaymentAnalyticsSerializer(analytics_data)
-        return success_response("Revenue summary retrieved successfully", serializer.data)
-    
-    @action(detail=False, methods=['get'])
-    def payment_methods_analytics(self, request):
-        """Get payment methods analytics."""
-        # Get payment methods usage statistics
-        payment_methods_stats = Payment.objects.filter(
-            status='COMPLETED', 
-            is_deleted=False
-        ).values('payment_method__name').annotate(
-            count=Count('id'),
-            total_amount=Sum('total_amount'),
-            avg_amount=Avg('total_amount')
-        ).order_by('-total_amount')
-        
-        return success_response("Payment methods analytics retrieved successfully", payment_methods_stats)
-    
-    @action(detail=False, methods=['get'])
-    def transaction_types_analytics(self, request):
-        """Get transaction types analytics."""
-        # Get transaction types statistics
-        transaction_types_stats = Payment.objects.filter(
-            status='COMPLETED', 
-            is_deleted=False
-        ).values('transaction_type').annotate(
-            count=Count('id'),
-            total_amount=Sum('total_amount'),
-            avg_amount=Avg('total_amount')
-        ).order_by('-total_amount')
-        
-        return success_response("Transaction types analytics retrieved successfully", transaction_types_stats)
+        return JsonResponse({
+            'success': False,
+            'message': 'No order ID provided'
+        }, status=400)
