@@ -959,3 +959,418 @@ WARNING 2025-08-11 18:20:32,596 log 17656 10912 Bad Request: /api/v1/user/regist
 WARNING 2025-08-11 18:20:32,598 basehttp 17656 10912 "POST /api/v1/user/register/ HTTP/1.1" 400 134
 WARNING 2025-08-11 18:25:41,955 log 17656 224 Bad Request: /api/v1/user/register/
 WARNING 2025-08-11 18:25:41,960 basehttp 17656 224 "POST /api/v1/user/register/ HTTP/1.1" 400 134
+WARNING 2025-08-11 23:51:19,994 email_service 18484 20280 RESEND_API_KEY not found in environment variables
+WARNING 2025-08-11 23:51:33,316 email_service 22180 6804 RESEND_API_KEY not found in environment variables
+ERROR 2025-08-11 23:51:33,328 email_service 22180 6804 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:51:33,461 email_service 22180 6804 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:51:33,476 notification_service 22180 6804 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:51:33,477 notification_service 22180 6804 Failed to send OTP email to test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:51:33,479 notification_service 22180 6804 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:51:33,479 notification_service 22180 6804 Failed to send registration email to test@example.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-11 23:51:33,505 notification_service 22180 6804 Created notification: 1 for user test@example.com
+ERROR 2025-08-11 23:51:33,506 email_service 22180 6804 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:51:33,515 email_service 22180 6804 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+INFO 2025-08-11 23:51:33,528 notification_service 22180 6804 Created notification: 2 for user test@example.com
+ERROR 2025-08-11 23:51:33,532 email_service 22180 6804 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:51:33,546 email_service 22180 6804 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+WARNING 2025-08-11 23:54:07,715 email_service 9548 14844 RESEND_API_KEY not found in environment variables
+ERROR 2025-08-11 23:54:07,726 email_service 9548 14844 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:54:07,865 email_service 9548 14844 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:54:07,869 notification_service 9548 14844 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:54:07,869 notification_service 9548 14844 Failed to send OTP email to test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:54:07,870 notification_service 9548 14844 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:54:07,870 notification_service 9548 14844 Failed to send registration email to test@example.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-11 23:54:07,885 notification_service 9548 14844 Created notification: 3 for user test@example.com
+ERROR 2025-08-11 23:54:07,887 email_service 9548 14844 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:54:07,896 email_service 9548 14844 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+INFO 2025-08-11 23:54:07,911 notification_service 9548 14844 Created notification: 4 for user test@example.com
+ERROR 2025-08-11 23:54:07,912 email_service 9548 14844 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:54:07,925 email_service 9548 14844 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+WARNING 2025-08-11 23:55:15,601 email_service 11620 17836 RESEND_API_KEY not found in environment variables
+ERROR 2025-08-11 23:55:15,609 email_service 11620 17836 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:55:15,750 email_service 11620 17836 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:55:15,754 notification_service 11620 17836 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:55:15,754 notification_service 11620 17836 Failed to send OTP email to test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:55:15,755 notification_service 11620 17836 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-11 23:55:15,755 notification_service 11620 17836 Failed to send registration email to test@example.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-11 23:55:15,767 notification_service 11620 17836 Created notification: 5 for user test@example.com
+ERROR 2025-08-11 23:55:15,767 email_service 11620 17836 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:55:15,778 email_service 11620 17836 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+INFO 2025-08-11 23:55:15,787 notification_service 11620 17836 Created notification: 6 for user test@example.com
+ERROR 2025-08-11 23:55:15,788 email_service 11620 17836 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-11 23:55:15,799 email_service 11620 17836 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+WARNING 2025-08-12 00:39:54,316 email_service 7148 8620 RESEND_API_KEY not found in environment variables
+ERROR 2025-08-12 00:39:56,648 email_service 7148 8620 Failed to send email to test@example.com: API key is invalid
+ERROR 2025-08-12 00:39:58,721 email_service 7148 8620 Failed to send email to test@example.com: API key is invalid
+ERROR 2025-08-12 00:39:58,734 notification_service 7148 8620 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:39:58,734 notification_service 7148 8620 Failed to send OTP email to test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:39:58,736 notification_service 7148 8620 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:39:58,736 notification_service 7148 8620 Failed to send registration email to test@example.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-12 00:39:58,771 notification_service 7148 8620 Created notification: 7 for user test@example.com
+ERROR 2025-08-12 00:40:00,576 email_service 7148 8620 Failed to send email to test@example.com: API key is invalid
+ERROR 2025-08-12 00:40:00,612 email_service 7148 8620 Failed to send notification email: API key is invalid
+INFO 2025-08-12 00:40:00,643 notification_service 7148 8620 Created notification: 8 for user test@example.com
+ERROR 2025-08-12 00:40:02,601 email_service 7148 8620 Failed to send email to test@example.com: API key is invalid
+ERROR 2025-08-12 00:40:02,629 email_service 7148 8620 Failed to send notification email: API key is invalid
+ERROR 2025-08-12 00:41:47,576 email_service 21860 11012 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:41:49,504 email_service 21860 11012 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:41:49,513 notification_service 21860 11012 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:41:49,513 notification_service 21860 11012 Failed to send OTP email to test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:41:49,515 notification_service 21860 11012 Failed to create notification for user test@example.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:41:49,515 notification_service 21860 11012 Failed to send registration email to test@example.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-12 00:41:49,535 notification_service 21860 11012 Created notification: 9 for user test@example.com
+ERROR 2025-08-12 00:41:50,595 email_service 21860 11012 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:41:50,607 email_service 21860 11012 Failed to send notification email: None
+INFO 2025-08-12 00:41:50,617 notification_service 21860 11012 Created notification: 10 for user test@example.com
+ERROR 2025-08-12 00:41:52,452 email_service 21860 11012 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:41:52,464 email_service 21860 11012 Failed to send notification email: None
+ERROR 2025-08-12 00:46:55,676 email_service 20724 7872 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 00:46:57,670 email_service 20724 7872 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 00:46:57,683 notification_service 20724 7872 Failed to create notification for user talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:46:57,684 notification_service 20724 7872 Failed to send OTP email to talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:46:57,693 notification_service 20724 7872 Failed to create notification for user talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 00:46:57,694 notification_service 20724 7872 Failed to send registration email to talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-12 00:46:57,708 notification_service 20724 7872 Created notification: 11 for user test@example.com
+ERROR 2025-08-12 00:46:59,515 email_service 20724 7872 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:46:59,532 email_service 20724 7872 Failed to send notification email: None
+INFO 2025-08-12 00:46:59,545 notification_service 20724 7872 Created notification: 12 for user test@example.com
+ERROR 2025-08-12 00:47:01,421 email_service 20724 7872 Failed to send email to test@example.com: None
+ERROR 2025-08-12 00:47:01,432 email_service 20724 7872 Failed to send notification email: None
+INFO 2025-08-12 01:09:53,596 email_service 18256 3036 Attempting to send email to talaviyavihar41@gmail.com with data: {'from': 'BorrowBit <jjay57326@gmail.com>', 'to': ['talaviyavihar41@gmail.com'], 'subject': 'Test Email from BorrowBit', 'html': '<h1>Hello from BorrowBit!</h1><p>This is a test email to verify the email service is working.</p>', 'text': 'Hello from BorrowBit! This is a test email to verify the email service is working.'}
+ERROR 2025-08-12 01:09:53,596 email_service 18256 3036 Failed to send email to talaviyavihar41@gmail.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:53,597 email_service 18256 3036 Exception type: <class 'AttributeError'>
+ERROR 2025-08-12 01:09:53,597 email_service 18256 3036 Exception details: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,082 email_service 18256 3036 Failed to send email to talaviyavihar41@gmail.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,083 email_service 18256 3036 Exception type: <class 'AttributeError'>
+ERROR 2025-08-12 01:09:54,085 email_service 18256 3036 Exception details: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,096 notification_service 18256 3036 Failed to create notification for user talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 01:09:54,097 notification_service 18256 3036 User ID: ff6a606f-763c-48ec-87d8-0717f83b0ca8, Type: <class 'uuid.UUID'>
+ERROR 2025-08-12 01:09:54,097 notification_service 18256 3036 Related object ID: 339505478334398340044499750261423279272, Type: <class 'int'>
+ERROR 2025-08-12 01:09:54,098 notification_service 18256 3036 Failed to send OTP email to talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 01:09:54,100 notification_service 18256 3036 Failed to create notification for user talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+ERROR 2025-08-12 01:09:54,102 notification_service 18256 3036 User ID: ff6a606f-763c-48ec-87d8-0717f83b0ca8, Type: <class 'uuid.UUID'>
+ERROR 2025-08-12 01:09:54,102 notification_service 18256 3036 Related object ID: 339505478334398340044499750261423279272, Type: <class 'int'>
+ERROR 2025-08-12 01:09:54,102 notification_service 18256 3036 Failed to send registration email to talaviyavihar41@gmail.com: Python int too large to convert to SQLite INTEGER
+INFO 2025-08-12 01:09:54,124 notification_service 18256 3036 Created notification: 13 for user test@example.com
+ERROR 2025-08-12 01:09:54,161 email_service 18256 3036 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,162 email_service 18256 3036 Exception type: <class 'AttributeError'>
+ERROR 2025-08-12 01:09:54,163 email_service 18256 3036 Exception details: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,181 email_service 18256 3036 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+INFO 2025-08-12 01:09:54,198 notification_service 18256 3036 Created notification: 14 for user test@example.com
+ERROR 2025-08-12 01:09:54,236 email_service 18256 3036 Failed to send email to test@example.com: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,239 email_service 18256 3036 Exception type: <class 'AttributeError'>
+ERROR 2025-08-12 01:09:54,241 email_service 18256 3036 Exception details: module 'resend.emails' has no attribute 'send'
+ERROR 2025-08-12 01:09:54,253 email_service 18256 3036 Failed to send notification email: module 'resend.emails' has no attribute 'send'
+INFO 2025-08-12 01:19:54,144 email_service 20392 17940 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:19:55,975 email_service 20392 17940 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:19:55,976 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:19:55,977 email_service 20392 17940 Exception details: None
+INFO 2025-08-12 01:19:56,303 email_service 20392 17940 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:19:58,028 email_service 20392 17940 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:19:58,028 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:19:58,029 email_service 20392 17940 Exception details: None
+INFO 2025-08-12 01:19:58,045 notification_service 20392 17940 Created notification: 15 for user talaviyavihar41@gmail.com
+INFO 2025-08-12 01:19:58,047 email_service 20392 17940 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:19:59,888 email_service 20392 17940 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:19:59,888 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:19:59,889 email_service 20392 17940 Exception details: None
+ERROR 2025-08-12 01:19:59,903 email_service 20392 17940 Failed to send notification email: None
+INFO 2025-08-12 01:19:59,914 notification_service 20392 17940 Created notification: 16 for user talaviyavihar41@gmail.com
+INFO 2025-08-12 01:19:59,916 email_service 20392 17940 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:20:01,725 email_service 20392 17940 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:20:01,726 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:20:01,726 email_service 20392 17940 Exception details: None
+ERROR 2025-08-12 01:20:01,737 email_service 20392 17940 Failed to send notification email: None
+INFO 2025-08-12 01:20:01,750 notification_service 20392 17940 Created notification: 17 for user test@example.com
+INFO 2025-08-12 01:20:01,752 email_service 20392 17940 Attempting to send email to test@example.com
+ERROR 2025-08-12 01:20:03,534 email_service 20392 17940 Failed to send email to test@example.com: None
+ERROR 2025-08-12 01:20:03,535 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:20:03,536 email_service 20392 17940 Exception details: None
+ERROR 2025-08-12 01:20:03,550 email_service 20392 17940 Failed to send notification email: None
+INFO 2025-08-12 01:20:03,562 notification_service 20392 17940 Created notification: 18 for user test@example.com
+INFO 2025-08-12 01:20:03,563 email_service 20392 17940 Attempting to send email to test@example.com
+ERROR 2025-08-12 01:20:05,242 email_service 20392 17940 Failed to send email to test@example.com: None
+ERROR 2025-08-12 01:20:05,242 email_service 20392 17940 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:20:05,243 email_service 20392 17940 Exception details: None
+ERROR 2025-08-12 01:20:05,256 email_service 20392 17940 Failed to send notification email: None
+INFO 2025-08-12 01:21:47,914 email_service 22352 18400 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:21:49,068 email_service 22352 18400 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:21:49,068 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:49,070 email_service 22352 18400 Exception details: None
+INFO 2025-08-12 01:21:49,227 email_service 22352 18400 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:21:50,167 email_service 22352 18400 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:21:50,167 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:50,168 email_service 22352 18400 Exception details: None
+INFO 2025-08-12 01:21:50,184 notification_service 22352 18400 Created notification: 19 for user talaviyavihar41@gmail.com
+INFO 2025-08-12 01:21:50,184 email_service 22352 18400 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:21:51,965 email_service 22352 18400 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:21:51,966 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:51,967 email_service 22352 18400 Exception details: None
+ERROR 2025-08-12 01:21:51,980 email_service 22352 18400 Failed to send notification email: None
+INFO 2025-08-12 01:21:51,990 notification_service 22352 18400 Created notification: 20 for user talaviyavihar41@gmail.com
+INFO 2025-08-12 01:21:51,992 email_service 22352 18400 Attempting to send email to talaviyavihar41@gmail.com
+ERROR 2025-08-12 01:21:53,733 email_service 22352 18400 Failed to send email to talaviyavihar41@gmail.com: None
+ERROR 2025-08-12 01:21:53,733 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:53,734 email_service 22352 18400 Exception details: None
+ERROR 2025-08-12 01:21:53,745 email_service 22352 18400 Failed to send notification email: None
+INFO 2025-08-12 01:21:53,758 notification_service 22352 18400 Created notification: 21 for user test@example.com
+INFO 2025-08-12 01:21:53,758 email_service 22352 18400 Attempting to send email to test@example.com
+ERROR 2025-08-12 01:21:55,489 email_service 22352 18400 Failed to send email to test@example.com: None
+ERROR 2025-08-12 01:21:55,489 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:55,490 email_service 22352 18400 Exception details: None
+ERROR 2025-08-12 01:21:55,501 email_service 22352 18400 Failed to send notification email: None
+INFO 2025-08-12 01:21:55,513 notification_service 22352 18400 Created notification: 22 for user test@example.com
+INFO 2025-08-12 01:21:55,514 email_service 22352 18400 Attempting to send email to test@example.com
+ERROR 2025-08-12 01:21:57,205 email_service 22352 18400 Failed to send email to test@example.com: None
+ERROR 2025-08-12 01:21:57,206 email_service 22352 18400 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 01:21:57,207 email_service 22352 18400 Exception details: None
+ERROR 2025-08-12 01:21:57,221 email_service 22352 18400 Failed to send notification email: None
+INFO 2025-08-12 01:49:17,607 email_service 16400 18528 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 01:52:23,262 email_service 20580 21900 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 01:54:30,723 email_service 11628 19808 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 01:54:49,826 email_service 2996 10944 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 01:56:59,021 email_service 10688 20680 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 01:58:01,731 email_service 22048 10184 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 02:02:31,277 email_service 16732 15768 Email service initialized with from_email: noreply@borrowbit.com
+INFO 2025-08-12 02:08:06,154 email_service 13784 20392 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 02:08:06,159 email_service 13784 20392 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:08:08,147 email_service 13784 20392 Failed to send email to shyamkalariya294@gmail.com: None
+INFO 2025-08-12 02:08:08,365 email_service 13784 20392 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:08:10,222 email_service 13784 20392 Failed to send email to shyamkalariya294@gmail.com: None
+INFO 2025-08-12 02:08:10,253 notification_service 13784 20392 Created notification: 23 for user test@example.com
+INFO 2025-08-12 02:08:10,254 email_service 13784 20392 Attempting to send email to test@example.com
+ERROR 2025-08-12 02:08:11,342 email_service 13784 20392 Failed to send email to test@example.com: None
+ERROR 2025-08-12 02:08:11,356 email_service 13784 20392 Failed to send notification email: None
+INFO 2025-08-12 02:30:47,238 email_service 19708 17404 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 02:30:47,243 email_service 19708 17404 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:30:49,281 email_service 19708 17404 Failed to send email to shyamkalariya294@gmail.com: None
+INFO 2025-08-12 02:30:49,522 email_service 19708 17404 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:30:51,233 email_service 19708 17404 Failed to send email to shyamkalariya294@gmail.com: None
+INFO 2025-08-12 02:30:51,269 notification_service 19708 17404 Created notification: 24 for user shyamkalariya294@gmail.com
+INFO 2025-08-12 02:30:51,270 email_service 19708 17404 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:30:52,671 email_service 19708 17404 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:30:52,683 email_service 19708 17404 Failed to send notification email: None
+INFO 2025-08-12 02:32:39,717 email_service 11480 11676 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 02:32:39,718 email_service 11480 11676 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:32:39,719 email_service 11480 11676 Attempting to send email to test@example.com
+ERROR 2025-08-12 02:32:41,485 email_service 11480 11676 Failed to send email to test@example.com: None
+INFO 2025-08-12 02:33:14,282 email_service 12592 1676 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 02:33:14,283 email_service 12592 1676 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:33:14,285 email_service 12592 1676 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:33:16,070 email_service 12592 1676 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:33:16,077 email_service 12592 1676 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:33:16,078 email_service 12592 1676 Exception details: None
+INFO 2025-08-12 02:33:59,598 email_service 4672 14460 Email service initialized with from_email: onboarding@resend.dev
+INFO 2025-08-12 02:33:59,599 email_service 4672 14460 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:33:59,622 email_service 4672 14460 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:34:01,896 email_service 4672 14460 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:34:01,898 email_service 4672 14460 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:34:01,899 email_service 4672 14460 Exception details: None
+INFO 2025-08-12 02:36:05,088 email_service 17744 20112 Email service initialized with from_email: onboarding@resend.dev
+INFO 2025-08-12 02:36:05,089 email_service 17744 20112 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:36:05,093 email_service 17744 20112 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:36:06,714 email_service 17744 20112 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:36:06,716 email_service 17744 20112 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:36:06,716 email_service 17744 20112 Exception details: None
+INFO 2025-08-12 02:36:06,928 email_service 17744 20112 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:36:08,385 email_service 17744 20112 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:36:08,386 email_service 17744 20112 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:36:08,387 email_service 17744 20112 Exception details: None
+INFO 2025-08-12 02:36:08,411 notification_service 17744 20112 Created notification: 25 for user shyamkalariya294@gmail.com
+INFO 2025-08-12 02:36:08,412 email_service 17744 20112 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:36:09,838 email_service 17744 20112 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:36:09,839 email_service 17744 20112 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:36:09,840 email_service 17744 20112 Exception details: None
+ERROR 2025-08-12 02:36:09,865 email_service 17744 20112 Failed to send notification email: None
+INFO 2025-08-12 02:36:55,382 email_service 14964 1392 Email service initialized with from_email: onboarding@resend.dev
+INFO 2025-08-12 02:36:55,383 email_service 14964 1392 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:36:55,385 email_service 14964 1392 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:36:57,015 email_service 14964 1392 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:36:57,015 email_service 14964 1392 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:36:57,016 email_service 14964 1392 Exception details: None
+INFO 2025-08-12 02:41:38,241 email_service 20648 17936 Email service initialized with from_email: onboarding@resend.dev
+INFO 2025-08-12 02:41:38,241 email_service 20648 17936 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:41:38,250 email_service 20648 17936 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:41:39,611 email_service 20648 17936 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:41:39,612 email_service 20648 17936 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:41:39,613 email_service 20648 17936 Exception details: None
+INFO 2025-08-12 02:41:39,977 email_service 20648 17936 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:41:41,647 email_service 20648 17936 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:41:41,649 email_service 20648 17936 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:41:41,651 email_service 20648 17936 Exception details: None
+INFO 2025-08-12 02:41:41,678 notification_service 20648 17936 Created notification: 26 for user shyamkalariya294@gmail.com
+INFO 2025-08-12 02:41:41,678 email_service 20648 17936 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:41:43,494 email_service 20648 17936 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:41:43,495 email_service 20648 17936 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:41:43,496 email_service 20648 17936 Exception details: None
+ERROR 2025-08-12 02:41:43,526 email_service 20648 17936 Failed to send notification email: None
+INFO 2025-08-12 02:44:43,606 email_service 4376 3904 Email service initialized with from_email: onboarding@resend.dev
+INFO 2025-08-12 02:44:43,607 email_service 4376 3904 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:44:43,609 email_service 4376 3904 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:44:44,872 email_service 4376 3904 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:44:44,873 email_service 4376 3904 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:44:44,874 email_service 4376 3904 Exception details: None
+INFO 2025-08-12 02:44:45,010 email_service 4376 3904 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:44:46,217 email_service 4376 3904 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:44:46,220 email_service 4376 3904 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:44:46,220 email_service 4376 3904 Exception details: None
+INFO 2025-08-12 02:44:46,234 notification_service 4376 3904 Created notification: 27 for user shyamkalariya294@gmail.com
+INFO 2025-08-12 02:44:46,235 email_service 4376 3904 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:44:47,737 email_service 4376 3904 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:44:47,737 email_service 4376 3904 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:44:47,737 email_service 4376 3904 Exception details: None
+ERROR 2025-08-12 02:44:47,750 email_service 4376 3904 Failed to send notification email: None
+INFO 2025-08-12 02:56:55,415 email_service 5704 14624 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 02:56:55,416 email_service 5704 14624 API key configured: re_cetLzGX...
+INFO 2025-08-12 02:56:55,420 email_service 5704 14624 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:56:57,193 email_service 5704 14624 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:56:57,193 email_service 5704 14624 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:56:57,194 email_service 5704 14624 Exception details: None
+INFO 2025-08-12 02:56:57,391 email_service 5704 14624 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:56:58,743 email_service 5704 14624 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:56:58,744 email_service 5704 14624 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:56:58,744 email_service 5704 14624 Exception details: None
+INFO 2025-08-12 02:56:58,761 notification_service 5704 14624 Created notification: 28 for user shyamkalariya294@gmail.com
+INFO 2025-08-12 02:56:58,762 email_service 5704 14624 Attempting to send email to shyamkalariya294@gmail.com
+ERROR 2025-08-12 02:57:00,357 email_service 5704 14624 Failed to send email to shyamkalariya294@gmail.com: None
+ERROR 2025-08-12 02:57:00,357 email_service 5704 14624 Exception type: <class 'resend.exceptions.ResendError'>
+ERROR 2025-08-12 02:57:00,358 email_service 5704 14624 Exception details: None
+ERROR 2025-08-12 02:57:00,370 email_service 5704 14624 Failed to send notification email: None
+INFO 2025-08-12 04:01:02,044 smtp_email_service 14388 15948 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:01:02,046 smtp_email_service 14388 15948 TLS: True, SSL: False
+INFO 2025-08-12 04:01:02,089 email_service 14388 15948 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:01:02,089 email_service 14388 15948 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:01:02,090 unified_email_service 14388 15948 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:01:02,973 unified_email_service 14388 15948 Testing SMTP connection
+INFO 2025-08-12 04:04:46,269 smtp_email_service 11652 4528 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:04:46,270 smtp_email_service 11652 4528 TLS: True, SSL: False
+INFO 2025-08-12 04:04:46,288 email_service 11652 4528 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:04:46,289 email_service 11652 4528 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:04:46,289 unified_email_service 11652 4528 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:04:46,668 unified_email_service 11652 4528 Testing SMTP connection
+INFO 2025-08-12 04:05:30,698 smtp_email_service 19316 14612 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:05:30,698 smtp_email_service 19316 14612 TLS: True, SSL: False
+INFO 2025-08-12 04:05:30,709 email_service 19316 14612 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:05:30,709 email_service 19316 14612 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:05:30,710 unified_email_service 19316 14612 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:05:31,030 unified_email_service 19316 14612 Testing SMTP connection
+INFO 2025-08-12 04:06:43,472 smtp_email_service 21920 2024 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:06:43,472 smtp_email_service 21920 2024 TLS: True, SSL: False
+INFO 2025-08-12 04:06:43,482 email_service 21920 2024 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:06:43,482 email_service 21920 2024 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:06:43,482 unified_email_service 21920 2024 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:06:43,778 unified_email_service 21920 2024 Testing SMTP connection
+INFO 2025-08-12 04:06:47,211 unified_email_service 21920 2024 Sending email via SMTP to shyamkalariya294@gmail.com
+ERROR 2025-08-12 04:06:51,240 smtp_email_service 21920 2024 SMTP authentication failed: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-32161282968sm15979085a91.25 - gsmtp')
+INFO 2025-08-12 04:08:34,489 smtp_email_service 19740 8120 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:08:34,489 smtp_email_service 19740 8120 TLS: True, SSL: False
+INFO 2025-08-12 04:08:34,498 email_service 19740 8120 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:08:34,499 email_service 19740 8120 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:08:34,499 unified_email_service 19740 8120 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:08:34,806 unified_email_service 19740 8120 Testing SMTP connection
+INFO 2025-08-12 04:08:38,984 unified_email_service 19740 8120 Sending email via SMTP to shyamkalariya294@gmail.com
+ERROR 2025-08-12 04:08:43,111 smtp_email_service 19740 8120 SMTP authentication failed: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 98e67ed59e1d1-31f63da81bfsm33043299a91.8 - gsmtp')
+INFO 2025-08-12 04:11:36,798 smtp_email_service 18728 11624 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:11:36,799 smtp_email_service 18728 11624 TLS: True, SSL: False
+INFO 2025-08-12 04:11:36,810 email_service 18728 11624 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:11:36,811 email_service 18728 11624 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:11:36,811 unified_email_service 18728 11624 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:11:37,238 unified_email_service 18728 11624 Testing SMTP connection
+INFO 2025-08-12 04:11:40,483 unified_email_service 18728 11624 Sending email via SMTP to shyamkalariya294@gmail.com
+ERROR 2025-08-12 04:11:43,611 smtp_email_service 18728 11624 SMTP authentication failed: (535, b'5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-241e89769c1sm286117985ad.77 - gsmtp')
+INFO 2025-08-12 04:24:04,155 smtp_email_service 12624 12324 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:24:04,156 smtp_email_service 12624 12324 TLS: True, SSL: False
+INFO 2025-08-12 04:24:04,175 email_service 12624 12324 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:24:04,175 email_service 12624 12324 API key configured: re_cetLzGX...
+INFO 2025-08-12 04:24:04,176 unified_email_service 12624 12324 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:24:04,717 unified_email_service 12624 12324 Testing SMTP connection
+INFO 2025-08-12 04:24:09,104 unified_email_service 12624 12324 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:24:11,633 smtp_email_service 12624 12324 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:24:13,206 smtp_email_service 12624 12324 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:28:05,586 smtp_email_service 14520 21452 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:28:05,586 smtp_email_service 14520 21452 TLS: True, SSL: False
+WARNING 2025-08-12 04:28:05,594 email_service 14520 21452 RESEND_API_KEY not found in environment variables
+INFO 2025-08-12 04:28:05,595 email_service 14520 21452 Email service initialized with from_email: jjay57326@gmail.com
+INFO 2025-08-12 04:28:05,595 email_service 14520 21452 API key configured: re_demo_ke...
+INFO 2025-08-12 04:28:05,595 unified_email_service 14520 21452 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:28:05,907 unified_email_service 14520 21452 Testing SMTP connection
+INFO 2025-08-12 04:28:10,240 unified_email_service 14520 21452 Sending email via SMTP to talaviyavihar41@gmail.com
+INFO 2025-08-12 04:28:12,719 smtp_email_service 14520 21452 Attempting to send email to talaviyavihar41@gmail.com
+INFO 2025-08-12 04:28:14,267 smtp_email_service 14520 21452 Email sent successfully to talaviyavihar41@gmail.com
+INFO 2025-08-12 04:31:18,738 smtp_email_service 16596 17172 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:31:18,739 smtp_email_service 16596 17172 TLS: True, SSL: False
+INFO 2025-08-12 04:33:53,043 smtp_email_service 20060 21412 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:33:53,045 smtp_email_service 20060 21412 TLS: True, SSL: False
+INFO 2025-08-12 04:33:53,045 unified_email_service 20060 21412 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:33:53,428 unified_email_service 20060 21412 Testing SMTP connection
+INFO 2025-08-12 04:33:57,854 unified_email_service 20060 21412 Sending email via SMTP to hnkathiriya2010@gmail.com
+INFO 2025-08-12 04:34:00,387 smtp_email_service 20060 21412 Attempting to send email to hnkathiriya2010@gmail.com
+INFO 2025-08-12 04:34:01,978 smtp_email_service 20060 21412 Email sent successfully to hnkathiriya2010@gmail.com
+INFO 2025-08-12 04:47:19,806 smtp_email_service 15488 5528 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:47:19,809 smtp_email_service 15488 5528 TLS: True, SSL: False
+INFO 2025-08-12 04:47:19,809 unified_email_service 15488 5528 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:48:05,103 smtp_email_service 20796 17572 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:48:05,104 smtp_email_service 20796 17572 TLS: True, SSL: False
+INFO 2025-08-12 04:48:05,104 unified_email_service 20796 17572 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:51:12,496 smtp_email_service 15212 14856 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:51:12,496 smtp_email_service 15212 14856 TLS: True, SSL: False
+INFO 2025-08-12 04:51:12,497 unified_email_service 15212 14856 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:51:13,021 unified_email_service 15212 14856 Testing SMTP connection
+INFO 2025-08-12 04:52:59,225 smtp_email_service 5720 11364 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:52:59,226 smtp_email_service 5720 11364 TLS: True, SSL: False
+INFO 2025-08-12 04:52:59,226 unified_email_service 5720 11364 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:52:59,560 unified_email_service 5720 11364 Testing SMTP connection
+INFO 2025-08-12 04:53:53,721 smtp_email_service 16092 8312 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:53:53,722 smtp_email_service 16092 8312 TLS: True, SSL: False
+INFO 2025-08-12 04:53:53,722 unified_email_service 16092 8312 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:53:54,040 unified_email_service 16092 8312 Testing SMTP connection
+INFO 2025-08-12 04:55:21,067 smtp_email_service 13936 16952 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:55:21,068 smtp_email_service 13936 16952 TLS: True, SSL: False
+INFO 2025-08-12 04:55:21,068 unified_email_service 13936 16952 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:55:21,409 unified_email_service 13936 16952 Testing SMTP connection
+INFO 2025-08-12 04:55:26,467 unified_email_service 13936 16952 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:55:29,001 smtp_email_service 13936 16952 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:55:30,572 smtp_email_service 13936 16952 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:58:03,975 smtp_email_service 7036 20636 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 04:58:03,976 smtp_email_service 7036 20636 TLS: True, SSL: False
+INFO 2025-08-12 04:58:03,976 unified_email_service 7036 20636 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 04:58:04,330 unified_email_service 7036 20636 Testing SMTP connection
+INFO 2025-08-12 04:58:08,665 unified_email_service 7036 20636 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:58:11,205 smtp_email_service 7036 20636 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 04:58:12,701 smtp_email_service 7036 20636 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:37:56,539 autoreload 21340 19800 Watching for file changes with StatReloader
+INFO 2025-08-12 05:39:55,917 smtp_email_service 4524 17760 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 05:39:55,917 smtp_email_service 4524 17760 TLS: True, SSL: False
+INFO 2025-08-12 05:39:55,918 unified_email_service 4524 17760 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 05:39:56,205 unified_email_service 4524 17760 Testing SMTP connection
+INFO 2025-08-12 05:40:00,953 unified_email_service 4524 17760 Sending email via SMTP to 'shyamkalariya294@gmail.com'
+INFO 2025-08-12 05:40:03,508 smtp_email_service 4524 17760 Attempting to send email to 'shyamkalariya294@gmail.com'
+ERROR 2025-08-12 05:40:04,267 smtp_email_service 4524 17760 Recipient refused: {"'shyamkalariya294@gmail.com'": (553, b"5.1.3 The recipient address <'shyamkalariya294@gmail.com'> is not a valid\n5.1.3 RFC 5321 address. For more information, go to\n5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321\n5.1.3 specifications. d9443c01a7336-24300f8ca2asm272225ad.141 - gsmtp")}
+INFO 2025-08-12 05:40:50,959 smtp_email_service 9828 21120 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 05:40:50,961 smtp_email_service 9828 21120 TLS: True, SSL: False
+INFO 2025-08-12 05:40:50,961 unified_email_service 9828 21120 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 05:40:51,241 unified_email_service 9828 21120 Testing SMTP connection
+INFO 2025-08-12 05:40:55,563 unified_email_service 9828 21120 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:40:58,119 smtp_email_service 9828 21120 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:40:59,676 smtp_email_service 9828 21120 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:42:00,337 smtp_email_service 15544 17544 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 05:42:00,338 smtp_email_service 15544 17544 TLS: True, SSL: False
+INFO 2025-08-12 05:42:00,338 unified_email_service 15544 17544 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 05:42:00,608 unified_email_service 15544 17544 Testing SMTP connection
+INFO 2025-08-12 05:42:04,932 unified_email_service 15544 17544 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:42:07,424 smtp_email_service 15544 17544 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:42:09,059 smtp_email_service 15544 17544 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:52:33,896 smtp_email_service 9516 8184 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 05:52:33,896 smtp_email_service 9516 8184 TLS: True, SSL: False
+INFO 2025-08-12 05:52:33,897 unified_email_service 9516 8184 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 05:52:34,196 unified_email_service 9516 8184 Testing SMTP connection
+INFO 2025-08-12 05:52:38,565 unified_email_service 9516 8184 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:52:41,718 smtp_email_service 9516 8184 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:52:43,243 smtp_email_service 9516 8184 Email sent successfully to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:55:28,008 smtp_email_service 18692 4528 SMTP Email service initialized with host: smtp.gmail.com:587
+INFO 2025-08-12 05:55:28,009 smtp_email_service 18692 4528 TLS: True, SSL: False
+INFO 2025-08-12 05:55:28,009 unified_email_service 18692 4528 Unified Email Service initialized with provider: SMTP
+INFO 2025-08-12 05:55:28,292 unified_email_service 18692 4528 Testing SMTP connection
+INFO 2025-08-12 05:55:33,609 unified_email_service 18692 4528 Sending email via SMTP to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:55:36,216 smtp_email_service 18692 4528 Attempting to send email to shyamkalariya294@gmail.com
+INFO 2025-08-12 05:55:37,808 smtp_email_service 18692 4528 Email sent successfully to shyamkalariya294@gmail.com

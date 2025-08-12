@@ -26,7 +26,6 @@ def debug_task(self):
     """Debug task to test Celery configuration."""
     print(f'Request: {self.request!r}')
 
-=======
 # Celery configuration has been disabled to run Django without Celery
 # Uncomment and configure when you want to use Celery again
 

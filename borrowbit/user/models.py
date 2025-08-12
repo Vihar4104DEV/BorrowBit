@@ -85,6 +85,18 @@ class User(AbstractUser, BaseModel):
     username = None
     email = models.EmailField(unique=True, verbose_name=_("Email Address"))
     
+    # Role field
+    ROLE_CHOICES = [
+        ('USER', 'User'),
+        ('CUSTOMER', 'Customer'),
+        ('DELIVERY_PARTNER', 'Delivery Partner'),
+        ('STAFF', 'Staff'),
+        ('MANAGER', 'Manager'),
+        ('ADMIN', 'Administrator'),
+        ('SUPER_ADMIN', 'Super Administrator'),
+    ]
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='USER', verbose_name=_("Role"))
+    
     is_verified = models.BooleanField(default=False, verbose_name=_("Is Verified"))
     email_verified_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Email Verified At"))
     phone_verified_at = models.DateTimeField(null=True, blank=True, verbose_name=_("Phone Verified At"))

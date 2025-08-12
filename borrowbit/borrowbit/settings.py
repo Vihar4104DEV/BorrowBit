@@ -13,18 +13,21 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-from decouple import config, Csv
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-in-production')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Custom user model
 AUTH_USER_MODEL = 'user.User'
@@ -101,17 +104,17 @@ WSGI_APPLICATION = 'borrowbit.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config('DB_ENGINE', default='django.db.backends.sqlite3'),
-        'NAME': config('DB_NAME', default=str(BASE_DIR / 'db.sqlite3')),
-        'USER': config('DB_USER', default=''),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DB_HOST', default=''),
-        'PORT': config('DB_PORT', default=''),
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get('DB_NAME', str(BASE_DIR / 'db.sqlite3')),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', ''),
+        'PORT': os.environ.get('DB_PORT', ''),
         'CONN_MAX_AGE': 600,  # 10 minutes
         'CONN_HEALTH_CHECKS': True,
     }
 }
-if config('DB_ENGINE', default='django.db.backends.sqlite3') == 'django.db.backends.mysql':
+if os.environ.get('DB_ENGINE', 'django.db.backends.sqlite3') == 'django.db.backends.mysql':
     DATABASES['default']['OPTIONS'] = {
         'charset': 'utf8mb4',
         'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -226,7 +229,7 @@ SIMPLE_JWT = {
 
 
 # Redis Configuration
-REDIS_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
+REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/0')
 
 # Cache Configuration
 CACHES = {
@@ -258,7 +261,7 @@ CACHES = {
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'session'
 SESSION_COOKIE_AGE = 3600  # 1 hour
-SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=False, cast=bool)
+SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False').lower() == 'true'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 
@@ -288,17 +291,41 @@ CHANNEL_LAYERS = {
 
 # Email Configuration
 
-    # Use SMTP backend for production
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=False, cast=bool)
+# Email Provider Configuration
+# Set EMAIL_PROVIDER to 'SMTP' or 'RESEND' to choose the email service
+EMAIL_PROVIDER = os.environ.get('EMAIL_PROVIDER', 'SMTP').upper()
+# EMAIL_PROVIDER=smtp
 
-# Default from email (used in all cases)
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='vihar_4104@yopmail.com')
+# Resend API Configuration (Free tier: 100 emails/day)
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', '')
+FROM_NAME = os.environ.get('FROM_NAME', 'borrowbits')
+
+# SMTP Configuration (for Gmail, Outlook, custom SMTP servers)
+SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', 587))
+SMTP_USERNAME = os.environ.get('SMTP_USERNAME', '')
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
+SMTP_USE_TLS = os.environ.get('SMTP_USE_TLS', 'True').lower() == 'true'
+SMTP_USE_SSL = os.environ.get('SMTP_USE_SSL', 'False').lower() == 'true'
+
+
+# SMTP_HOST=smtp.gmail.com
+# SMTP_PORT=587
+# SMTP_USERNAME=jjay57326@gmail.com
+# SMTP_PASSWORD=oszpjeehzlmmucby
+# SMTP_USE_TLS=True
+# SMTP_USE_SSL=False
+
+
+# Fallback Django SMTP configuration (if Resend is not available)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = SMTP_HOST
+EMAIL_PORT = SMTP_PORT
+EMAIL_HOST_USER = SMTP_USERNAME
+EMAIL_HOST_PASSWORD = SMTP_PASSWORD
+EMAIL_USE_TLS = SMTP_USE_TLS
+EMAIL_USE_SSL = SMTP_USE_SSL
 
 # Security Settings
 SECURE_BROWSER_XSS_FILTER = True
@@ -314,7 +341,7 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000', cast=Csv())
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000').split(',')
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_METHODS = [
     'DELETE',
@@ -388,15 +415,15 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 
 # Payment Gateway Settings
-STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='')
-RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', '')
+RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET', '')
 
 # Rental Application Settings
-RENTAL_REMINDER_DAYS = config('RENTAL_REMINDER_DAYS', default=3, cast=int)
-LATE_RETURN_FEE_PER_DAY = config('LATE_RETURN_FEE_PER_DAY', default=100.0, cast=float)
-MAX_RENTAL_DURATION_DAYS = config('MAX_RENTAL_DURATION_DAYS', default=365, cast=int)
+RENTAL_REMINDER_DAYS = int(os.environ.get('RENTAL_REMINDER_DAYS', '3'))
+LATE_RETURN_FEE_PER_DAY = float(os.environ.get('LATE_RETURN_FEE_PER_DAY', '100.0'))
+MAX_RENTAL_DURATION_DAYS = int(os.environ.get('MAX_RENTAL_DURATION_DAYS', '365'))
 
 # Rate Limiting
 RATELIMIT_ENABLE = True

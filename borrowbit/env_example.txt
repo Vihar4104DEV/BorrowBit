@@ -1,27 +1,64 @@
+# BorrowBit Environment Configuration
+# Copy this file to .env and fill in your actual values
+
 # Django Settings
 SECRET_KEY=your-secret-key-here
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
-# Email Configuration (for production)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_HOST_USER=your-email@gmail.com
-EMAIL_HOST_PASSWORD=your-app-password
-EMAIL_USE_TLS=True
-EMAIL_USE_SSL=False
+# Database Configuration
+DATABASE_URL=postgresql://username:password@localhost:5432/borrowbit
+
+# Email Configuration
+# Choose your email provider: SMTP or RESEND
+EMAIL_PROVIDER=SMTP
+
+# SMTP Configuration (for Gmail, Outlook, Yahoo, custom SMTP)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+SMTP_USE_TLS=True
+SMTP_USE_SSL=False
+
+# Resend Configuration (alternative to SMTP)
+RESEND_API_KEY=your_resend_api_key
+
+# Email Sender Configuration
 DEFAULT_FROM_EMAIL=noreply@borrowbit.com
+FROM_NAME=BorrowBit
 
-# Database (optional - uses SQLite by default)
-# DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+# JWT Settings
+JWT_SECRET_KEY=your-jwt-secret-key
+JWT_ACCESS_TOKEN_LIFETIME=5
+JWT_REFRESH_TOKEN_LIFETIME=1
 
-# Redis (optional - for caching)
-# REDIS_URL=redis://localhost:6379/0
-
-# Payment Gateway Settings
-STRIPE_PUBLIC_KEY=your-stripe-public-key
-STRIPE_SECRET_KEY=your-stripe-secret-key
-RAZORPAY_KEY_ID=your-razorpay-key-id
+# Redis Configuration (for caching and sessions)
+REDIS_URL=redis://localhost:6379/0
 
 # CORS Settings
 CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FILE=logs/django.log
+
+# Payment Gateway (example)
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+
+# SMS Gateway (example)
+TWILIO_ACCOUNT_SID=your_twilio_account_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=+1234567890
+
+# File Storage
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_STORAGE_BUCKET_NAME=your_bucket_name
+AWS_S3_REGION_NAME=us-east-1
+
+# Security
+SECURE_SSL_REDIRECT=False
+SECURE_BROWSER_XSS_FILTER=True
+SECURE_CONTENT_TYPE_NOSNIFF=True
