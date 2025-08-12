@@ -65,6 +65,7 @@ razorpay==1.4.1
 # PDF Generation
 reportlab==4.0.7
 xlsxwriter
+weasyprint==60.2
 
 # Caching & Performance
 django-cacheops
