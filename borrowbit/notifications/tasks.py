@@ -3,8 +3,8 @@ from django.core.mail import send_mail  # Email sending disabled (bypassed)
 from django.conf import settings
 from user.models import User, OTPVerification
 from .models import Notification
-from .notification_service import NotificationService
-from .unified_email_service import unified_email_service
+# from .notification_service import NotificationService
+# from .unified_email_service import unified_email_service
 import logging
 
 logger = logging.getLogger(__name__)

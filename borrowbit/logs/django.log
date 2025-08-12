@@ -33938,3 +33938,26 @@ INFO 2025-08-12 09:30:01,249 autoreload 13384 19104 D:\ODOO_FINAL_8_11_2_19\Borr
 INFO 2025-08-12 09:30:05,128 autoreload 8560 6588 Watching for file changes with StatReloader
 INFO 2025-08-12 09:31:15,702 basehttp 8560 16700 "GET /api/v1/payments/rental-orders/my_orders/ HTTP/1.1" 200 68
 >>>>>>> 820dc79f10db0b2f3469b0f9edcee952c348957c
+INFO 2025-08-12 10:07:33,122 autoreload 20136 21416 Watching for file changes with StatReloader
+INFO 2025-08-12 10:11:31,100 autoreload 11828 10832 Watching for file changes with StatReloader
+INFO 2025-08-12 10:11:55,504 autoreload 11828 10832 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\notifications\tasks.py changed, reloading.
+INFO 2025-08-12 10:11:56,900 autoreload 16144 19612 Watching for file changes with StatReloader
+INFO 2025-08-12 10:12:09,195 autoreload 16144 19612 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\notifications\tasks.py changed, reloading.
+INFO 2025-08-12 10:12:10,742 autoreload 16412 4224 Watching for file changes with StatReloader
+INFO 2025-08-12 10:16:07,848 autoreload 16412 4224 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\user\models.py changed, reloading.
+INFO 2025-08-12 10:16:09,632 autoreload 22448 11192 Watching for file changes with StatReloader
+INFO 2025-08-12 10:16:49,681 autoreload 22448 11192 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\products\models.py changed, reloading.
+INFO 2025-08-12 10:16:51,272 autoreload 8444 5988 Watching for file changes with StatReloader
+INFO 2025-08-12 10:17:32,124 autoreload 8444 5988 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\payments\models.py changed, reloading.
+INFO 2025-08-12 10:17:34,092 autoreload 6508 20932 Watching for file changes with StatReloader
+INFO 2025-08-12 10:17:44,007 autoreload 17496 3568 Watching for file changes with StatReloader
+INFO 2025-08-12 10:18:37,698 autoreload 17496 3568 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\rentals\models.py changed, reloading.
+INFO 2025-08-12 10:18:39,175 autoreload 15168 14368 Watching for file changes with StatReloader
+INFO 2025-08-12 10:22:02,750 autoreload 14052 11536 Watching for file changes with StatReloader
+INFO 2025-08-12 10:22:51,934 autoreload 14052 11536 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\payments\models.py changed, reloading.
+INFO 2025-08-12 10:22:54,114 autoreload 16092 11824 Watching for file changes with StatReloader
+INFO 2025-08-12 10:23:44,844 autoreload 16092 11824 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\notifications\migrations\0001_initial.py changed, reloading.
+INFO 2025-08-12 10:23:46,756 autoreload 17592 10872 Watching for file changes with StatReloader
+INFO 2025-08-12 10:24:17,530 autoreload 17592 10872 C:\Users\Shyam Kalariya\Desktop\odoo_final\BorrowBit\borrowbit\products\migrations\0001_initial.py changed, reloading.
+INFO 2025-08-12 10:24:19,505 autoreload 8860 21476 Watching for file changes with StatReloader
+INFO 2025-08-12 10:30:33,435 autoreload 2768 19356 Watching for file changes with StatReloader
