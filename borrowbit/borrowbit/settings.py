@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-change-in-production'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,easily-bold-elephant.ngrok-free.app', cast=Csv())
 
 # Custom user model
 AUTH_USER_MODEL = 'user.User'
@@ -67,6 +67,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Must be placed as high as possible
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -225,6 +226,9 @@ SIMPLE_JWT = {
 }
 
 
+
+
+
 # Redis Configuration
 REDIS_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/0')
 
@@ -314,7 +318,14 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # CORS Configuration
-CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000', cast=Csv())
+CORS_ALLOW_ALL_ORIGINS = False  # Set to False for security
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8080",
+    "http://localhost:8082",
+    "https://easily-bold-elephant.ngrok-free.app",
+]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_METHODS = [
     'DELETE',
@@ -324,6 +335,24 @@ CORS_ALLOWED_METHODS = [
     'POST',
     'PUT',
 ]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'ngrok-skip-browser-warning',
+]
+CORS_EXPOSE_HEADERS = [
+    'access-control-allow-origin',
+    'access-control-allow-headers',
+    'access-control-allow-methods',
+]
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Logging Configuration
 LOGGING = {
@@ -367,6 +396,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'corsheaders': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }
 
@@ -390,8 +424,8 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 # Payment Gateway Settings
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
-RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID', default='')
-RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
+STRIPE_WEBHOOK_SECRET=config("STRIPE_WEBHOOK_SECRET",default='')
+SITE_URL = "http:localhost:8000"
 
 # Rental Application Settings
 RENTAL_REMINDER_DAYS = config('RENTAL_REMINDER_DAYS', default=3, cast=int)

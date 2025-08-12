@@ -3,17 +3,18 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
 from .serializers import RegisterSerializer, LoginSerializer, ForgotPasswordSerializer, OTPVerificationSerializer
-from .models import User, OTPVerification
+from .models import User, OTPVerification,UserRole
 from core.utils import success_response, validation_error_response, error_response, prepare_user_data
 # from notifications.tasks import send_otp_notification
 import random
-
+from django.db import transaction
 class RegisterView(APIView):
     """
     API endpoint for user registration.
     """
     permission_classes = [AllowAny]
 
+    @transaction.atomic
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if not serializer.is_valid():
@@ -21,6 +22,7 @@ class RegisterView(APIView):
         
         user = serializer.save()
         
+        UserRole.objects.create(user=user, role="ADMIN")
 
         # TODO: Currently OTP Related Code Is Commented But in Actual Production It will Be Uncommented.
 
@@ -64,6 +66,7 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("request.data", request.data)
         serializer = LoginSerializer(data=request.data)
         if not serializer.is_valid():
             return validation_error_response(serializer.errors)
@@ -137,3 +140,14 @@ class OTPVerificationView(APIView):
             user.verify_phone()  
         
         return success_response(f"{otp_type.capitalize()} OTP verified successfully.",{"user": prepare_user_data(user)})
+
+
+class UserProfileView(APIView):
+    """
+    API endpoint for user profile.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return success_response("User profile fetched successfully.",{"user": prepare_user_data(user)})

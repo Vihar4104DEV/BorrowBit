@@ -180,8 +180,8 @@ class User(AbstractUser, BaseModel):
     
     def get_full_name(self):
         """Return the full name of the user."""
-        if self.middle_name:
-            return f"{self.first_name} {self.middle_name} {self.last_name}".strip()
+        if self.prefix:
+            return f"{self.prefix} {self.first_name} {self.last_name}".strip()
         return f"{self.first_name} {self.last_name}".strip()
     
     def get_short_name(self):

@@ -102,6 +102,7 @@ class Product(BaseModel):
         related_name='owned_products',
         verbose_name=_("Owner")
     )
+    
     category = models.ForeignKey(
         ProductCategory, 
         on_delete=models.PROTECT, 
